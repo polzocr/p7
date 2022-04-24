@@ -1,5 +1,7 @@
 const express = require('express');
 const mysql = require('mysql2');
+
+const userRoutes = require('./routes/user');
 // const { Sequelize} = require('sequelize');
 // const sequelize = new Sequelize('groupomania','root','MySQL123!', {
 //     host: 'localhost',
@@ -39,6 +41,10 @@ app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS');
     next();
 });
+
+app.use('/', userRoutes);
+
+
 
 
 module.exports = app;
