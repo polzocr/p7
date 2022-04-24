@@ -2,6 +2,7 @@ const express = require('express');
 const mysql = require('mysql2');
 
 const userRoutes = require('./routes/user');
+const postRoutes = require('./routes/post');
 // const { Sequelize} = require('sequelize');
 // const sequelize = new Sequelize('groupomania','root','MySQL123!', {
 //     host: 'localhost',
@@ -43,6 +44,7 @@ app.use((req, res, next) => {
 });
 
 app.use('/', userRoutes);
+app.use('/', postRoutes);
 
 
 
