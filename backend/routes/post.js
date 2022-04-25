@@ -6,6 +6,7 @@ const multer = require('../middleware/multer');
 
 const postCtrl = require('../controllers/post');
 const commentCtrl = require('../controllers/comment');
+const likeCtrl = require('../controllers/like');
 
 router.post('/',auth, multer, postCtrl.createPost);
 router.get('/', auth, postCtrl.getAllPosts);
@@ -18,5 +19,9 @@ router.post('/:id/like',auth, postCtrl.likePost);
 router.post('/:id/comment', auth, commentCtrl.createComment);
 router.get('/:id/comments', auth, commentCtrl.getAllComments);
 router.delete('/comment/:id', auth, commentCtrl.deleteComment);
+
+
+router.post('/:id/like', auth, likeCtrl.likeOrDislikePost);
+
 
 module.exports = router;
