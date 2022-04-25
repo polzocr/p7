@@ -5,7 +5,7 @@ const path = require("path");
 const userRoutes = require('./routes/user');
 const postRoutes = require('./routes/post');
 // const { Sequelize} = require('sequelize');
-// const sequelize = new Sequelize('groupomania','root','MySQL123!', {
+// const sequelize = new Sequelize('groupomania','root','motdepasse', {
 //     host: 'localhost',
 //     dialect: 'mysql'
 // })
