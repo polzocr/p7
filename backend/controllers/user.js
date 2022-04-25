@@ -39,3 +39,25 @@ exports.login = (req, res, next) => {
    .catch(error => res.status(500).json({error})); 
 };
 
+exports.getOneUser = (req,res,next) => {
+    db.User.findOne({where: {id:req.params.id} })
+    .then(user => res.status(200).json(user))
+    .catch(error => res.status(404).json({error:'Utilisateur non trouvé'}));
+};
+
+exports.deleteUser = (req,res,next) => {
+    db.User.findOne({where: {id:req.params.id} })
+    .then(user => {
+        if(!user){
+            return res.status(404).json({error: "Utilisateur non trouvé 1"})
+        }
+        if(user.id !== req.auth.userId){
+            return res.status(401).json({error: "Requête non autorisée"})
+        }
+        db.User.destroy({where: {id:req.params.id} })
+        .then(() => res.status(200).json({message: 'Utilisateur supprimé avec succès !'}))
+        .catch(error => res.status(400).json({error:"Erreur ici"}));
+    })
+    .catch(error => res.status(404).json({error:'Utilisateur non trouvé 2'}));
+};
+
