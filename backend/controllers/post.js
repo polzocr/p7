@@ -40,11 +40,16 @@ exports.modifyPost = (req, res, next) => {
         ...req.body,
         image_url: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
     }:{...req.body}
-    db.Post.update({ ...postObject}, {where: {id: req.params.id} })
-    .then(() => res.status(200).json({message:'Objet modifié avec succès !'}))
-    .catch(error => {res.status(400).json({error});
-    });
- 
+    db.Post.findOne({where: {id:req.params.id} })
+    .then(post => {
+        if(post.userId !== req.auth.userId){
+            res.status(401).json({error: "Requête non autorisée"})
+        }
+        db.Post.update({ ...postObject}, {where: {id: req.params.id} })
+        .then(() => res.status(200).json({message:'Objet modifié avec succès !'}))
+        .catch(error => res.status(400).json({error}));
+    })
+    .catch(error => res.status(404).json({error: "Post non trouvé"}));
 };
 
 exports.deletePost = (req, res, next) => {
