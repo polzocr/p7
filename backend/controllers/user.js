@@ -41,7 +41,7 @@ exports.login = (req, res, next) => {
 
 exports.getOneUser = (req,res,next) => {
     db.User.findOne({where: {id:req.params.id} })
-    .then(user => res.status(200).json(user))
+    .then(user => res.status(200).json({"email": user.email, "username": user.firstName}))
     .catch(error => res.status(404).json({error:'Utilisateur non trouvé'}));
 };
 
