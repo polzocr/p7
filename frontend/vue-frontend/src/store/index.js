@@ -17,13 +17,12 @@ export default new Vuex.Store({
    
   },
   actions: {
-    postRequest(context , userInfo){
-      context.commit;
+    postRequest(context , user){
       instance.post('/signup', {
-        firstName: userInfo.firstName,
-        lastName: userInfo.lastName,
-        email: userInfo.email,
-        password: userInfo.password
+        firstName: user.firstName,
+        lastName: user.lastName,
+        email: user.email,
+        password: user.password
       })
     .then(function (response) {
     console.log(response);
