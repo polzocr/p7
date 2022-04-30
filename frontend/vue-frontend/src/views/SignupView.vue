@@ -102,7 +102,7 @@ export default {
                 firstName: this.firstName,
                 email: this.email,
                 password: this.password
-          })
+                })
             } else {
                 this.errorValidation = 'Veuillez remplir correctement vos informations personnelles';
             }
