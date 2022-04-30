@@ -1,26 +1,32 @@
 <template>
    <div class="signup">
-        <div class="form">
-            <div class="">
-                <label for="lastName">Nom</label>
-                <input v-model="lastName" type="text" name="lastName">
+       <form action="" @submit.prevent="SignupRequest">
+            <div class="form">
+                <div class="">
+                    <label for="lastName">Nom</label>
+                    <input @input="testLastName()" v-model.trim="lastName" type="text" name="lastName">
+                    <p v-if="errorLastName">{{ errorLastName }}</p>
+                </div>
+                <div class="">
+                    <label for="firstName">Prénom</label>
+                    <input v-model.trim="firstName" type="text" name="firstName">
+                </div>
+                <div class="">
+                    <label for="email">Email</label>
+                    <input @input="testEmail()" v-model.trim="email" type="email" name="email">
+                    <p v-if="errorEmail">{{ errorEmail }}</p>
+                </div>
+                <div class="">
+                    <label for="password">Mot de passe</label>
+                    <input @input="testPassword()" v-model.trim="password" type="password" name="password">
+                    <p v-if="errorPassword">{{ errorPassword }}</p>
+                </div>
+                <div class="">
+                    <button type="submit" :disabled="isDisabled()">S'enregistrer</button>
+                    <p v-if="errorValidation"> {{ errorValidation }}</p>
+                </div>
             </div>
-            <div class="">
-                <label for="firstName">Prénom</label>
-                <input v-model="firstName" type="text" name="firstName">
-            </div>
-            <div class="">
-                <label for="email">Email</label>
-                <input v-model="email" type="email" name="email">
-            </div>
-            <div class="">
-                <label for="password">Mot de passe</label>
-                <input v-model="password" type="password" name="password">   
-            </div>
-            <div class="">
-                <button @click="SignupRequest">S'enregistrer</button>
-            </div>
-        </div>
+        </form>
     </div>
 </template>
 
@@ -29,24 +35,79 @@
 
 
 export default {
-  name: 'SignupView',
-  data: function(){ 
-          return {
-            firstName: '',
-            lastName: '',
-            email: '',
-            password: ''
-          }
+    name: 'SignupView',
+    data: function(){ 
+            return {
+                firstName: '',
+                lastName: '',
+                email: '',
+                password: '',
+                errorLastName: '',
+                errorEmail: '',
+                errorPassword: '',
+                errorValidation: '',
+            }
+            },
+    computed: {
+        
+    },
+    methods:{
+        testPassword(){
+            const regexPassword = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{8,}$/;
+            if(regexPassword.test(this.password)){
+                this.errorPassword = "";
+                this.errorValidation= "";
+                return true;
+            } else {
+                this.errorPassword = "Le mot de passe est trop simple";
+                return false;
+            }
         },
-  methods:{
-      SignupRequest(){
-          this.$store.dispatch('postRequest', {
-              lastName: this.lastName,
-              firstName: this.firstName,
-              email: this.email,
-              password: this.password
+        testEmail(){
+            const regexEmail = /^(([^<>()\]\\.,;:\s@"]+(\.[^<>()\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+            if(regexEmail.test(this.email)){
+                this.errorEmail = "";
+                this.errorValidation= "";
+                return true;
+            } else {
+                this.errorEmail = "Ce n'est pas une email valide";
+                return false;
+            }
+        },
+        testLastName(){
+            const regexLastName =  /^[a-zA-Zàáâäãåąčćęèéêëėįìíîïłńòóôöõùúûüųūÿýżźñç ,.'-]+$/u;
+            if(regexLastName.test(this.lastName)){
+                this.errorLastName = "";
+                this.errorValidation= "";
+                return true;
+            } else {
+                this.errorLastName = "Le nom doit être correct";
+                return false;
+            }
+        },
+        isDisabled(){
+            if(this.lastName == "" || this.email == "" || this.password == ""){
+                return true;
+            }else {
+                return false;
+            }
+        },
+        SignupRequest(){
+            if(this.testPassword() && this.testEmail() && this.testLastName() && !this.isDisabled()){
+                this.errorValidation = '';
+                console.log("La validation est correcte");
+
+                this.$store.dispatch('SignupRequest', {
+                lastName: this.lastName,
+                firstName: this.firstName,
+                email: this.email,
+                password: this.password
           })
-      }
-  }
+            } else {
+                this.errorValidation = 'Veuillez remplir correctement vos informations personnelles';
+            }
+        
+        }
+    }
 }
 </script>
