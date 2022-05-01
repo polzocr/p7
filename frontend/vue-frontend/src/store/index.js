@@ -11,11 +11,14 @@ const instance = axios.create({
 
 export default new Vuex.Store({
   state: {
+    error: '',
   },
   getters: {
   },
   mutations: {
-   
+    clearError(state){
+      state.error = '';
+    },
   },
   actions: {
     SignupRequest(context , user){
@@ -35,6 +38,7 @@ export default new Vuex.Store({
     });
     },
     LoginRequest(context, user){
+      context.commit('clearError')
       instance.post('/login', {
         email: user.email,
         password: user.password
@@ -45,6 +49,8 @@ export default new Vuex.Store({
       })
       .catch(error => {
         console.log('Inconnexion réussie', error);
+        this.state.error = error.response.data.error;
+        console.log(this.state.error)
       })
     }
   },

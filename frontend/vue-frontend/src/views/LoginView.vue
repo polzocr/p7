@@ -1,19 +1,22 @@
 <template>
-    <div class="login">
-        <div class="">
+   <div class="login">
+      <form action="" @submit.prevent="LoginRequest">
+         <div class="">
             <div class="">
                 <label for="email">Email</label>
-                <input v-model="email" type="email">
+                <input @input="cleanStore()" v-model.trim="email" type="email" name="email">
             </div>
             <div class="">
                 <label for="password">Password</label>
-                <input v-model="password" type="password">
+                <input @input="cleanStore()" v-model.trim="password" type="password" name="password">
+                <p v-if="haveError()"> {{ $store.state.error }} </p>
             </div>
             <div class="">
-                <button @click="LoginRequest" >Se connecter</button>
+                <button type="submit" :disabled="isDisabled()">Se connecter</button>
             </div>
         </div>
-    </div>
+      </form>
+   </div>
 </template>
 
 <script>
@@ -28,13 +31,35 @@ export default {
         password: '',
      }
   },
+  computed: {
+
+    
+  },
   methods: {
-     LoginRequest(){
-        this.$store.dispatch('LoginRequest', {
-           email: this.email,
-           password: this.password
-        })
-     }
+      haveError(){
+         if(this.$store.state.error){
+            return true
+         }else {
+            return false
+         }
+      },
+      cleanStore(){
+         this.$store.commit('clearError');
+      },
+      isDisabled(){
+         if(this.email == "" || this.password == ""){
+               return true;
+         }else {
+               return false;
+         }
+      },
+      
+      LoginRequest(){
+         this.$store.dispatch('LoginRequest', {
+            email: this.email,
+            password: this.password
+         })
+      }
   },
 
 }
