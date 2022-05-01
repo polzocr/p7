@@ -4,15 +4,15 @@
          <div class="">
             <div class="">
                 <label for="email">Email</label>
-                <input @input="cleanStore()" v-model.trim="email" type="email" name="email">
+                <input v-model.trim="email" type="email" name="email">
             </div>
             <div class="">
                 <label for="password">Password</label>
-                <input @input="cleanStore()" v-model.trim="password" type="password" name="password">
+                <input v-model.trim="password" type="password" name="password">
                 <p v-if="haveError()"> {{ $store.state.error }} </p>
             </div>
             <div class="">
-                <button type="submit" :disabled="isDisabled()">Se connecter</button>
+                <button @blur="cleanStore()" type="submit" :disabled="isDisabled()">Se connecter</button>
             </div>
         </div>
       </form>
