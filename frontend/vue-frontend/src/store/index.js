@@ -28,7 +28,7 @@ export default new Vuex.Store({
       })
     .then(res => {
       console.log("Inscription réussie", res);
-      // LoginRequest(user);
+      context.dispatch('LoginRequest', user);
     })
     .catch(error => {
       console.log("Inscription ratée", error );
@@ -40,7 +40,7 @@ export default new Vuex.Store({
         password: user.password
       })
       .then(res => {
-        console.log(res, "Connexion réussie");
+        console.log("Connexion réussie", res);
         router.push('/')
       })
       .catch(error => {
