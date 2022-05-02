@@ -6,7 +6,7 @@
     </div>
     <div v-else>
       <router-link to="">Profil</router-link> |
-      <router-link to="">Créer un Post</router-link>
+      <router-link to="/">Accueil</router-link>
     </div> 
     
     <router-view/>

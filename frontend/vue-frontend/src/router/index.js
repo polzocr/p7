@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 import Home from '../views/HomeView.vue'
 import LoginView from '../views/LoginView.vue'
 import SignupView from '../views/SignupView.vue'
+import PostView from '../views/PostView.vue'
 
 Vue.use(VueRouter)
 
@@ -21,7 +22,12 @@ Vue.use(VueRouter)
     path: '/signup',
     name: 'SignupView',
     component: SignupView
-  }
+  },
+  {
+    path: '/:id',
+    name: 'PostView',
+    component: PostView
+  },
 ]
 
 const router = new VueRouter({

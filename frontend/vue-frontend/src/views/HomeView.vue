@@ -3,12 +3,10 @@
        <button @click="deconnexion()">
            Deconnexion
        </button>
-       <button @click="PostsRequest()">
-           Requete post
-       </button>
-       <PostComp v-for="post in this.$store.state.posts" 
-       :key="post" 
-       :userId="post.userId"
+       <PostComp v-for="(post, index) in this.$store.state.posts" 
+       :key="index"
+       :id="post.id"
+       :userId="post.userId" 
        :name="post.name"
        :text="post.text"
        :image_url="post.image_url"
@@ -26,6 +24,7 @@ export default {
         PostComp,
     },
     mounted() {
+        this.$store.dispatch('GetPostsRequest');
         const user = JSON.parse(localStorage.getItem('user'));
         if(!user || this.$store.state.user.userId !== user.userId){
             console.log(user)
@@ -41,10 +40,6 @@ export default {
             });
             this.$router.push('/login')
         },
-         PostsRequest(){
-             this.$store.dispatch('PostsRequest');
-             
-         }
     },
 }
 </script>

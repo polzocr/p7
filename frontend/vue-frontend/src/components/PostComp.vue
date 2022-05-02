@@ -1,8 +1,13 @@
 <template>
     <div>
-        <p>Titre: {{ name }} : {{ userId }}</p>
-        <p>Text: {{ text }}</p>
-        <img :src="image_url" alt="imagePost"/>
+        <router-link :to="'/' + id">
+            <p>{{ id }}</p>
+            <p>Titre: {{ name }} : {{ userId }}</p>
+            <p>Text: {{ text }}</p>
+            <img :src="image_url" alt="imagePost"/>
+        </router-link>
+            
+        
     </div>
 </template>
 
@@ -10,17 +15,22 @@
     export default {
         name: "PostComp",
         props: {
+            id:{
+                type: Number,
+                required: true,
+                default: 0
+            },
             userId: {
                 type: Number,
-                required: true
+                required: true,
+                default: 0
             },
             name: {
                 type: String,
                 default: () => 'JolieTitre'
             },
             text: {
-                type: String,
-                required:true
+                type: String
             },
             image_url: {
                 type: String,
@@ -32,6 +42,6 @@
     }
 </script>
 
-<style scoped="scss">
+<style scoped lang="scss">
 
 </style>

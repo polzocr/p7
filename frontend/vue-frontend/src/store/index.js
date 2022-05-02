@@ -19,6 +19,7 @@ if(!userLocal){
   userLocal = userInit;
 } else {
   userLocal = JSON.parse(userLocal);
+  instance.defaults.headers.common['Authorization'] = 'Bearer ' + userLocal.token;
 }
 
 
@@ -29,6 +30,9 @@ export default new Vuex.Store({
     status: '',
     user: userLocal,
     posts: {
+
+    },
+    post : {
 
     }
   },
@@ -92,12 +96,19 @@ export default new Vuex.Store({
       localStorage.removeItem('user');
       context.state.user = userInit;
     },
-    PostsRequest(context){
+    GetPostsRequest(context){
       instance.get('/')
       .then(posts => {
         context.state.posts = posts.data;
       })
       .catch(error => console.log(error));
+    },
+    GetPostRequest(context, id){
+      instance.get('/' + id)
+      .then(post => {
+        context.state.post = post.data
+      })
+      .catch(error => console.log(error))
     }
   },
  
