@@ -1,12 +1,33 @@
 <template>
-  <div id="app">  
-    <router-link to="/login">Login</router-link> |
-    <router-link to="/signup">Signup</router-link>
+  <div id="app"> 
+    <div v-if="!connected()">
+      <router-link to="/login">Login</router-link> |
+      <router-link to="/signup">Signup</router-link>
+    </div>
+    <div v-else>
+      <router-link to="">Profil</router-link> |
+      <router-link to="">Deconnexion</router-link>
+    </div> 
+    
     <router-view/>
   </div>
 </template>
 
-
+<script>
+export default {
+  name: 'App',
+  methods: {
+    connected(){
+      const user = JSON.parse(localStorage.getItem('user'));
+      if(user && this.$store.state.user.userId == user.userId ){
+        return true;
+      } else {
+        return false;
+      }
+    }
+  }
+}
+</script>
 
 
 <style lang="scss">
