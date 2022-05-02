@@ -7,6 +7,7 @@
     <div v-else>
       <router-link to="">Profil</router-link> |
       <router-link to="/">Accueil</router-link>
+      <router-link @click.native="deconnexion()" to="">Deconnexion</router-link>
     </div> 
     
     <router-view/>
@@ -25,7 +26,14 @@ export default {
         return false;
       }
     },
-  }
+    deconnexion(){
+            this.$store.dispatch('deconnexion', {
+                userId: -1,
+                token: ''
+            });
+            this.$router.push('/login')
+        },
+  },
 }
 </script>
 

@@ -1,5 +1,8 @@
 <template>
     <div>
+        <div v-if="ownPost()">
+            <router-link to="/">Modifier l'élément</router-link>
+        </div>
         
         <div>
             <PostComp
@@ -28,11 +31,12 @@ import {mapState} from 'vuex'
             ...mapState(['post'])
         },
         methods:{
-            
+            ownPost(){
+
+            },
         },
         beforeMount(){
             this.$store.dispatch('GetPostRequest', this.$route.params.id);
-            console.log(this.$store.state.post.UserId)
         }
     }
 </script>

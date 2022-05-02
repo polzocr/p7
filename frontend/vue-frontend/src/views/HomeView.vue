@@ -1,8 +1,5 @@
 <template>
    <div>
-       <button @click="deconnexion()">
-           Deconnexion
-       </button>
        <PostComp v-for="(post, index) in this.$store.state.posts" 
        :key="index"
        :id="post.id"
@@ -33,13 +30,6 @@ export default {
         }
     },
     methods: {
-        deconnexion(){
-            this.$store.dispatch('deconnexion', {
-                userId: -1,
-                token: ''
-            });
-            this.$router.push('/login')
-        },
     },
 }
 </script>
