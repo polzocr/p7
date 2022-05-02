@@ -12,7 +12,10 @@
                 <p v-if="haveError()"> {{ $store.state.error }} </p>
             </div>
             <div class="">
-                <button @blur="cleanStore()" type="submit" :disabled="isDisabled()">Se connecter</button>
+               <button @blur="cleanStore()" type="submit" :disabled="isDisabled()">
+                  <span v-if="$store.state.status == 'loading'">Connexion en cours...</span>
+                  <span v-else>Se connecter</span>
+               </button>
             </div>
         </div>
       </form>
@@ -31,6 +34,14 @@ export default {
         password: '',
      }
   },
+  mounted() {
+        const user = JSON.parse(localStorage.getItem('user'));
+        if(user && this.$store.state.user.userId == user.userId){
+            console.log(user)
+            this.$router.push('/');
+            return ;
+        }
+    },
   computed: {
 
     

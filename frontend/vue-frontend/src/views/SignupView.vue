@@ -22,7 +22,10 @@
                     <p v-if="errorPassword">{{ errorPassword }}</p>
                 </div>
                 <div class="">
-                    <button type="submit" :disabled="isDisabled()">S'enregistrer</button>
+                    <button type="submit" :disabled="isDisabled()">
+                        <span v-if="$store.state.status == 'loading'">Création en cours...</span>
+                        <span v-else>S'enregistrer</span>
+                    </button>
                     <p v-if="errorValidation"> {{ errorValidation }}</p>
                 </div>
             </div>
@@ -50,6 +53,13 @@ export default {
             },
     computed: {
         
+    },
+    mounted() {
+        const user = JSON.parse(localStorage.getItem('user'));
+        if(user && this.$store.state.user.userId == user.userId){
+            this.$router.push('/');
+            return ;
+        }
     },
     methods:{
         testPassword(){
