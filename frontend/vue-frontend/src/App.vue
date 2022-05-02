@@ -6,7 +6,7 @@
     </div>
     <div v-else>
       <router-link to="">Profil</router-link> |
-      <router-link to="">Deconnexion</router-link>
+      <router-link to="">Créer un Post</router-link>
     </div> 
     
     <router-view/>
@@ -24,7 +24,7 @@ export default {
       } else {
         return false;
       }
-    }
+    },
   }
 }
 </script>

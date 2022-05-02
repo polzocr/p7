@@ -28,6 +28,9 @@ export default new Vuex.Store({
     error: '',
     status: '',
     user: userLocal,
+    posts: {
+
+    }
   },
   getters: {
   },
@@ -39,7 +42,7 @@ export default new Vuex.Store({
       state.status = status;
     },
     userLogin(state, user){
-      instance.defaults.headers.common['Authorization'] = user.token;
+      instance.defaults.headers.common['Authorization'] = 'Bearer ' + user.token;
       state.user = user;
       localStorage.setItem('user', JSON.stringify(user))
     },
@@ -89,6 +92,13 @@ export default new Vuex.Store({
       localStorage.removeItem('user');
       context.state.user = userInit;
     },
+    PostsRequest(context){
+      instance.get('/')
+      .then(posts => {
+        context.state.posts = posts.data;
+      })
+      .catch(error => console.log(error));
+    }
   },
  
   modules: {

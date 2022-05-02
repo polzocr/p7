@@ -3,14 +3,28 @@
        <button @click="deconnexion()">
            Deconnexion
        </button>
+       <button @click="PostsRequest()">
+           Requete post
+       </button>
+       <PostComp v-for="post in this.$store.state.posts" 
+       :key="post" 
+       :userId="post.userId"
+       :name="post.name"
+       :text="post.text"
+       :image_url="post.image_url"
+       />
    </div>
 </template>
 
 <script>
-// @ is an alias to /src
+
+import PostComp from '@/components/PostComp.vue'
 
 export default {
     name: 'HomeView',
+    components:{
+        PostComp,
+    },
     mounted() {
         const user = JSON.parse(localStorage.getItem('user'));
         if(!user || this.$store.state.user.userId !== user.userId){
@@ -27,6 +41,10 @@ export default {
             });
             this.$router.push('/login')
         },
+         PostsRequest(){
+             this.$store.dispatch('PostsRequest');
+             
+         }
     },
 }
 </script>
