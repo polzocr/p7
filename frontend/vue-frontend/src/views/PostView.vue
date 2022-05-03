@@ -1,7 +1,7 @@
 <template>
     <div>
         <div v-if="ownPost()">
-            <router-link to="/">Modifier l'élément</router-link>
+            <router-link  :to="'/'+ post.id + '/modify'">Modifier l'élément</router-link>
         </div>
         
         <div>
@@ -12,6 +12,7 @@
             :text="post.text"
             :image_url="post.image_url"
             />
+            <PutComp/>
         </div>
         
     </div>
@@ -20,20 +21,29 @@
 <script>
 
 import PostComp from '@/components/PostComp.vue'
+import PutComp from '@/components/PutComp.vue'
 import {mapState} from 'vuex'
 
     export default {
         name:'PostView',
         components: {
-           PostComp 
+           PostComp, PutComp
         },
         computed:{
             ...mapState(['post'])
         },
         methods:{
             ownPost(){
-
+                const user = JSON.parse(localStorage.getItem('user'))
+                if(this.post.userId == user.userId){
+                    return true
+                } else {
+                    return false
+                }
             },
+            PutPostRequest(){
+                
+            }
         },
         beforeMount(){
             this.$store.dispatch('GetPostRequest', this.$route.params.id);

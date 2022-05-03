@@ -4,6 +4,7 @@ import Home from '../views/HomeView.vue'
 import LoginView from '../views/LoginView.vue'
 import SignupView from '../views/SignupView.vue'
 import PostView from '../views/PostView.vue'
+import PutComp from '../components/PutComp.vue'
 
 Vue.use(VueRouter)
 
@@ -27,6 +28,11 @@ Vue.use(VueRouter)
     path: '/:id',
     name: 'PostView',
     component: PostView
+  },
+  {
+    path: '/:id/modify',
+    name: 'PutComp',
+    component: PutComp
   },
 ]
 
