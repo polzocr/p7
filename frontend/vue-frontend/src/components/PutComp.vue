@@ -20,11 +20,6 @@
         <div>
             <button type="submit">Supprimer</button>
         </div>
-        
-           
-      
-            
-        
     </div>
 </template>
 

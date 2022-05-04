@@ -9,6 +9,12 @@ const instance = axios.create({
   baseURL: 'http://localhost:3000/',
 });
 
+ const instancePut = axios.create({
+   baseURL: 'http://localhost:3000/',
+   headers: { "Content-Type": "multipart/form-data" }
+});
+
+
 const userInit = {
   userId: -1,
   token: ''
@@ -109,7 +115,16 @@ export default new Vuex.Store({
         context.state.post = post.data
       })
       .catch(error => console.log(error))
-    }
+    },
+    PutPostRequest(context, datas){
+      instancePut.defaults.headers.common['Authorization'] = 'Bearer ' + userLocal.token;
+      instancePut.put('/' + datas.data.id, datas.data)
+      .then(data => {
+        console.log(data);
+        router.push('/')
+      })
+      .catch(error => console.log(error))
+    },
   },
  
   modules: {

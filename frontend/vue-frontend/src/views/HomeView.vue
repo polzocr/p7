@@ -1,5 +1,6 @@
 <template>
    <div>
+       
        <PostComp v-for="(post, index) in this.$store.state.posts" 
        :key="index"
        :id="post.id"
@@ -20,6 +21,11 @@ export default {
     components:{
         PostComp,
     },
+    data: function(){
+        return {
+            idLocal: this.$route.params.id,
+        }
+    },
     mounted() {
         this.$store.dispatch('GetPostsRequest');
         const user = JSON.parse(localStorage.getItem('user'));
@@ -30,6 +36,7 @@ export default {
         }
     },
     methods: {
+       
     },
 }
 </script>

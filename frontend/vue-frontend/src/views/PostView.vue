@@ -1,18 +1,19 @@
 <template>
     <div>
         <div v-if="ownPost()">
-            <router-link  :to="'/'+ post.id + '/modify'">Modifier l'élément</router-link>
+            <router-link  @click.native="modifier()" to="">Modifier l'élément</router-link>
         </div>
         
         <div>
-            <PostComp
+            <PostComp @Modifying="ModifyRequest"
+            :clickable="false"
+            :modify="modify"
             :id="post.id"
             :userId="post.userId"
             :name="post.name"
             :text="post.text"
             :image_url="post.image_url"
             />
-            <PutComp/>
         </div>
         
     </div>
@@ -21,13 +22,22 @@
 <script>
 
 import PostComp from '@/components/PostComp.vue'
-import PutComp from '@/components/PutComp.vue'
 import {mapState} from 'vuex'
 
     export default {
         name:'PostView',
         components: {
-           PostComp, PutComp
+           PostComp,
+        },
+        data: function() {
+            return {
+                modify: false,
+                newPost: {
+                    name: '',
+                    text: '',
+                    image_url:''
+                },
+            }
         },
         computed:{
             ...mapState(['post'])
@@ -40,6 +50,12 @@ import {mapState} from 'vuex'
                 } else {
                     return false
                 }
+            },
+            modifier(){
+                this.modify = !this.modify;
+            },
+            ModifyRequest(infos){
+                this.$store.dispatch('PutPostRequest', infos)
             },
             PutPostRequest(){
                 
