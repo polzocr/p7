@@ -129,6 +129,15 @@ export default new Vuex.Store({
       instance.delete('/' + id.id)
       .then(() => router.push('/'))
       .catch(error => console.log(error))
+    },
+    PostPostRequest(context, datas){
+      instance.post('/', datas.data , { headers: {"Content-Type": "multipart/form-data"}})
+      .then(res => {
+        console.log("Post Crée avec succès")
+        console.log(res)
+        router.push('/')
+      })
+      .catch(error => console.log(error))
     }
   },
  

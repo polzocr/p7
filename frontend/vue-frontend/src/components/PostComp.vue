@@ -4,10 +4,10 @@
             <div>
                 <form enctype="multipart/form-data">
                     <div>
-                        <input v-model="localName" type="text" />
+                        <input id="name" :value="name" type="text" />
                     </div>
                     <div>
-                        <input v-model="localText" type="textarea" />
+                        <input id="text" :value="text" type="textarea" />
                     </div>
                     <div>
                         <div>
@@ -69,7 +69,6 @@
             },
             name: {
                 type: String,
-                default: () => 'JolieTitre'
             },
             text: {
                 type: String
@@ -87,11 +86,15 @@
         },
         methods: {
            emitModify(){
-                const data = {'image': this.file, 'name':this.localName, 'text':this.localText, 'id':this.$route.params.id}
+               const name = document.getElementById('name').value;
+               const text = document.getElementById('text').value;
+                const data = {'image': this.file, 'name':name, 'text':text , 'id':this.$route.params.id}
                 this.$emit('Modifying', { data })
             },
             changeFile(){
                 this.file = this.$refs.fileInput.files[0];
+                console.log(this.name)
+                console.log(this.localName)
             },
             emitDelete(){
                 this.$emit('Deleting', {id:this.$route.params.id})

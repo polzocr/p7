@@ -4,6 +4,7 @@ import Home from '../views/HomeView.vue'
 import LoginView from '../views/LoginView.vue'
 import SignupView from '../views/SignupView.vue'
 import PostView from '../views/PostView.vue'
+import CreateView from '../views/CreateView.vue'
 
 Vue.use(VueRouter)
 
@@ -24,10 +25,16 @@ Vue.use(VueRouter)
     component: SignupView
   },
   {
+    path: '/createpost',
+    name: 'CreateView',
+    component: CreateView
+  },
+  {
     path: '/:id',
     name: 'PostView',
     component: PostView
   },
+  
 ]
 
 const router = new VueRouter({

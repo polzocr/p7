@@ -1,10 +1,6 @@
 <template>
     <div>
-        <div>
-            <button @click="CreateRequest">
-               Créé post
-            </button>
-        </div>
+        
        <PostComp v-for="(post, index) in this.$store.state.posts" 
        :key="index"
        :id="post.id"
