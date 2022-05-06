@@ -125,6 +125,11 @@ export default new Vuex.Store({
       })
       .catch(error => console.log(error))
     },
+    DeleteRequest(context, id){
+      instance.delete('/' + id.id)
+      .then(() => router.push('/'))
+      .catch(error => console.log(error))
+    }
   },
  
   modules: {

@@ -5,7 +5,7 @@
         </div>
         
         <div>
-            <PostComp @Modifying="ModifyRequest"
+            <PostComp @Modifying="ModifyRequest" @Deleting="DeleteRequest"
             :clickable="false"
             :modify="modify"
             :id="post.id"
@@ -57,9 +57,9 @@ import {mapState} from 'vuex'
             ModifyRequest(infos){
                 this.$store.dispatch('PutPostRequest', infos)
             },
-            PutPostRequest(){
-                
-            }
+            DeleteRequest(id){
+                this.$store.dispatch('DeleteRequest', id)
+            },
         },
         beforeMount(){
             this.$store.dispatch('GetPostRequest', this.$route.params.id);

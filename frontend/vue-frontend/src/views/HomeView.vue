@@ -1,6 +1,10 @@
 <template>
-   <div>
-       
+    <div>
+        <div>
+            <button @click="CreateRequest">
+               Créé post
+            </button>
+        </div>
        <PostComp v-for="(post, index) in this.$store.state.posts" 
        :key="index"
        :id="post.id"
@@ -9,7 +13,7 @@
        :text="post.text"
        :image_url="post.image_url"
        />
-   </div>
+    </div>
 </template>
 
 <script>
@@ -36,7 +40,9 @@ export default {
         }
     },
     methods: {
-       
+       CreateRequest(){
+           this.$store.dispatch()
+       }
     },
 }
 </script>

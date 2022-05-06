@@ -21,7 +21,7 @@
                         <button @click.prevent="emitModify">Modifier</button>
                     </div>
                     <div>
-                        <button type="submit">Supprimer</button>
+                        <button @click.prevent="emitDelete">Supprimer</button>
                     </div>
                 </form>
             </div>
@@ -92,6 +92,9 @@
             },
             changeFile(){
                 this.file = this.$refs.fileInput.files[0];
+            },
+            emitDelete(){
+                this.$emit('Deleting', {id:this.$route.params.id})
             },
         }
     }
