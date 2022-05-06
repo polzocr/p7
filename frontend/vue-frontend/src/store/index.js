@@ -40,6 +40,9 @@ export default new Vuex.Store({
     },
     post : {
 
+    },
+    getUser: {
+
     }
   },
   getters: {
@@ -138,7 +141,15 @@ export default new Vuex.Store({
         router.push('/')
       })
       .catch(error => console.log(error))
-    }
+    },
+    GetUserRequest(context, id){
+      instance.get('/user/' + id )
+      .then(user => {
+        context.state.getUser = user.data;
+        console.log(context.state.getUser)
+      })
+      .catch(error => console.log(error));
+    },
   },
  
   modules: {

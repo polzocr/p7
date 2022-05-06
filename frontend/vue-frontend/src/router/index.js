@@ -5,6 +5,7 @@ import LoginView from '../views/LoginView.vue'
 import SignupView from '../views/SignupView.vue'
 import PostView from '../views/PostView.vue'
 import CreateView from '../views/CreateView.vue'
+import ProfileView from '../views/ProfileView.vue'
 
 Vue.use(VueRouter)
 
@@ -23,6 +24,11 @@ Vue.use(VueRouter)
     path: '/signup',
     name: 'SignupView',
     component: SignupView
+  },
+  {
+    path: '/profile/:id',
+    name: 'ProfileView',
+    component: ProfileView
   },
   {
     path: '/createpost',
