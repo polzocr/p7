@@ -1,12 +1,13 @@
 <template>
     <div>
-        <p>lolilol monsieur {{ this.$store.state.user.userId }}</p>
-        <p> {{ this.$store.state.getUser.email}}</p>
-        <p> {{ this.$store.state.getUser.username}}</p>
+        <p> {{ getUser.email}}</p>
+        <p> {{getUser.username}}</p>
     </div>
 </template>
 
 <script>
+import {mapState} from 'vuex'
+
 export default {
     name:'ProfileView',
     data: function(){
@@ -16,6 +17,9 @@ export default {
     },
     beforeCreate(){
         this.$store.dispatch('GetUserRequest', this.$route.params.id)
+    },
+    computed: {
+        ...mapState(['getUser'])
     }
 }
 </script>
