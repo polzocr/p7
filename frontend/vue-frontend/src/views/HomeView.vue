@@ -1,7 +1,7 @@
 <template>
     <div>
         
-       <PostComp v-for="(post, index) in this.$store.state.posts" 
+       <PostComp v-for="(post, index) in this.$store.state.posts.slice().reverse()" 
        :key="index"
        :id="post.id"
        :userId="post.userId" 

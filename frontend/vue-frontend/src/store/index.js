@@ -57,6 +57,7 @@ export default new Vuex.Store({
     userLogin(state, user){
       instance.defaults.headers.common['Authorization'] = 'Bearer ' + user.token;
       state.user = user;
+      console.log(state.user)
       localStorage.setItem('user', JSON.stringify(user))
     },
   },
@@ -146,10 +147,22 @@ export default new Vuex.Store({
       instance.get('/user/' + id )
       .then(user => {
         context.state.getUser = user.data;
-        console.log(context.state.getUser)
       })
       .catch(error => console.log(error));
     },
+    UpdateUserRequest(){
+
+    },
+    DeleteUserRequest(context, id){
+      instance.delete('/user/' + id)
+      .then(() => {
+        console.log('Utilisateur supprimé avec succès');
+        localStorage.removeItem('user');
+        context.state.user = userInit;
+        router.push('/login')
+      })
+      .catch(error => console.log(error));
+    }
   },
  
   modules: {

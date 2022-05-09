@@ -5,7 +5,7 @@
       <router-link to="/signup">Signup</router-link>
     </div>
     <div v-else>
-      <router-link :to="'/profile/' + user.userId ">Profil</router-link> |
+      <router-link :to="'/profile/' + this.$store.state.user.userId">Profil</router-link> |
       <router-link to="/">Accueil</router-link> |
       <router-link @click.native="deconnexion()" to="">Deconnexion</router-link> |
       <router-link to="/createpost">Create</router-link>
@@ -20,7 +20,7 @@ export default {
   name: 'App',
   data: function(){
     return {
-      user: this.$store.state.user
+      
     }
   },
   methods: {

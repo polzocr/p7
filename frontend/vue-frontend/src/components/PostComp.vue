@@ -86,8 +86,8 @@
         },
         methods: {
            emitModify(){
-               const name = document.getElementById('name').value;
-               const text = document.getElementById('text').value;
+                const name = document.getElementById('name').value;
+                const text = document.getElementById('text').value;
                 const data = {'image': this.file, 'name':name, 'text':text , 'id':this.$route.params.id}
                 this.$emit('Modifying', { data })
             },
