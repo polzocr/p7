@@ -35,15 +35,15 @@ export default new Vuex.Store({
     error: '',
     status: '',
     user: userLocal,
-    posts: {
-
-    },
+    posts: [{}],
     post : {
 
     },
     getUser: {
 
-    }
+    },
+    comments: {},
+    postIdComments: ''
   },
   getters: {
   },
@@ -162,6 +162,27 @@ export default new Vuex.Store({
         router.push('/login')
       })
       .catch(error => console.log(error));
+    },
+    CreateCommentRequest(context, data){
+      instance.post('/'+ data.PostId + '/comment', {
+        PostId: data.PostId,
+        text: data.text
+      })
+      .then(comment => {
+        console.log('Commentaire créé avec succès !');
+        console.log(comment);
+      })
+      .catch(error => console.log(error))
+    },
+    GetCommentsRequest(context, id){
+      instance.get('/'+ id + '/comments')
+      .then(comments => {
+        context.state.comments = comments;
+        console.log("voili")
+        console.log(context.state.comments.data)
+        console.log("voili")
+      })
+      .catch(error => console.log(error ,'Insuccès de lappel des commentaires'));
     }
   },
  

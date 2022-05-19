@@ -41,13 +41,30 @@
                 <p>Text: {{ text }}</p>
                 <img :src="image_url" alt="imagePost"/>
             </div>
+            <div>
+                <div>
+                    <input id="textComment" type="text"/>
+                </div>
+                <div>
+                    <button @click.prevent="emitComment">Commenter</button>
+                </div>
+            </div>
+            <p><CommentComp v-for="(comment, index) in this.$store.state.comments.data"
+            :key="index"
+            :userId="comment.userId"
+            :text="comment.text"
+            /></p>
         </div>
     </div>
 </template>
 
 <script>
+import CommentComp from '@/components/CommentComp.vue'
     export default {
         name: "PostComp",
+        components: {
+            CommentComp
+        },
         props: {
             modify: {
                 type: Boolean,
@@ -81,8 +98,12 @@
             return {
                 localName: this.name,
                 localText: this.text,
-                file: this.image_url
+                file: this.image_url,
+                idPost: ''
             }
+        },
+        beforeMount(){
+            this.$store.dispatch('GetCommentsRequest', this.id );
         },
         methods: {
            emitModify(){
@@ -98,6 +119,14 @@
             },
             emitDelete(){
                 this.$emit('Deleting', {id:this.$route.params.id})
+            },
+            emitComment(){
+                const textComment = document.getElementById('textComment').value
+                console.log(textComment)
+                this.$emit('Commenting', {
+                    PostId: this.id ,
+                    text: textComment
+                })
             },
         }
     }

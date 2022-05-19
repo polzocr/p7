@@ -69,7 +69,7 @@ export default {
             this.modify= false
         },
         UpdateUserRequest(){
-            this.$store.dispatch('UpdataUserRequest', {
+            this.$store.dispatch('UpdateUserRequest', {
                 lastName: this.lastName,
                 firstName: this.firstName,
                 email: this.email

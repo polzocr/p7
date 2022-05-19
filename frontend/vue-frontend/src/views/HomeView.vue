@@ -1,7 +1,8 @@
 <template>
     <div>
         
-       <PostComp v-for="(post, index) in this.$store.state.posts.slice().reverse()" 
+       <PostComp v-for="(post, index) in this.$store.state.posts.slice().reverse()"
+       @Commenting="CommentRequest" 
        :key="index"
        :id="post.id"
        :userId="post.userId" 
@@ -39,9 +40,12 @@ export default {
         
     },
     methods: {
-       CreateRequest(){
+        CreateRequest(){
            this.$store.dispatch()
-       }
+        },
+        CommentRequest(data){
+            this.$store.dispatch('CreateCommentRequest', data)
+        }
     },
 }
 </script>
