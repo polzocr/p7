@@ -1,10 +1,9 @@
 const db = require('../models');
 
 exports.createComment = (req,res,next) => {
-    console.log(req.body.text)
    db.Comment.create({
     UserId: req.auth.userId,
-    PostId: req.params.id,
+    PostId: req.body.PostId,
     text: req.body.text
    })
    .then(() => res.status(201).json({message:'Commentaire créé avec succès'}))
