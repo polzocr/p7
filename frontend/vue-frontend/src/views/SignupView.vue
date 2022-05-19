@@ -1,28 +1,24 @@
 <template>
-   <div class="signup">
-       <form action="" @submit.prevent="SignupRequest">
-            <div class="form">
-                <div class="">
-                    <label for="lastName">Nom</label>
-                    <input @input="testLastName()" v-model.trim="lastName" type="text" name="lastName">
+   <div class="composant">
+       <form action="" @submit.prevent="SignupRequest" class="composant__form">
+            <div class="form signup">
+                <div class="form__input">
+                    <input @input="testLastName()" v-model.trim="lastName" type="text" name="lastName" placeholder="Nom">
                     <p v-if="errorLastName">{{ errorLastName }}</p>
                 </div>
-                <div class="">
-                    <label for="firstName">Prénom</label>
-                    <input v-model.trim="firstName" type="text" name="firstName">
+                <div class="form__input">
+                    <input v-model.trim="firstName" type="text" name="firstName" placeholder="Prénom">
                 </div>
-                <div class="">
-                    <label for="email">Email</label>
-                    <input @input="testEmail()" v-model.trim="email" type="email" name="email">
+                <div class="form__input">
+                    <input @input="testEmail()" v-model.trim="email" type="email" name="email" placeholder="E-mail"> 
                     <p v-if="errorEmail">{{ errorEmail }}</p>
                 </div>
-                <div class="">
-                    <label for="password">Mot de passe</label>
-                    <input @input="testPassword()" v-model.trim="password" type="password" name="password">
+                <div class="form__input">
+                    <input @input="testPassword()" v-model.trim="password" type="password" name="password" placeholder="Mot de passe">
                     <p v-if="errorPassword">{{ errorPassword }}</p>
                 </div>
                 <div class="">
-                    <button type="submit" :disabled="isDisabled()">
+                    <button type="submit" :disabled="isDisabled()" class="btn form__button btn-signup">
                         <span v-if="$store.state.status == 'loading'">Création en cours...</span>
                         <span v-else>S'enregistrer</span>
                     </button>
@@ -30,6 +26,9 @@
                 </div>
             </div>
         </form>
+        <div class="logo">
+          <img src="../../public/images/black-logo.png" alt="logo-groupomania"/>
+        </div>
     </div>
 </template>
 

@@ -1,17 +1,27 @@
 <template>
-  <div id="app"> 
-    <div v-if="!connected()">
-      <router-link to="/login">Login</router-link> |
-      <router-link to="/signup">Signup</router-link>
+  <div id="app">
+    <div v-if="!connected()" class="login">
+      <div class="login__element">
+        <div class="login__element__nav">
+          <div class="navigation left" @click="background()">
+            <router-link to="/login" id="login--signup"><i class="fa fa-user-circle"></i>Se connecter</router-link> 
+          </div>
+          <div class="navigation">
+            <router-link to="/signup" id="login--signup"><i class="fa fa-list-alt" aria-hidden="true"></i>S'inscrire</router-link>
+          </div>
+        </div>
+        <router-view/>
+      </div>
     </div>
     <div v-else>
       <router-link :to="'/profile/' + this.$store.state.user.userId">Profil</router-link> |
       <router-link to="/">Accueil</router-link> |
       <router-link @click.native="deconnexion()" to="">Deconnexion</router-link> |
       <router-link to="/createpost">Create</router-link>
+      <router-view/>
     </div> 
     
-    <router-view/>
+    
   </div>
 </template>
 
@@ -24,6 +34,9 @@ export default {
     }
   },
   methods: {
+    background(){
+
+    },
     connected(){
       const user = JSON.parse(localStorage.getItem('user'));
       if(user && this.$store.state.user.userId == user.userId ){
@@ -51,9 +64,50 @@ export default {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
+  box-sizing: border-box; 
 }
 
+body{
+  background: url('../public/images/bc1.png') no-repeat;
+  background-size: 100% 100%;
+  object-fit: cover;
+
+}
+
+
+
+.btn{
+  background-color: $primary-color;
+  border: 2px solid $primary-color;
+  border-radius: 10px;
+  box-shadow: 0 0 40px 40px $primary-color inset, 0 0 0 0 primary-color;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1;
+  color: black;
+
+  cursor: pointer;
+  text-decoration: none;
+
+  display: flex;
+  align-self: center;
+  text-align: center;
+  text-transform: uppercase;
+
+  
+  
+  padding: 19px 45px;
+  
+  transition: all 150ms ease-in-out;
+  &:hover {
+    box-shadow: 0 0 10px 0 $primary-color inset, 0 0 10px 4px $primary-color;
+    background-color: transparent;
+  }
+}
+
+.focus{
+  background-color: $primary-color;
+}
 
 nav {
   padding: 30px;
