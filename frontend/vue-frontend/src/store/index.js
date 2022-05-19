@@ -171,6 +171,7 @@ export default new Vuex.Store({
       .then(comment => {
         console.log('Commentaire créé avec succès !');
         console.log(comment);
+        router.push('/login');
       })
       .catch(error => console.log(error))
     },

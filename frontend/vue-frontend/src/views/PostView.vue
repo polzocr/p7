@@ -6,6 +6,7 @@
         
         <div>
             <PostComp @Modifying="ModifyRequest" @Deleting="DeleteRequest"
+            @Commenting="CommentRequest" 
             :clickable="false"
             :modify="modify"
             :id="post.id"
@@ -59,6 +60,9 @@ import {mapState} from 'vuex'
             },
             DeleteRequest(id){
                 this.$store.dispatch('DeleteRequest', id)
+            },
+            CommentRequest(data){
+            this.$store.dispatch('CreateCommentRequest', data)
             },
         },
         beforeMount(){
