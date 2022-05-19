@@ -3,7 +3,7 @@
       <form action="" @submit.prevent="LoginRequest">
          <div class="">
             <div class="">
-                <label for="email">Email</label>
+                <label for="email" id="email">Email</label>
                 <input v-model.trim="email" type="email" name="email">
             </div>
             <div class="">
@@ -75,3 +75,11 @@ export default {
 
 }
 </script>
+
+<style lang="scss">
+
+#email{
+   color:$primary-color;
+}
+
+</style>
