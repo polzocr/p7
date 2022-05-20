@@ -1,6 +1,6 @@
 <template>
-    <div>
-        <div v-if="modify">
+    <section class="home">
+        <section v-if="modify">
             <div>
                 <form enctype="multipart/form-data">
                     <div>
@@ -25,37 +25,88 @@
                     </div>
                 </form>
             </div>
-        </div>
-        <div v-else>
-            <div v-if="clickable">
-                <router-link :to="'/' + id">
-                    <p>{{ id }}</p>
-                    <p>Titre: {{ name }} : {{ userId }}</p>
-                    <p>Text: {{ text }}</p>
-                    <img :src="image_url" alt="imagePost"/>
+        </section>
+        <section v-else>
+            <section v-if="clickable" class="homePost">
+                <div class="homePost__title">
+                        <p>name{{ id }}</p>
+                        <p>Titre: {{ name }}</p>
+                        <p>date : 12/01/2078</p>
+                    </div>
+                <router-link :to="'/' + id" class="homePost__link">  
+                    <div class="homePost__text">
+                        <p>Text: {{ text }} je vais devoir ecrire bcp de texteuuuuuuuuu  je vais devoir ecrire bcp de texteuuuuuuuuu 
+                        je vais devoir ecrire bcp de texteuuuuuuuuu je vais devoir ecrire bcp de texteuuuuuuuuu </p>
+                        <p>je vais devoir ecrire bcp de texteuuuuuuuuu je vais devoir ecrire bcp de texteuuuuuuuuu</p>
+                        <p>Text: {{ text }} je vais devoir ecrire bcp de texteuuuuuuuuu  je vais devoir ecrire bcp de texteuuuuuuuuu
+                        je vais devoir ecrire bcp de texteuuuuuuuuu je vais devoir ecrire bcp de texteuuuuuuuuu </p>
+                        <p>je vais devoir ecrire bcp de texteuuuuuuuuu je vais devoir ecrire bcp de texteuuuuuuuuu</p>
+                    </div>
+                    <div class="homePost__image">
+                        <img :src="image_url" alt="imagePost"/>
+                    </div>
                 </router-link>
+                <div class="homePost__footer">
+                        <div class="homePost__footer__comment">
+                            <i class="fa fa-comment" aria-hidden="true"></i>
+                        </div>
+                        <div class="homePost__footer__like">
+                            <i class="fa fa-thumbs-up" aria-hidden="true"></i>
+                            <i class="fa fa-thumbs-down" aria-hidden="true"></i> 
+                        </div>
+                    </div>
+                    <div class="homePost__comment">
+                        <div class="homePost__comment__input">
+                            <input id="textComment" type="text" placeholder="Votre commentaire"/>
+                        </div>
+                    <div>
+                        <button @click.prevent="emitComment" class="btn homePost__comment__button" >Commenter</button>
+                    </div>
             </div>
-            <div v-else>
-                <p>{{ id }}</p>
-                <p>Titre: {{ name }} : {{ userId }}</p>
-                <p>Text: {{ text }}</p>
-                <img :src="image_url" alt="imagePost"/>
+            </section>
+            <section v-else class="homePost">
+                <div class="homePost__title">
+                        <p>name{{ id }}</p>
+                        <p>Titre: {{ name }}</p>
+                        <p>date : 12/01/2078</p>
+                    </div>
+                    <div class="homePost__text">
+                        <p>Text: {{ text }} je vais devoir ecrire bcp de texteuuuuuuuuu  je vais devoir ecrire bcp de texteuuuuuuuuu 
+                        je vais devoir ecrire bcp de texteuuuuuuuuu je vais devoir ecrire bcp de texteuuuuuuuuu </p>
+                        <p>je vais devoir ecrire bcp de texteuuuuuuuuu je vais devoir ecrire bcp de texteuuuuuuuuu</p>
+                        <p>Text: {{ text }} je vais devoir ecrire bcp de texteuuuuuuuuu  je vais devoir ecrire bcp de texteuuuuuuuuu
+                        je vais devoir ecrire bcp de texteuuuuuuuuu je vais devoir ecrire bcp de texteuuuuuuuuu </p>
+                        <p>je vais devoir ecrire bcp de texteuuuuuuuuu je vais devoir ecrire bcp de texteuuuuuuuuu</p>
+                    </div>
+                    <div class="homePost__image">
+                        <img :src="image_url" alt="imagePost"/>
+                    </div>
+                <div class="homePost__footer">
+                        <div class="homePost__footer__comment">
+                            <i class="fa fa-comment" aria-hidden="true"></i>
+                        </div>
+                        <div class="homePost__footer__like">
+                            <i class="fa fa-thumbs-up" aria-hidden="true"></i>
+                            <i class="fa fa-thumbs-down" aria-hidden="true"></i> 
+                        </div>
+                    </div>
+                    <div class="homePost__comment">
+                        <div class="homePost__comment__input">
+                            <input id="textComment" type="text" placeholder="Votre commentaire"/>
+                        </div>
+                    <div>
+                        <button @click.prevent="emitComment" class="btn homePost__comment__button" >Commenter</button>
+                    </div>
             </div>
-            <div>
-                <div>
-                    <input id="textComment" type="text"/>
-                </div>
-                <div>
-                    <button @click.prevent="emitComment">Commenter</button>
-                </div>
-            </div>
+            </section>
+            
             <p><CommentComp v-for="(comment, index) in this.$store.state.comments.data"
             :key="index"
             :userId="comment.userId"
             :text="comment.text"
             /></p>
-        </div>
-    </div>
+        </section>
+    </section>
 </template>
 
 <script>
@@ -132,6 +183,96 @@ import CommentComp from '@/components/CommentComp.vue'
     }
 </script>
 
-<style scoped lang="scss">
+<style lang="scss">
+
+.home{
+    width: 70%;
+    margin:6% auto auto auto;
+}
+
+.homePost{
+    background-color: $secondary-color;
+    border-radius: 30px;
+    &__link{
+        text-decoration: none;
+        color: $tertiary-color;
+    }
+    &__title{
+        font-size: 22px;
+        padding: 0 2%;
+        display: flex;
+        justify-content: space-between;
+        position: relative;
+        &:after{
+            content:"";
+            position: absolute;
+            width: 96%;
+            bottom: 0;
+            left: 15px;
+            border-bottom: 1px solid $tertiary-color;
+        }        
+    }
+    &__text{
+        font-size: 20px;
+        padding: 1.5%;
+        text-align: left;
+    }
+    &__image{
+        height: 600px;
+        img{
+            width: 100%;
+            height: 100%;
+            border-bottom-left-radius: 5px;
+            border-bottom-right-radius:5px;
+            object-fit: fill;
+        }
+    }
+    &__footer{
+        padding:2.5%;
+        display: flex;
+        justify-content: space-between;
+        position: relative;
+        &:after{
+            content:"";
+            position: absolute;
+            width: 96%;
+            bottom: 0;
+            left: 15px;
+            border-bottom: 1px solid $tertiary-color;
+        }
+        i{
+            font-size: 35px;
+            color: $tertiary-color;
+        }
+        &__like{
+            width: 10%;
+            display: flex;
+            justify-content: space-between;
+        }
+    }
+    &__comment{
+        display: flex;
+        justify-content: space-between;
+        padding: 2%;
+        &__input{
+            width: 78%;
+            input{
+                padding-left: 1%;
+                font-size: 20px;
+                color: $tertiary-color;
+                border: none;
+                border-radius: 20px;
+                width: 100%;
+                height: 90%;
+                &:focus{
+                    outline: 2px solid $primary-color;
+                }
+            }
+        }
+        
+
+    }
+}
+
 
 </style>
