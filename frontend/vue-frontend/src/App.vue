@@ -89,6 +89,10 @@ body{
    display: flex;
    align-items: center;
    height: 1704px;
+   
+   @include mobiles{
+     height: 852px;
+   }
    @include tablets{
      height: 852px;
    }
@@ -104,6 +108,11 @@ body{
       height: 70%;
       @include tablets{
         height: 75%;
+        width: 70%;
+      }
+      @include mobiles{
+      height: 100%;
+      width: 100%;
       }
       
 
@@ -118,6 +127,9 @@ body{
          align-items: center;
         @include tablets{
           height: 12%;
+        }
+        @include mobiles{
+          height: 10%;
         }
       }
       

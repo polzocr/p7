@@ -88,6 +88,9 @@ export default {
    @include tablets{
           height: 88%;
    }
+   @include mobiles{
+            height: 90%;
+   }
    display: flex;
    flex-direction: column;
    justify-content: center;
@@ -97,6 +100,9 @@ export default {
       height: 100%;
       @include tablets{
          margin-top: 3%;
+      }
+      @include mobiles{
+         margin-top:25%;
       }
       display: flex;
       align-items: center;
@@ -120,8 +126,13 @@ export default {
    display: flex;
    flex-direction: column;
    gap: 40px;
+   @include mobiles{
+      height: 70%;
+      width: 90%;
+   }
    &.log{
       margin:12% auto auto auto;
+
    }
    &__input{
       input{
@@ -154,6 +165,9 @@ export default {
    }
    &.signup{
       gap:20px;
+      @include mobiles{
+         gap: 30px;
+      }
    }
 }
 
