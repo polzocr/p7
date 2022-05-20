@@ -4,7 +4,7 @@
       <div class="login__element">
         <div class="login__element__nav">
           <div class="navigation left" :class="{'active':loginPage()}">
-            <router-link to="/login" id="login--signup"  ><i class="fa fa-user-circle"></i>Se connecter</router-link> 
+            <router-link to="/login" id="login--signup"><i class="fa fa-user-circle"></i>Se connecter</router-link> 
           </div>
           <div class="navigation" :class="{'active':signupPage()}" >
             <router-link to="/signup" id="login--signup"><i class="fa fa-list-alt" aria-hidden="true"></i>S'inscrire</router-link>
@@ -14,10 +14,15 @@
       </div>
     </div>
     <div v-else>
-      <router-link :to="'/profile/' + this.$store.state.user.userId">Profil</router-link> |
-      <router-link to="/">Accueil</router-link> |
-      <router-link @click.native="deconnexion()" to="">Deconnexion</router-link> |
-      <router-link to="/createpost">Create</router-link>
+      <nav class="navbar">
+          <router-link to="/" class="navbar__icon"><img src="../public/images/icon-white.png" alt="icone-groupomania"/></router-link>
+          <router-link to="/createpost" class="navbar__create"><i class="fa fa-plus" aria-hidden="true"></i></router-link>
+          <div class="navbar__profil">
+            <router-link :to="'/profile/' + this.$store.state.user.userId" ><i class="fa fa-user" aria-hidden="true"></i></router-link>
+            <router-link @click.native="deconnexion()" to=""><i class="fa fa-arrow-right" aria-hidden="true"></i></router-link> 
+          </div>
+      </nav>
+      
       <router-view/>
     </div> 
     
@@ -208,16 +213,76 @@ body{
   background-color: $primary-color;
 }
 
-nav {
-  padding: 30px;
 
-  a {
-    font-weight: bold;
-    color: #2c3e50;
+nav{
+  
+}
 
-    &.router-link-exact-active {
-      color: #42b983;
+.navbar{
+  background-color:$tertiary-color;
+  position:fixed;
+  top: 0;
+  width: 100%;
+  height: 70px;;
+  overflow: hidden;
+  &__icon{
+    float:left;
+    padding-left: 1%;
+    width: 250px;
+    height: 100%;
+    &:hover{
+      transform: scale(1.1);
+      transition: all 400ms;
+    }
+
+  }
+  & img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  &__create{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    left: 47%;
+
+    height: 100%;
+    width: 75px;
+    
+    text-decoration: none;
+    &:hover{
+      transform: scale(1.1);
+      transition: all 400ms;
+    }
+    i{
+      color: $primary-color;
+      font-size: 45px;
+      width: 100%;
+      border: 2px solid $primary-color;
+      border-radius: 50%;
+      padding: 10%;
+    }
+    
+  }
+  &__profil{
+    float: right;
+    width: 200px;
+    height: 100%;
+    margin-top: 1%;
+    
+    i{
+      color: $primary-color;
+      font-size: 45px;
+      width: 50%;
+      &:hover{
+      transform: scale(1.2);
+      transition: all 400ms;
+    }
     }
   }
 }
+
+
 </style>

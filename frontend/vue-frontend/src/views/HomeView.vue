@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <main>
         
        <PostComp v-for="(post, index) in this.$store.state.posts.slice().reverse()"
        @Commenting="CommentRequest" 
@@ -10,7 +10,7 @@
        :text="post.text"
        :image_url="post.image_url"
        />
-    </div>
+    </main>
 </template>
 
 <script>
@@ -49,3 +49,9 @@ export default {
     },
 }
 </script>
+
+<style lang='scss'>
+main{
+    margin-top: 6%;
+}
+</style>
