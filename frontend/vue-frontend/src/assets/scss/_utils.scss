@@ -22,7 +22,12 @@ $color: #102241;
 }
 
 @mixin normal-desktop{
-    @media all and (min-width: 1440px) and (max-width:2000px){
+    @media all and (min-width: 1440px) and (max-width:1663px){
+        @content;
+    }
+}
+@mixin big-desktop{
+    @media all and(min-width: 1664px){
         @content;
     }
 }

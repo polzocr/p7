@@ -102,6 +102,9 @@ body{
    @include normal-desktop{
      height: 946px;
    }
+   @include big-desktop{
+     height: 1150px;
+   }
    &__element{
       width: 60%;
       margin: auto;
@@ -114,6 +117,9 @@ body{
       height: 100%;
       width: 100%;
       }
+      @include big-desktop{
+        margin-top:2%;
+      }
       
 
       display:flex;
@@ -121,7 +127,7 @@ body{
       justify-content: center;
 
       &__nav{
-         height: 15%;
+         height: 13%;
          display: flex;
          justify-content: space-evenly;
          align-items: center;

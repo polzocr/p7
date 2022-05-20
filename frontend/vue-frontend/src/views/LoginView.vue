@@ -84,7 +84,7 @@ export default {
 
 .composant{
    background-color: $secondary-color;
-   height: 85%;
+   height: 87%;
    @include tablets{
           height: 88%;
    }
@@ -117,6 +117,9 @@ export default {
       width: 80%;
       max-width: 80%;
       max-height: 100%;
+      @include normal-desktop{
+         height: 85%;
+      }
    }
 }
 .form{
