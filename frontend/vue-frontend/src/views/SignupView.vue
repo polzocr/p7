@@ -4,25 +4,25 @@
             <div class="form signup">
                 <div class="form__input">
                     <input @input="testLastName()" v-model.trim="lastName" type="text" name="lastName" placeholder="Nom">
-                    <p v-if="errorLastName">{{ errorLastName }}</p>
+                    <p class="error" v-if="errorLastName">{{ errorLastName }}</p>
                 </div>
                 <div class="form__input">
                     <input v-model.trim="firstName" type="text" name="firstName" placeholder="Prénom">
                 </div>
                 <div class="form__input">
                     <input @input="testEmail()" v-model.trim="email" type="email" name="email" placeholder="E-mail"> 
-                    <p v-if="errorEmail">{{ errorEmail }}</p>
+                    <p class="error" v-if="errorEmail">{{ errorEmail }}</p>
                 </div>
                 <div class="form__input">
                     <input @input="testPassword()" v-model.trim="password" type="password" name="password" placeholder="Mot de passe">
-                    <p v-if="errorPassword">{{ errorPassword }}</p>
+                    <p class="error" v-if="errorPassword">{{ errorPassword }}</p>
                 </div>
                 <div class="">
-                    <button type="submit" :disabled="isDisabled()" class="btn form__button btn-signup">
+                    <button type="submit" :disabled="isDisabled()" class="btn form__button btn-signup" :class="{'disabled':isDisabled()}">
                         <span v-if="$store.state.status == 'loading'">Création en cours...</span>
                         <span v-else>S'enregistrer</span>
                     </button>
-                    <p v-if="errorValidation"> {{ errorValidation }}</p>
+                    <p class="error" v-if="errorValidation"> {{ errorValidation }}</p>
                 </div>
             </div>
         </form>

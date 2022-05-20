@@ -1,7 +1,7 @@
 <template>
    <div class="composant">
       <form action="" @submit.prevent="LoginRequest" class="composant__form">
-         <div class="form">
+         <div class="form log">
             <div class="form__input">
                 <input v-model.trim="email" type="email" name="email" placeholder="E-mail">
             </div>
@@ -10,7 +10,7 @@
                 <p v-if="haveError()"> {{ $store.state.error }} </p>
             </div>
             <div class="">
-               <button @blur="cleanStore()" type="submit" :disabled="isDisabled()" class=" btn form__button">
+               <button @blur="cleanStore()" type="submit" :disabled="isDisabled()" class="btn form__button" :class="{'disabled':isDisabled()}">
                   <span v-if="$store.state.status == 'loading'">Connexion en cours...</span>
                   <span v-else>Se connecter</span>
                </button>
@@ -83,15 +83,18 @@ export default {
 
 
 .composant{
+   background-color: $secondary-color;
    height: 85%;
    display: flex;
    flex-direction: column;
    justify-content: center;
-   &__form{
-     height: 100%;
-     display: flex;
-     align-items: center;
-     justify-content: center;
+   border-bottom-left-radius: 20px;
+   border-bottom-right-radius: 20px;
+   &__form{  
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
    }
 }
 .logo{
@@ -107,90 +110,53 @@ export default {
 .form{
    height: 80%;
    width: 60%;
-   margin: 10% auto auto auto;
+   margin: 8% auto auto auto;
    display: flex;
    flex-direction: column;
    gap: 40px;
+   &.log{
+      margin:12% auto auto auto;
+   }
    &__input{
-      label{
-         font-size: 26px;
-      }
       input{
          width: 85%;
          height: 40px;
          font-size:20px;
-         border-radius:20px;
+         border-radius:50px;
          padding-left:15px;
          color: $primary-color;
+         border:none;
          &:focus{
-            color:black;
-            outline: 2px solid $primary-color;
-            border: none;
+             outline: 2px solid $primary-color;
          }
       }
    }
    &__button{
       margin: 5% auto 0 auto;
-      &.btn-signup{
+      &:focus{
+         outline:2px solid black !important;
+      }
+      &.disabled{
+         background-color:darken($primary-color, 5);
+         color:lighten($primary-color, 20);
+         &:hover{
+            box-shadow:none;
+            cursor: wait ;
+            
+         }
       }
    }
    &.signup{
-      gap:30px;
-      margin-top: 4%;
-   }
-}
-.navigation{
-   width: 100%;
-   height: 100%;
-   display: flex;
-   justify-content: center;
-   align-items: center;
-   &.left{
-      border-right: 2px solid black;
-   }
-   i{
-      margin-right:15px;
-      color: $primary-color;
-   };
-}
-
-#login--signup{
-   font-size: 30px;
-   color: black;
-   text-decoration: none;
-   &:hover{
-      font-size: 36px;
-      transition: all 450ms ease ;
-      cursor: pointer;
+      gap:20px;
    }
 }
 
-.login{
-   display: flex;
-   align-items: center;
-   height: 1000px;
-   &__element{
-      background-color: $secondary-color;
-      border: 2px solid black;
-      border-radius: 2%;
-      width: 60%;
-      margin: auto;
-      padding: 0 0 2% 0;
-      height: 70%;
+.error{
+   font-size: 14px;
+   margin: 2% auto 0 auto;
+}
 
-      display:flex;
-      flex-direction: column;
-      justify-content: center;
 
-      &__nav{
-         height: 15%;
-         display: flex;
-         justify-content: space-evenly;
-         align-items: center;
 
-         border-bottom: 2px solid black
-      }
-      
-   }
-};
+
 </style>

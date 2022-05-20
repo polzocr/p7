@@ -3,10 +3,10 @@
     <div v-if="!connected()" class="login">
       <div class="login__element">
         <div class="login__element__nav">
-          <div class="navigation left" @click="background()">
-            <router-link to="/login" id="login--signup"><i class="fa fa-user-circle"></i>Se connecter</router-link> 
+          <div class="navigation left" :class="{'active':loginPage()}">
+            <router-link to="/login" id="login--signup"  ><i class="fa fa-user-circle"></i>Se connecter</router-link> 
           </div>
-          <div class="navigation">
+          <div class="navigation" :class="{'active':signupPage()}" >
             <router-link to="/signup" id="login--signup"><i class="fa fa-list-alt" aria-hidden="true"></i>S'inscrire</router-link>
           </div>
         </div>
@@ -30,12 +30,22 @@ export default {
   name: 'App',
   data: function(){
     return {
-      
     }
   },
   methods: {
-    background(){
-
+    loginPage(){
+      if(this.$route.path == '/login'){
+        return true
+      } else {
+        return false
+      }  
+    },
+    signupPage(){
+      if(this.$route.path == '/signup'){
+        return true
+      } else {
+        return false
+      }  
     },
     connected(){
       const user = JSON.parse(localStorage.getItem('user'));
@@ -74,12 +84,67 @@ body{
 
 }
 
+.login{
+   display: flex;
+   align-items: center;
+   height: 1000px;
+   &__element{
+      width: 60%;
+      margin: auto;
+      height: 70%;
+      
+
+      display:flex;
+      flex-direction: column;
+      justify-content: center;
+
+      &__nav{
+         height: 15%;
+         display: flex;
+         justify-content: space-evenly;
+         align-items: center;
+      }
+      
+   }
+}
+
+#login--signup{
+   font-size: 30px;
+   color: black;
+   text-decoration: none;
+   &:hover{
+      font-size: 36px;
+      transition: all 450ms ease ;
+      cursor: pointer;
+   }
+}
+
+.navigation{
+   width: 100%;
+   height: 101%;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   background-color: #CAD2E7;
+   border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+   &.left{
+   }
+   i{
+      margin-right:15px;
+      color: $primary-color;
+   };
+}
+.active{
+  background-color: $secondary-color;
+}
+
 
 
 .btn{
   background-color: $primary-color;
   border: 2px solid $primary-color;
-  border-radius: 10px;
+  border-radius: 30px;
   box-shadow: 0 0 40px 40px $primary-color inset, 0 0 0 0 primary-color;
   font-size: 16px;
   font-weight: 700;
