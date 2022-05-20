@@ -1,7 +1,6 @@
 <template>
     <section class="home">
-        <section v-if="modify">
-            <div>
+        <section v-if="modify" id="test">
                 <form enctype="multipart/form-data">
                     <div>
                         <input id="name" :value="name" type="text" />
@@ -24,7 +23,7 @@
                         <button @click.prevent="emitDelete">Supprimer</button>
                     </div>
                 </form>
-            </div>
+                
         </section>
         <section v-else>
             <section v-if="clickable" class="homePost">
@@ -189,6 +188,8 @@ import CommentComp from '@/components/CommentComp.vue'
     width: 70%;
     margin:6% auto auto auto;
 }
+
+
 
 .homePost{
     background-color: $secondary-color;

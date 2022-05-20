@@ -1,10 +1,10 @@
 <template>
-    <div>
+    <main>
         <div v-if="ownPost()">
             <router-link  @click.native="modifier()" to="">Modifier l'élément</router-link>
         </div>
         
-        <div>
+        <div class="createPost">
             <PostComp @Modifying="ModifyRequest" @Deleting="DeleteRequest"
             @Commenting="CommentRequest" 
             :clickable="false"
@@ -17,7 +17,7 @@
             />
         </div>
         
-    </div>
+    </main>
 </template>
 
 <script>
@@ -71,6 +71,7 @@ import {mapState} from 'vuex'
     }
 </script>
 
-<style scoped lang="scss">
+<style lang="scss">
+
 
 </style>

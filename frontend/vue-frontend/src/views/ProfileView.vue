@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <section class="profil">
        <div v-if="modify">
             <div>
                 <p> {{ lastName }}</p>
@@ -33,7 +33,7 @@
             
             
         </div>
-    </div>
+    </section>
 </template>
 
 <script>
@@ -82,3 +82,10 @@ export default {
     },
 }
 </script>
+
+<style lang="scss">
+.profil{
+    margin-top:10%
+}
+
+</style>
