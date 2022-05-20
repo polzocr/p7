@@ -85,6 +85,9 @@ export default {
 .composant{
    background-color: $secondary-color;
    height: 85%;
+   @include tablets{
+          height: 88%;
+   }
    display: flex;
    flex-direction: column;
    justify-content: center;
@@ -92,6 +95,9 @@ export default {
    border-bottom-right-radius: 20px;
    &__form{  
       height: 100%;
+      @include tablets{
+         margin-top: 3%;
+      }
       display: flex;
       align-items: center;
       justify-content: center;

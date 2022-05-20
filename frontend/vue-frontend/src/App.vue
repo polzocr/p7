@@ -81,17 +81,30 @@ body{
   background: url('../public/images/bc1.png') no-repeat;
   background-size: 100% 100%;
   object-fit: cover;
+  margin: 0;
 
 }
 
 .login{
    display: flex;
    align-items: center;
-   height: 1000px;
+   height: 1704px;
+   @include tablets{
+     height: 852px;
+   }
+   @include small-desktop{
+     height: 946px;
+   }
+   @include normal-desktop{
+     height: 946px;
+   }
    &__element{
       width: 60%;
       margin: auto;
       height: 70%;
+      @include tablets{
+        height: 75%;
+      }
       
 
       display:flex;
@@ -103,6 +116,9 @@ body{
          display: flex;
          justify-content: space-evenly;
          align-items: center;
+        @include tablets{
+          height: 12%;
+        }
       }
       
    }
