@@ -45,6 +45,20 @@ exports.getOneUser = (req,res,next) => {
     .catch(error => res.status(404).json({error:'Utilisateur non trouvé'}));
 };
 
+exports.updateUser = (req, res, next) => {
+    const userObject = {...req.body};
+    db.User.findOne({where: {id:req.params.id} })
+    .then(user => {
+        if(user.id !== req.auth.userId){
+            res.status(401).json({error: "Requête non authorisée"})
+        }
+        db.User.update({ ...userObject}, {where: {id:req.params.id} })
+        .then(() => res.status(200).json({message: 'Utilisateur modifié avec succès'}))
+        .catch(error => res.status(400).json({error: 'Modification echoué'}));
+    })
+    .catch(error => res.status(404).json({error: 'Utilisateur non trouvé ?'}));
+}
+
 exports.deleteUser = (req,res,next) => {
     db.User.findOne({where: {id:req.params.id} })
     .then(user => {
