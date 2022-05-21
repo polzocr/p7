@@ -5,9 +5,11 @@ const axios = require('axios').default;
 
 Vue.use(Vuex)
 
+
 const instance = axios.create({
   baseURL: 'http://localhost:3000/',
 });
+
 
  const instancePut = axios.create({
    baseURL: 'http://localhost:3000/',
@@ -21,6 +23,8 @@ const userInit = {
 };
 
 let userLocal = localStorage.getItem('user');
+
+
 if(!userLocal){
   userLocal = userInit;
 } else {
@@ -40,7 +44,7 @@ export default new Vuex.Store({
 
     },
     comments: {},
-    postIdComments: ''
+    postIdComments: '',
   },
   getters: {
   },
@@ -140,9 +144,6 @@ export default new Vuex.Store({
       })
       .catch(error => console.log(error))
     },
-    UpdateUserRequest(){
-
-    },
     DeleteUserRequest(context, id){
       instance.delete('/user/' + id)
       .then(() => {
@@ -178,3 +179,4 @@ export default new Vuex.Store({
   modules: {
   }
 })
+

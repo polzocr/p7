@@ -53,6 +53,7 @@ export default {
     beforeCreate(){
         const user = JSON.parse(localStorage.getItem('user'));
         const instance = axios.create({baseURL: 'http://localhost:3000/',});
+        instance.defaults.headers.common['Authorization'] = 'Bearer ' + user.token;
         if(user && this.$store.state.user.userId == user.userId && this.$route.params.id == user.userId){
                 instance.get('/user/' + this.$store.state.user.userId)
                 .then(user => {
@@ -74,11 +75,25 @@ export default {
             this.modify= false
         },
         UpdateUserRequest(){
-            this.$store.dispatch('UpdateUserRequest', {
+            const user = JSON.parse(localStorage.getItem('user'));
+            const instance = axios.create({baseURL: 'http://localhost:3000/',});
+            instance.defaults.headers.common['Authorization'] = 'Bearer ' + user.token;
+            const id = this.$store.state.user.userId;
+            instance.put('/user/' + id, {
                 lastName: this.lastName,
                 firstName: this.firstName,
                 email: this.email
             })
+            .then(user => {
+                console.log(user.data);
+                this.$router.push('/')
+                .then(() => {
+                    this.$router.push('/profile/' + id)
+                })
+                .catch(error => console.log({error}))
+                
+            })
+            .catch(error => console.log(error));
         },
         DeleteUserRequest(){
             const id = this.$route.params.id;
