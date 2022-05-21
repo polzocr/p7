@@ -39,9 +39,6 @@ export default new Vuex.Store({
     post : {
 
     },
-    getUser: {
-
-    },
     comments: {},
     postIdComments: ''
   },
@@ -143,13 +140,6 @@ export default new Vuex.Store({
       })
       .catch(error => console.log(error))
     },
-    GetUserRequest(context, id){
-      instance.get('/user/' + id )
-      .then(user => {
-        context.state.getUser = user.data;
-      })
-      .catch(error => console.log(error));
-    },
     UpdateUserRequest(){
 
     },
@@ -179,9 +169,7 @@ export default new Vuex.Store({
       instance.get('/'+ id + '/comments')
       .then(comments => {
         context.state.comments = comments;
-        console.log("voili")
         console.log(context.state.comments.data)
-        console.log("voili")
       })
       .catch(error => console.log(error ,'Insuccès de lappel des commentaires'));
     }

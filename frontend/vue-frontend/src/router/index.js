@@ -28,7 +28,8 @@ Vue.use(VueRouter)
   {
     path: '/profile/:id',
     name: 'ProfileView',
-    component: ProfileView
+    component: ProfileView,
+    props: true
   },
   {
     path: '/createpost',

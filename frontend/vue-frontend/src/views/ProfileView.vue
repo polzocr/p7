@@ -38,26 +38,31 @@
 
 <script>
 
+import axios from 'axios'
 
 export default {
     name:'ProfileView',
     data: function(){
         return {
             modify: true,
-            lastName: this.$store.state.getUser.lastName,
-            firstName: this.$store.state.getUser.firstName,
-            email: this.$store.state.getUser.email,
+            lastName: '',
+            firstName: '',
+            email: '',
         }
     },
     beforeCreate(){
         const user = JSON.parse(localStorage.getItem('user'));
+        const instance = axios.create({baseURL: 'http://localhost:3000/',});
         if(user && this.$store.state.user.userId == user.userId && this.$route.params.id == user.userId){
-            this.$store.dispatch('GetUserRequest', this.$route.params.id);
+                instance.get('/user/' + this.$store.state.user.userId)
+                .then(user => {
+                this.lastName = user.data.lastName;
+                this.firstName = user.data.firstName;
+                this.email = user.data.email;
+                })
+                .catch(error => console.log(error));
         } else {
             console.log('Unauthorized')
-            console.log(this.$store.state.user.userId)
-            console.log(user.userId)
-            console.log(this.$route.params.id)
             this.$router.push('/');
         }
     },
