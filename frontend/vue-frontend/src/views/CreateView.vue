@@ -55,7 +55,6 @@ export default {
     height: 856px;
     margin-top: 10%;
     &__form{
-        border: 1px solid black;
         background-color: $secondary-color;
         border-radius: 20px;
         padding: 2%;

@@ -1,17 +1,40 @@
 <template>
-    <section class="profil">
-       <div v-if="modify">
-            <div>
-                <p> {{ lastName }}</p>
-                <p> {{ firstName }}</p>
-                <p> {{ email }}</p>
+    <section class="profilePage">
+       <section class="profile" v-if="modify">
+            <div class="profile__perso">
+                <div class="profile__perso__icon">
+                    <i class="fa fa-user-circle" aria-hidden="true"></i>
+                </div>
+                <div class="infos">
+                    <div class="infos__name">
+                        <p> {{ lastName }}</p>
+                        <p> {{ firstName }}</p>
+                    </div>
+                    <div class="infos__email">
+                        <p> {{ email }}</p>
+                    </div>
+                    <div class="infos__button">
+                        <button class="btn" @click.prevent="ModifyUser()">Modifier le profil</button>
+                    </div>
+                </div>
             </div>
-            <div>
-                <button @click.prevent="ModifyUser()">Modifier le profil</button>
-            </div> 
-        </div>
-        <div v-else>
-            <div>
+            <div class="profile__content">
+                <div class="profile__content__posts">
+                    <i class="fa fa-file-image-o" aria-hidden="true"></i>
+                    <p>25</p>
+                </div>
+                <div class="profile_content__comments">
+                    <i class="fa fa-comment" aria-hidden="true"></i>
+                    <p>25</p>
+                </div>
+                <div class="profile__content__likes">
+                    <i class="fa fa-heart" aria-hidden="true"></i>
+                    <p>25</p>
+                </div>
+            </div>
+        </section>
+        <section v-else>
+            <div class="profile">
                 <div>
                 <input type="text" v-model="lastName">
                 </div>
@@ -32,7 +55,7 @@
             </div>
             
             
-        </div>
+        </section>
     </section>
 </template>
 
@@ -104,8 +127,62 @@ export default {
 </script>
 
 <style lang="scss">
-.profil{
-    margin-top:10%
+.profilePage{
+    height: 856px;
+    margin-top:12%
+}
+
+.profile{
+    background-color:$secondary-color;
+    border-radius: 20px;
+    padding: 2%;
+    width: 70%;
+    height: 70%;
+    margin: auto;
+    display: flex;
+    &__perso{
+        width: 50%;
+        position: relative;
+        &__icon{
+            height: 65%;
+            i{
+                //font-size: 390px;
+                font-size: 2420%;
+                color: $primary-color;
+            }
+        }
+    }
+    &__content{
+        border-left: 1px solid black;
+        width: 50%;
+    }
+}
+
+.infos{
+    padding-left: 3%;
+    height: 35%;
+    &__name{
+        display: flex;
+        justify-content: start;
+        gap: 20px;
+        font-size: 30px;
+        color: $tertiary-color;
+    }
+    &__email{
+        font-size: 20px;
+        color: $tertiary-color; 
+        text-align: start;
+        margin-top: -5%;
+    }
+    &__button{
+        width: 45%;
+        position: absolute;
+        bottom: 10px;
+        left: 10px;
+        button{
+            
+        }
+    }
 }
 
 </style>
