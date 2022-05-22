@@ -20,39 +20,61 @@
             </div>
             <div class="profile__content">
                 <div class="profile__content__posts">
-                    <i class="fa fa-file-image-o" aria-hidden="true"></i>
-                    <p>25</p>
+                    <i class="fa fa-file-image" aria-hidden="true"></i>
+                    <p>25 Posts</p>
                 </div>
-                <div class="profile_content__comments">
+                <div id = "comments">
                     <i class="fa fa-comment" aria-hidden="true"></i>
-                    <p>25</p>
+                    <p>25 Commentaires</p>
                 </div>
                 <div class="profile__content__likes">
                     <i class="fa fa-heart" aria-hidden="true"></i>
-                    <p>25</p>
+                    <p>25 Likes</p>
                 </div>
             </div>
         </section>
-        <section v-else>
-            <div class="profile">
-                <div>
-                <input type="text" v-model="lastName">
+        <section v-else class="profile">
+            <div class="profile__perso">
+                <div class="profile__perso__icon">
+                    <i class="fa fa-user-circle" aria-hidden="true"></i>
                 </div>
-                <div>
-                <input type="text" v-model="firstName">
-                </div>
-                <div>
-                <input type="text" v-model="email">
+                <div class="modify">
+                    <div class="modify__name">
+                        <input type="text" v-model="lastName">
+                        <input type="text" v-model="firstName">
+                    </div>
+                    <div class="modify__email">
+                        <input type="text" v-model="email">
+                    </div>
+                    <div class="modify__button">
+                        <div class="modify__button__1">
+                            <button @click.prevent="UpdateUserRequest()" class="btn">Valider</button>
+                        </div>
+                        <div class="modify__button__2">
+                            <button @click.prevent="DeleteUserRequest()" class="btn">Supprimer</button>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div>
-                <div>
-                    <button @click.prevent="UpdateUserRequest()">Modifier le profil</button>
+
+
+
+            <div class="profile__content">
+                <div class="profile__content__posts">
+                    <i class="fa fa-file-image" aria-hidden="true"></i>
+                    <p>25 Posts</p>
                 </div>
-                <div>
-                    <button @click.prevent="DeleteUserRequest()">Supprimer le compte</button>
+                <div id = "comments">
+                    <i class="fa fa-comment" aria-hidden="true"></i>
+                    <p>25 Commentaires</p>
+                </div>
+                <div class="profile__content__likes">
+                    <i class="fa fa-heart" aria-hidden="true"></i>
+                    <p>25 Likes</p>
                 </div>
             </div>
+
+            
             
             
         </section>
@@ -129,7 +151,8 @@ export default {
 <style lang="scss">
 .profilePage{
     height: 856px;
-    margin-top:12%
+    margin-top:12%;
+    
 }
 
 .profile{
@@ -142,45 +165,117 @@ export default {
     display: flex;
     &__perso{
         width: 50%;
-        position: relative;
         &__icon{
             height: 65%;
             i{
                 //font-size: 390px;
                 font-size: 2420%;
-                color: $primary-color;
+                //color: $primary-color;
+                color: $tertiary-color;
             }
         }
     }
     &__content{
         border-left: 1px solid black;
         width: 50%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        gap: 70px;
+        i{
+                font-size: 70px;
+                color: $primary-color;
+        }
+        p{
+            font-size: 25px;
+            color: $tertiary-color;
+        }
+        &__posts{
+            display: flex;
+            margin-left:25%;
+            gap: 30px;
+        }
+        &__likes{
+            display: flex;
+            margin-left:25%;
+            gap: 30px;
+        }
     }
 }
 
+#comments {
+    display: flex;
+    margin-left:25%;
+    gap: 30px;
+}
+
 .infos{
-    padding-left: 3%;
     height: 35%;
     &__name{
         display: flex;
         justify-content: start;
         gap: 20px;
         font-size: 30px;
+        height: 30%;
         color: $tertiary-color;
     }
     &__email{
         font-size: 20px;
+        height: 30%;
         color: $tertiary-color; 
         text-align: start;
-        margin-top: -5%;
     }
     &__button{
         width: 45%;
-        position: absolute;
-        bottom: 10px;
-        left: 10px;
+        height: 40%;
+        margin-top: 2%;
+        padding-left: 0;
         button{
-            
+            padding: 12px 45px;
+        }
+    }
+}
+
+.modify{
+    height: 40%;
+    input{
+            height: 60%;
+            width: 43%;
+            font-size: 20px;
+            color: $tertiary-color;  
+            border: none;
+            border-radius: 20px;   
+            padding-left: 2%; 
+            &:focus{
+                    outline: 2px solid $primary-color;
+            }      
+        }
+    &__name{
+        height: 30%;
+        display: flex;
+        justify-content:start;
+        align-items: center;
+        gap: 4%;
+        box-sizing: border-box;
+    }
+    &__email{
+        height: 30%;
+        display: flex;
+        align-items: center;
+        input{
+            width: 92%;
+        }
+    }
+    &__button{
+        width: 100%;
+        height: 40%;
+        padding-right: 5%;
+        box-sizing: border-box;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        button{
+            padding: 12px 45px;
         }
     }
 }

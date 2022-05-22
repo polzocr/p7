@@ -1,15 +1,16 @@
 <template>
     <section class="createPost">
         <form action="" @submit.prevent="PostRequest" class="createPost__form">
-            <div class="createPost__form__post">
+            <div class="createPost__form__title">
                 <input v-model="name" type="text" placeholder="Titre">
             </div>
-            <div class="createPost__form__post">
-                <input v-model="text" type="text" placeholder="Text">
-                <!-- <textarea rows="5" cols="60" name="text" placeholder="Enter text"></textarea> -->
+            <div class="createPost__form__text">
+                <!-- <input v-model="text" type="text" placeholder="Text"> -->
+                <textarea v-model="text" rows="5" cols="60"  placeholder="Votre texte"></textarea>
             </div>
             <div class="createPost__form__file">
-                <input @change="changeFile()" type="file" accept="image/*" ref="fileInput" name="image">
+                <label class="btn upload" for="upload">Choisir un fichier</label>
+                <input @change="changeFile()" id="upload" type="file" accept="image/*" ref="fileInput" name="image">
             </div>  
             <div class="createPost__form__button">
                 <button class="btn" type="submit">Créer votre post</button>
@@ -55,15 +56,17 @@ export default {
     height: 856px;
     margin-top: 10%;
     &__form{
-        background-color: $secondary-color;
+       background-color: $secondary-color;
         border-radius: 20px;
         padding: 2%;
         width: 40%;
-        height: 70%;
+        height: 50%;
         margin: auto;
-        &__post{
-            border: 1px solid black;
-            height: 7%;
+        display: flex;
+        flex-direction: column;
+        gap: 7%;
+        &__title{
+            height: 10%;
             input{
                 padding-left: 2%;
                 font-size: 20px;
@@ -71,7 +74,7 @@ export default {
                 border: none;
                 border-radius: 20px;
                 width: 60%;
-                height: 85%;
+                height: 90%;
                 //word-break: break-word;
                 &:focus{
                     outline: 2px solid $primary-color;
@@ -79,15 +82,57 @@ export default {
             }
         }
         &__text{
-            border: 1px solid black;
+            display: flex;
+            align-items: center;
+            height: 45%;
+            textarea{
+                font-family: Avenir, Helvetica, Arial, sans-serif;
+                padding: 2%;
+                font-size: 20px;
+                color: $tertiary-color;
+                border: none;
+                border-radius: 20px;
+                width: 100%;
+                height: 80%;
+                &:focus{
+                    outline: 2px solid $primary-color;
+                }
+            }
         }
         &__file{
-            border: 1px solid black;
+            display: flex;
+            justify-content: start;
+            position: relative;
+            z-index: 1;
+            input[type="file" i]{
+                font-size: 20px;
+                position: absolute;
+                z-index: -1;
+                left: 21px;
+                top: 5px;
+                
+                
+            }
         }
         &__button{
-            border: 1px solid black;
+            height: 30%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
-    }
-    
+    }    
 }
+
+.upload {
+    background-color: $tertiary-color;
+    color: $primary-color;
+    border: none;
+    padding: 12px 12px;
+    border-radius: 5px;
+    &:hover{
+        box-shadow: 0 0 10px 0 $primary-color inset, 0 0 10px 4px $primary-color;
+        background-color: $tertiary-color;
+    }
+}
+
 </style>
