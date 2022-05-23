@@ -145,15 +145,11 @@ import axios from 'axios'
             instance.get('/'+ this.id + '/comments')
             .then(comments => {
                 comments.data.forEach(element => {
-                    console.log('======================')
-                    console.log("text: ", element.text + '' + element.PostId)
                     this.comments.push({
                         userId: element.UserId,
                         text: element.text
                     })
-                    console.log("show: " + this.show)
                 })
-                console.log(this.comments.text)
             }).then(() => {
                 this.show = !this.show
             })
