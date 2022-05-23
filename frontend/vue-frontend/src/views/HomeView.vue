@@ -3,6 +3,8 @@
         
        <PostComp v-for="(post, index) in this.$store.state.posts.slice().reverse()"
        @Commenting="CommentRequest" 
+       @modify="getToPost"
+       :modify="modify"
        :key="index"
        :id="post.id"
        :userId="post.userId" 
@@ -25,6 +27,7 @@ export default {
     data: function(){
         return {
             idLocal: this.$route.params.id,
+            modify: false,
         }
     },
     beforeCreate(){
@@ -45,7 +48,10 @@ export default {
         },
         CommentRequest(data){
             this.$store.dispatch('CreateCommentRequest', data)
-        }
+        },
+        getToPost(data){
+            this.$router.push('/' + data.postId)                
+        },
     },
 }
 </script>

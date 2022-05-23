@@ -225,6 +225,7 @@ nav{
   width: 100%;
   height: 70px;;
   overflow: hidden;
+  z-index: 1;
   &__icon{
     float:left;
     padding-left: 1%;

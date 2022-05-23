@@ -1,8 +1,8 @@
 <template>
     <main>
-        <div v-if="ownPost()">
+        <!-- <div v-if="ownPost()">
             <router-link  @click.native="modifier()" to="">Modifier l'élément</router-link>
-        </div>
+        </div> -->
         
         <div class="createPost">
             <PostComp @Modifying="ModifyRequest" @Deleting="DeleteRequest"
@@ -24,6 +24,7 @@
 
 import PostComp from '@/components/PostComp.vue'
 import {mapState} from 'vuex'
+import axios from 'axios'
 
     export default {
         name:'PostView',
@@ -66,8 +67,28 @@ import {mapState} from 'vuex'
             },
         },
         beforeMount(){
-            this.$store.dispatch('GetPostRequest', this.$route.params.id);
-        }
+            //this.$store.dispatch('GetPostRequest', this.$route.params.id)
+            const user =  JSON.parse(localStorage.getItem('user'))
+            const instance = axios.create({baseURL: 'http://localhost:3000/',});
+            instance.defaults.headers.common['Authorization'] = 'Bearer ' + user.token;
+            instance.get('/' + this.$route.params.id)
+            .then(post => {
+                this.$store.state.post = post.data;
+                if(post.data.userId !== user.userId){
+                    this.$router.push('/login')
+                }
+            })
+            .catch(error => console.log(error))
+            },
+        // async mounted(){
+        //     const postId = await this.$store.state.post.userId
+        //     const user =  JSON.parse(localStorage.getItem('user'))
+        //     if(user.userId !== postId){
+        //         console.log(user.userId)
+        //         console.log(postId)
+        //         this.$router.push('/login')
+        //     }
+        // }
     }
 </script>
 

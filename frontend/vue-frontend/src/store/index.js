@@ -132,7 +132,7 @@ export default new Vuex.Store({
     },
     DeleteRequest(context, id){
       instance.delete('/' + id.id)
-      .then(() => router.push('/'))
+      .then(() => router.push('/login'))
       .catch(error => console.log(error))
     },
     PostPostRequest(context, datas){
