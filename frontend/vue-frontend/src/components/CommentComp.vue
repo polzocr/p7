@@ -1,9 +1,8 @@
 <template>
     <div>
         <div> 
-            <p>Voici le commentaire : </p>
-            <p>UserId : {{ userId }}</p>
-            <p> Text: {{ text }} </p>
+            <p>{{ userId }}</p>
+            <p>{{ text }} </p>
         </div>
 
     </div>

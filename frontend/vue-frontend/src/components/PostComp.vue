@@ -25,58 +25,59 @@
                 </form>                
         </section>
         <section v-else>
-            <section v-if="clickable" class="homePost">
+            <section class="homePost">
                 <div class="homePost__title">
-                        <p>name{{ id }}</p>
-                        <p>Titre: {{ name }}</p>
-                        <p id="delete__flexbox">
-                            date : 12/01/2078 
-                            <button v-if="ownPost()" @click.prevent="GetToPost()" class="btn delete"><i class="fa fa-pen" aria-hidden="true"></i></button>
-                            <button v-if="ownPost()" @click.prevent="DeleteRequest()" class="btn delete"><i class="fa fa-trash" aria-hidden="true"></i></button>
-                        </p>
-                    </div>
-                    <div class="homePost__text">
-                        <p>Text: {{ text }} je vais devoir ecrire bcp de texteuuuuuuuuu  je vais devoir ecrire bcp de texteuuuuuuuuu 
-                        je vais devoir ecrire bcp de texteuuuuuuuuu je vais devoir ecrire bcp de texteuuuuuuuuu </p>
-                        <p>je vais devoir ecrire bcp de texteuuuuuuuuu je vais devoir ecrire bcp de texteuuuuuuuuu</p>
-                        <p>Text: {{ text }} je vais devoir ecrire bcp de texteuuuuuuuuu  je vais devoir ecrire bcp de texteuuuuuuuuu
-                        je vais devoir ecrire bcp de texteuuuuuuuuu je vais devoir ecrire bcp de texteuuuuuuuuu </p>
-                        <p>je vais devoir ecrire bcp de texteuuuuuuuuu je vais devoir ecrire bcp de texteuuuuuuuuu</p>
-                    </div>
-                    <div class="homePost__image">
-                        <img :src="image_url" alt="imagePost"/>
-                    </div>
+                    <p>name{{ id }}</p>
+                    <p>Titre: {{ name }}</p>
+                    <p id="delete__flexbox">
+                        date : 12/01/2078 
+                        <button v-if="ownPost()" @click.prevent="GetToPost()" class="btn delete"><i class="fa fa-pen" aria-hidden="true"></i></button>
+                        <button v-if="ownPost()" @click.prevent="DeleteRequest()" class="btn delete"><i class="fa fa-trash" aria-hidden="true"></i></button>
+                    </p>
+                </div>
+                <div class="homePost__text">
+                    <p>Text: {{ text }} je vais devoir ecrire bcp de texteuuuuuuuuu  je vais devoir ecrire bcp de texteuuuuuuuuu 
+                    je vais devoir ecrire bcp de texteuuuuuuuuu je vais devoir ecrire bcp de texteuuuuuuuuu </p>
+                    <p>je vais devoir ecrire bcp de texteuuuuuuuuu je vais devoir ecrire bcp de texteuuuuuuuuu</p>
+                    <p>Text: {{ text }} je vais devoir ecrire bcp de texteuuuuuuuuu  je vais devoir ecrire bcp de texteuuuuuuuuu
+                    je vais devoir ecrire bcp de texteuuuuuuuuu je vais devoir ecrire bcp de texteuuuuuuuuu </p>
+                    <p>je vais devoir ecrire bcp de texteuuuuuuuuu je vais devoir ecrire bcp de texteuuuuuuuuu</p>
+                </div>
+                <div class="homePost__image">
+                    <img :src="image_url" alt="imagePost"/>
+                </div>
                 <div class="homePost__footer">
                         <div class="homePost__footer__comment">
-                            <i class="fa fa-comment" aria-hidden="true"></i>
+                            <i @click="showComments()" class="fa fa-comment" aria-hidden="true"></i>
                         </div>
                         <div class="homePost__footer__like">
                             <i class="fa fa-thumbs-up" aria-hidden="true"></i>
                             <i class="fa fa-thumbs-down" aria-hidden="true"></i> 
                         </div>
+                </div>
+                <div class="homePost__comment">
+                    <div class="homePost__comment__input">
+                        <input v-model="textComment" id="textComment" type="text" placeholder="Votre commentaire"/>
                     </div>
-                    <div class="homePost__comment">
-                        <div class="homePost__comment__input">
-                            <input id="textComment" type="text" placeholder="Votre commentaire"/>
-                        </div>
                     <div>
-                        <button @click.prevent="emitComment" class="btn homePost__comment__button" >Commenter</button>
+                        <button @click.prevent="CommentRequest()" class="btn homePost__comment__button" >Commenter</button>
                     </div>
-            </div>
+                </div>
+                
+                <p v-if="show"><CommentComp v-for="(comment, index) in this.comments"
+                :key="index"
+                :userId="comment.userId"
+                :text="comment.text"
+                /></p>
             </section>
-            
-            
-            <p><CommentComp v-for="(comment, index) in this.$store.state.comments.data"
-            :key="index"
-            :userId="comment.userId"
-            :text="comment.text"
-            /></p>
         </section>
     </section>
 </template>
 
 <script>
 import CommentComp from '@/components/CommentComp.vue'
+import axios from 'axios'
+
     export default {
         name: "PostComp",
         components: {
@@ -117,16 +118,49 @@ import CommentComp from '@/components/CommentComp.vue'
                 localText: this.text,
                 file: this.image_url,
                 idPost: '',
+                show: false,
+                textComment: '',
+                comments: [{}]
             }
         },
         beforeMount(){
             //this.$store.dispatch('GetCommentsRequest', this.id );
-             
-        },
-        mounted(){
             
         },
         methods: {
+            CommentRequest(){
+                const textComment = document.getElementById('textComment').value
+                console.log('Voicie le text: ' + textComment)
+                console.log(this.textComment)
+                this.$store.dispatch('CreateCommentRequest', {
+                    PostId: this.id ,
+                    text: this.textComment
+                })
+            },
+            showComments(){
+            this.comments = [{}];
+            const user =  JSON.parse(localStorage.getItem('user'))
+            const instance = axios.create({baseURL: 'http://localhost:3000/',});
+            instance.defaults.headers.common['Authorization'] = 'Bearer ' + user.token;
+            instance.get('/'+ this.id + '/comments')
+            .then(comments => {
+                comments.data.forEach(element => {
+                    console.log('======================')
+                    console.log("text: ", element.text + '' + element.PostId)
+                    this.comments.push({
+                        userId: element.UserId,
+                        text: element.text
+                    })
+                    console.log("show: " + this.show)
+                })
+                console.log(this.comments.text)
+            }).then(() => {
+                this.show = !this.show
+            })
+            .catch(error => console.log(error))
+            .catch(error => console.log(error ,'Insuccès de lappel des commentaires'));
+            
+            },
             ownPost(){
                 const user = JSON.parse(localStorage.getItem('user'))
                 if(this.userId == user.userId){
@@ -138,9 +172,9 @@ import CommentComp from '@/components/CommentComp.vue'
             modifyComp(){
                 const paramsId =  this.$route.params.id;
                 const id = this.id;
-                console.log('--------------------')
-                console.log("paramsId: " + paramsId);
-                console.log("id: "+id)
+                // console.log('--------------------')
+                // console.log("paramsId: " + paramsId);
+                // console.log("id: "+id)
                 if(paramsId == id && this.ownPost()) {
                     console.log("true")
                     return true
@@ -167,7 +201,6 @@ import CommentComp from '@/components/CommentComp.vue'
             },
             emitComment(){
                 const textComment = document.getElementById('textComment').value
-                console.log(textComment)
                 this.$emit('Commenting', {
                     PostId: this.id ,
                     text: textComment
@@ -296,6 +329,14 @@ import CommentComp from '@/components/CommentComp.vue'
 #delete__flexbox{
     display: flex;
     gap: 10px;
+}
+.fa-comment{
+    &:hover{
+        cursor: pointer;
+        color: $primary-color;
+        transform: scale(1.2);
+        transition: all 200ms ease-in-out;
+    }
 }
 
 
