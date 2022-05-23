@@ -31,46 +31,10 @@
                         <p>Titre: {{ name }}</p>
                         <p id="delete__flexbox">
                             date : 12/01/2078 
+                            <button v-if="ownPost()" @click.prevent="GetToPost()" class="btn delete"><i class="fa fa-pen" aria-hidden="true"></i></button>
                             <button v-if="ownPost()" @click.prevent="DeleteRequest()" class="btn delete"><i class="fa fa-trash" aria-hidden="true"></i></button>
                         </p>
                     </div>
-                <router-link :to="'/' + id" class="homePost__link">  
-                    <div class="homePost__text">
-                        <p>Text: {{ text }} je vais devoir ecrire bcp de texteuuuuuuuuu  je vais devoir ecrire bcp de texteuuuuuuuuu 
-                        je vais devoir ecrire bcp de texteuuuuuuuuu je vais devoir ecrire bcp de texteuuuuuuuuu </p>
-                        <p>je vais devoir ecrire bcp de texteuuuuuuuuu je vais devoir ecrire bcp de texteuuuuuuuuu</p>
-                        <p>Text: {{ text }} je vais devoir ecrire bcp de texteuuuuuuuuu  je vais devoir ecrire bcp de texteuuuuuuuuu
-                        je vais devoir ecrire bcp de texteuuuuuuuuu je vais devoir ecrire bcp de texteuuuuuuuuu </p>
-                        <p>je vais devoir ecrire bcp de texteuuuuuuuuu je vais devoir ecrire bcp de texteuuuuuuuuu</p>
-                    </div>
-                    <div class="homePost__image">
-                        <img :src="image_url" alt="imagePost"/>
-                    </div>
-                </router-link>
-                <div class="homePost__footer">
-                        <div class="homePost__footer__comment">
-                            <i class="fa fa-comment" aria-hidden="true"></i>
-                        </div>
-                        <div class="homePost__footer__like">
-                            <i class="fa fa-thumbs-up" aria-hidden="true"></i>
-                            <i class="fa fa-thumbs-down" aria-hidden="true"></i> 
-                        </div>
-                    </div>
-                    <div class="homePost__comment">
-                        <div class="homePost__comment__input">
-                            <input id="textComment" type="text" placeholder="Votre commentaire"/>
-                        </div>
-                    <div>
-                        <button @click.prevent="emitComment" class="btn homePost__comment__button" >Commenter</button>
-                    </div>
-            </div>
-            </section>
-            <section v-else class="homePost">
-                <div class="homePost__title">
-                        <p>name{{ id }}</p>
-                        <p>Titre: {{ name }}</p>
-                        <p>date : 12/01/2078</p>
-                    </div>
                     <div class="homePost__text">
                         <p>Text: {{ text }} je vais devoir ecrire bcp de texteuuuuuuuuu  je vais devoir ecrire bcp de texteuuuuuuuuu 
                         je vais devoir ecrire bcp de texteuuuuuuuuu je vais devoir ecrire bcp de texteuuuuuuuuu </p>
@@ -100,6 +64,7 @@
                     </div>
             </div>
             </section>
+            
             
             <p><CommentComp v-for="(comment, index) in this.$store.state.comments.data"
             :key="index"
@@ -209,9 +174,13 @@ import CommentComp from '@/components/CommentComp.vue'
                 })
             },
             DeleteRequest(){
-                // this.$store.dispatch('DeleteRequest', {id:this.id})
-                this.$router.push('/' + this.id)
                 // this.$emit('modify', {postId: this.id})
+                if(confirm('Vous-vous supprimer cet article ?')){
+                    this.$store.dispatch('DeleteRequest', {id:this.id})
+                }
+            },
+            GetToPost(){
+                this.$router.push('/' + this.id)
             }
         }
     }
