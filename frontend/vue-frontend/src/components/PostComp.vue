@@ -17,7 +17,7 @@
                         </div>
                     </div>
                     <div>
-                        <button @click.prevent="emitModify">Modifier</button>
+                        <button @click.prevent="ModifyRequest()">Modifier</button>
                     </div>
                     <div>
                         <button @click.prevent="DeleteRequest()">Supprimer</button>
@@ -181,7 +181,13 @@ import CommentComp from '@/components/CommentComp.vue'
             },
             GetToPost(){
                 this.$router.push('/' + this.id)
-            }
+            },
+            ModifyRequest(){
+                const name = document.getElementById('name').value;
+                const text = document.getElementById('text').value;
+                const data = {'image': this.file, 'name':name, 'text':text , 'id':this.$route.params.id}
+                this.$store.dispatch('PutPostRequest', {data})
+            },
         }
     }
 </script>

@@ -30,6 +30,7 @@ if(!userLocal){
 } else {
   userLocal = JSON.parse(userLocal);
   instance.defaults.headers.common['Authorization'] = 'Bearer ' + userLocal.token;
+  instancePut.defaults.headers.common['Authorization'] = 'Bearer ' + userLocal.token;
 }
 
 
@@ -57,6 +58,7 @@ export default new Vuex.Store({
     },
     userLogin(state, user){
       instance.defaults.headers.common['Authorization'] = 'Bearer ' + user.token;
+      instancePut.defaults.headers.common['Authorization'] = 'Bearer ' + user.token;
       state.user = user;
       console.log(state.user)
       localStorage.setItem('user', JSON.stringify(user))
@@ -121,14 +123,13 @@ export default new Vuex.Store({
       })
       .catch(error => console.log(error))
     },
-    PutPostRequest(context, datas){
-      instancePut.defaults.headers.common['Authorization'] = 'Bearer ' + userLocal.token;
+    PutPostRequest(context, datas){   
       instancePut.put('/' + datas.data.id, datas.data)
       .then(data => {
         console.log(data);
         router.push('/')
       })
-      .catch(error => console.log(error))
+      .catch(error => console.log(error, "yeah"))
     },
     DeleteRequest(context, id){
       instance.delete('/' + id.id)

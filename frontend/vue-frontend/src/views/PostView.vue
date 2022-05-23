@@ -5,7 +5,7 @@
         </div> -->
         
         <div class="createPost">
-            <PostComp @Modifying="ModifyRequest" @Deleting="DeleteRequest"
+            <PostComp 
             @Commenting="CommentRequest" 
             :clickable="false"
             :modify="modify"
