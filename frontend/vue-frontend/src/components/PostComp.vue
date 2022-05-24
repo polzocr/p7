@@ -168,9 +168,9 @@ import axios from 'axios'
             modifyComp(){
                 const paramsId =  this.$route.params.id;
                 const id = this.id;
-                // console.log('--------------------')
-                // console.log("paramsId: " + paramsId);
-                // console.log("id: "+id)
+                console.log('--------------------')
+                console.log("paramsId: " + paramsId);
+                console.log("id: "+id)
                 if(paramsId == id && this.ownPost()) {
                     console.log("true")
                     return true
