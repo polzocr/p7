@@ -8,7 +8,16 @@
                         date : 12/01/2078 
                         <button v-if="ownPost()" @click.prevent="GetToPost()" class="btn delete"><i class="fa fa-pen" aria-hidden="true"></i></button>
                         <button v-if="ownPost()" @click.prevent="DeleteRequest()" class="btn delete"><i class="fa fa-trash" aria-hidden="true"></i></button>
-                    </p>
+                        <div id="test-modal">
+                            <button id="show-modal" @click="showModal = true">Show Modal</button>
+                            <Modal v-if="showModal" @close="showModal = false"
+                            :id="this.id"
+                            :userId="this.userId"
+                            :name="this.name"
+                            :text="this.text"
+                            :image_url="this.image_url"
+                            />
+                        </div>
                 </div>
                 <div class="homePost__text">
                     <p>Text: {{ text }} je vais devoir ecrire bcp de texteuuuuuuuuu  je vais devoir ecrire bcp de texteuuuuuuuuu 
@@ -50,12 +59,13 @@
 
 <script>
 import CommentComp from '@/components/CommentComp.vue'
+import Modal from '@/components/ModalComp.vue'
 import axios from 'axios'
 
     export default {
         name: "PostComp",
         components: {
-            CommentComp
+            CommentComp, Modal
         },
         props: {
             modify: {
@@ -94,7 +104,8 @@ import axios from 'axios'
                 idPost: '',
                 show: false,
                 textComment: '',
-                comments: [{}]
+                comments: [{}],
+                showModal: false
             }
         },
         beforeMount(){

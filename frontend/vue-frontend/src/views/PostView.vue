@@ -78,13 +78,13 @@ import {mapState} from 'vuex'
             modifier(){
                 this.modify = !this.modify;
             },
-             ModifyRequest(){
+            ModifyRequest(){
                 const name = document.getElementById('name').value;
                 const text = document.getElementById('text').value;
                 const data = {'image': this.file, 'name':name, 'text':text , 'id':this.$route.params.id}
                 this.$store.dispatch('PutPostRequest', {data})
             },
-             DeleteRequest(){
+            DeleteRequest(){
                 // this.$emit('modify', {postId: this.id})
                 if(confirm('Vous-vous supprimer cet article ?')){
                     this.$store.dispatch('DeleteRequest', {id:this.post.id})

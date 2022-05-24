@@ -129,9 +129,8 @@ export default new Vuex.Store({
     },
     PutPostRequest(context, datas){   
       instancePut.put('/' + datas.data.id, datas.data)
-      .then(data => {
-        console.log(data);
-        router.push('/')
+      .then(() => {
+        router.push('/login')
       })
       .catch(error => console.log(error, "yeah"))
     },
