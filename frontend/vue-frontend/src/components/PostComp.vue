@@ -1,30 +1,5 @@
 <template>
     <section class="home">
-        <section v-if="modifyComp()" id="test">
-                <form enctype="multipart/form-data">
-                    <div>
-                        <input id="name" :value="name" type="text" />
-                    </div>
-                    <div>
-                        <input id="text" :value="text" type="textarea" />
-                    </div>
-                    <div>
-                        <div>
-                            <img :src="image_url" alt="image_PutRequest"/>
-                        </div>
-                        <div>
-                            <input @change="changeFile()" type="file" accept="image/*" ref="fileInput" name="image">
-                        </div>
-                    </div>
-                    <div>
-                        <button @click.prevent="ModifyRequest()">Modifier</button>
-                    </div>
-                    <div>
-                        <button @click.prevent="DeleteRequest()">Supprimer</button>
-                    </div>
-                </form>                
-        </section>
-        <section v-else>
             <section class="homePost">
                 <div class="homePost__title">
                     <p>name{{ id }}</p>
@@ -71,7 +46,6 @@
                 /></p>
             </section>
         </section>
-    </section>
 </template>
 
 <script>
