@@ -37,7 +37,7 @@ Vue.use(VueRouter)
     component: CreateView
   },
   {
-    path: '/:id',
+    path: '/post/:id',
     name: 'PostView',
     component: PostView
   },

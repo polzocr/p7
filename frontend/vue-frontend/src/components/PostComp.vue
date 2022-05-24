@@ -184,7 +184,7 @@ import axios from 'axios'
             },
             GetToPost(){
                 this.$store.state.postUserId = this.userId
-                this.$router.push('/' + this.id)
+                this.$router.push('/post/' + this.id)
             },
             ModifyRequest(){
                 const name = document.getElementById('name').value;
