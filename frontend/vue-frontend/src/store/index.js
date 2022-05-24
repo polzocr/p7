@@ -46,6 +46,7 @@ export default new Vuex.Store({
     },
     comments: {},
     postIdComments: '',
+    postUserId: ''
   },
   getters: {
   },
@@ -120,6 +121,9 @@ export default new Vuex.Store({
       instance.get('/' + id)
       .then(post => {
         context.state.post = post.data
+        // if(context.state.post.userId !== context.state.user.userId){
+        //   router.push('/login')
+        // }
       })
       .catch(error => console.log(error))
     },

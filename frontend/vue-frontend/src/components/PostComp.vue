@@ -209,6 +209,7 @@ import axios from 'axios'
                 }
             },
             GetToPost(){
+                this.$store.state.postUserId = this.userId
                 this.$router.push('/' + this.id)
             },
             ModifyRequest(){

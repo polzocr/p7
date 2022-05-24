@@ -18,7 +18,7 @@
           <router-link to="/" class="navbar__icon"><img src="../public/images/icon-white.png" alt="icone-groupomania"/></router-link>
           <router-link to="/createpost" class="navbar__create"><i class="fa fa-plus" aria-hidden="true"></i></router-link>
           <div class="navbar__profil">
-            <router-link :to="'/profile/' + this.$store.state.user.userId" ><i class="fa fa-user" aria-hidden="true"></i></router-link>
+            <router-link :to="{name: 'ProfileView', params:{id: this.$store.state.user.userId} }" ><i class="fa fa-user" aria-hidden="true"></i></router-link>
             <router-link @click.native="deconnexion()" to=""><i class="fa fa-arrow-right" aria-hidden="true"></i></router-link> 
           </div>
       </nav>
