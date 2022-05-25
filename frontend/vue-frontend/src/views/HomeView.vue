@@ -12,6 +12,7 @@
        :title="post.name"
        :text="post.text"
        :image_url="post.image_url"
+       :nbComments="post.Comments.length"
        />
     </main>
 </template>

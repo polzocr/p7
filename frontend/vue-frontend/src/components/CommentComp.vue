@@ -33,12 +33,13 @@ export default {
     },
     methods:{
         date(){
-            const date =  this.created_at.split('T')[0]
-            const day = date.split('-')[2]
-            const month = date.split('-')[1]
-            const year = date.split('-')[0]
-            return day+ '/' + month + '/' + year
-            
+            if(typeof this.created_at !== 'undefined'){
+                const date =  this.created_at.split('T')[0]
+                const day = date.split('-')[2]
+                const month = date.split('-')[1]
+                const year = date.split('-')[0]
+                return day+ '/' + month + '/' + year
+            }
         }
     },
     computed:{

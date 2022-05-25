@@ -33,6 +33,7 @@
                 <div class="homePost__footer">
                         <div class="homePost__footer__comment">
                             <i @click="showComments()" class="fa fa-comment" aria-hidden="true"></i>
+                            <p>{{ nbComments }}</p>
                         </div>
                         <div class="homePost__footer__like">
                             <i class="fa fa-thumbs-up" aria-hidden="true"></i>
@@ -48,7 +49,7 @@
                     </div>
                 </div>
                 
-                <p v-if="show"><CommentComp v-for="(comment, index) in this.comments"
+                <p v-if="showComment"><CommentComp v-for="(comment, index) in this.comments"
                 :key="index"
                 :firstName="comment.UserFirstName"
                 :lastName="comment.UserLastName"
@@ -88,6 +89,9 @@ import axios from 'axios'
                 required: true,
                 default: 0
             },
+            nbComments:{
+                type: Number,
+            },
             firstName: {
                 type:String,
             },
@@ -110,7 +114,7 @@ import axios from 'axios'
                 localText: this.text,
                 file: this.image_url,
                 idPost: '',
-                show: false,
+                showComment: false,
                 textComment: '',
                 comments: [{}],
                 showModal: false
@@ -146,7 +150,7 @@ import axios from 'axios'
                     })
                 })
             }).then(() => {
-                this.show = !this.show
+                this.showComment = !this.showComment
             })
             .catch(error => console.log(error))
             .catch(error => console.log(error ,'Insuccès de lappel des commentaires'));
