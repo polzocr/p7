@@ -46,7 +46,9 @@ export default new Vuex.Store({
     },
     comments: {},
     postIdComments: '',
-    postUserId: ''
+    postUserId: '',
+    postFirstName: '',
+    postLastName: ''
   },
   getters: {
   },

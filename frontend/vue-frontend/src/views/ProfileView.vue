@@ -21,15 +21,15 @@
             <div class="profile__content">
                 <div class="profile__content__posts">
                     <i class="fa fa-file-image" aria-hidden="true"></i>
-                    <p>25 Posts</p>
+                    <p>{{ nbPosts }} Posts</p>
                 </div>
                 <div id = "comments">
                     <i class="fa fa-comment" aria-hidden="true"></i>
-                    <p>25 Commentaires</p>
+                    <p>{{ nbComments }} Commentaires</p>
                 </div>
                 <div class="profile__content__likes">
                     <i class="fa fa-heart" aria-hidden="true"></i>
-                    <p>25 Likes</p>
+                    <p>{{ nbLikes }} Likes</p>
                 </div>
             </div>
         </section>
@@ -62,15 +62,15 @@
             <div class="profile__content">
                 <div class="profile__content__posts">
                     <i class="fa fa-file-image" aria-hidden="true"></i>
-                    <p>25 Posts</p>
+                    <p>{{ nbPosts }} Posts</p>
                 </div>
                 <div id = "comments">
                     <i class="fa fa-comment" aria-hidden="true"></i>
-                    <p>25 Commentaires</p>
+                    <p>{{ nbComments }} Commentaires</p>
                 </div>
                 <div class="profile__content__likes">
                     <i class="fa fa-heart" aria-hidden="true"></i>
-                    <p>25 Likes</p>
+                    <p>{{nbLikes}} Likes</p>
                 </div>
             </div>
 
@@ -92,6 +92,9 @@ export default {
             modify: true,
             lastName: '',
             firstName: '',
+            nbPosts: 0,
+            nbComments: 0,
+            nbLikes: 0,
             email: '',
         }
     },
@@ -105,6 +108,8 @@ export default {
                 this.lastName = user.data.lastName;
                 this.firstName = user.data.firstName;
                 this.email = user.data.email;
+                this.nbPosts = user.data.posts.length
+                this.nbComments = user.data.comments.length
                 })
                 .catch(error => console.log(error));
         } else {
