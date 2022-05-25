@@ -2,8 +2,8 @@
     <section class="home">
             <section class="homePost">
                 <div class="homePost__title">
-                    <p>name{{ id }}</p>
-                    <p>Titre: {{ name }}</p>
+                    <p>{{ firstName }} {{ lastName }} </p>
+                    <p>Titre: {{ title }}</p>
                     <p id="delete__flexbox">
                         date : 12/01/2078 
                         <button v-if="ownPost()" @click.prevent="GetToPost()" class="btn delete"><i class="fa fa-pen" aria-hidden="true"></i></button>
@@ -81,12 +81,18 @@ import axios from 'axios'
                 required: true,
                 default: 0
             },
-            userId: {
+            userId:{
                 type: Number,
                 required: true,
                 default: 0
             },
-            name: {
+            firstName: {
+                type:String,
+            },
+            lastName: {
+                type: String,
+            },
+            title: {
                 type: String,
             },
             text: {

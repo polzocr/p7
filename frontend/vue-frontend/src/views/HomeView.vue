@@ -1,14 +1,15 @@
 <template>
     <main>
-        
        <PostComp v-for="(post, index) in this.$store.state.posts.slice().reverse()"
        @Commenting="CommentRequest" 
        @modify="getToPost"
        :modify="modify"
        :key="index"
        :id="post.id"
-       :userId="post.userId" 
-       :name="post.name"
+       :userId="post.userId"
+       :firstName="post.User.firstName" 
+       :lastName="post.User.lastName" 
+       :title="post.name"
        :text="post.text"
        :image_url="post.image_url"
        />
@@ -40,7 +41,6 @@ export default {
         } 
     },
     mounted() {
-        
     },
     methods: {
         CreateRequest(){
