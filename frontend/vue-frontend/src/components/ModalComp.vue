@@ -4,7 +4,7 @@
         <div class="modal">
             <form enctype="multipart/form-data" class="modal__box">
                 <div class="modal__box__header"> 
-                    <input id="name" :value="name" type="text" />
+                    <input id="title" :value="title" type="text" />
                 </div>
                 <div>
                     <input id="text" :value="text" type="textarea" />
@@ -50,7 +50,7 @@ export default {
                 required: true,
                 default: 0
             },
-            name: {
+            title: {
                 type: String,
             },
             text: {
@@ -66,9 +66,9 @@ export default {
             },
             ModifyRequest(){
                 const user =  JSON.parse(localStorage.getItem('user'))
-                const name = document.getElementById('name').value;
+                const title = document.getElementById('title').value;
                 const text = document.getElementById('text').value;
-                const data = {'image': this.file, 'name':name, 'text':text , 'id':this.id}
+                const data = {'image': this.file, 'name':title, 'text':text , 'id':this.id}
                 if(user.userId !== this.userId){
                     this.$router.push('/login')
                 } else {

@@ -13,7 +13,7 @@
                             <Modal v-if="showModal" @close="showModal = false"
                             :id="this.id"
                             :userId="this.userId"
-                            :name="this.name"
+                            :title="this.title"
                             :text="this.text"
                             :image_url="this.image_url"
                             />
@@ -110,7 +110,7 @@ import axios from 'axios'
         },
         data: function() {
             return {
-                localName: this.name,
+                localName: this.title,
                 localText: this.text,
                 file: this.image_url,
                 idPost: '',
@@ -181,15 +181,13 @@ import axios from 'axios'
                 }
             },
             emitModify(){
-                const name = document.getElementById('name').value;
+                const title = document.getElementById('title').value;
                 const text = document.getElementById('text').value;
-                const data = {'image': this.file, 'name':name, 'text':text , 'id':this.$route.params.id}
+                const data = {'image': this.file, 'title':title, 'text':text , 'id':this.$route.params.id}
                 this.$emit('Modifying', { data })
             },
             changeFile(){
                 this.file = this.$refs.fileInput.files[0];
-                console.log(this.name)
-                console.log(this.localName)
             },
             emitDelete(){
                 this.$store.dispatch('DeleteRequest', {id:this.id})
@@ -212,9 +210,9 @@ import axios from 'axios'
                 this.$router.push('/post/' + this.id)
             },
             ModifyRequest(){
-                const name = document.getElementById('name').value;
+                const title = document.getElementById('title').value;
                 const text = document.getElementById('text').value;
-                const data = {'image': this.file, 'name':name, 'text':text , 'id':this.$route.params.id}
+                const data = {'image': this.file, 'title':title, 'text':text , 'id':this.$route.params.id}
                 this.$store.dispatch('PutPostRequest', {data})
             },
         }
