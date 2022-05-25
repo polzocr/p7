@@ -63,8 +63,6 @@ export default {
         methods: {
             changeFile(){
                 this.file = this.$refs.fileInput.files[0];
-                console.log(this.name)
-                console.log(this.localName)
             },
             ModifyRequest(){
                 const user =  JSON.parse(localStorage.getItem('user'))
