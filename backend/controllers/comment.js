@@ -11,7 +11,7 @@ exports.createComment = (req,res,next) => {
 };
 
 exports.getAllComments = (req,res,next) => {
-    db.Comment.findAll({where: {postId: req.params.id} })
+    db.Comment.findAll({where: {postId: req.params.id}, include:[{model:db.User, attributes:['firstName', 'lastName']}] })
     .then(comments => res.status(200).json(comments))
     .catch(error => res.status(400).json({error: "Commentaires non trouvés"}))
 };
