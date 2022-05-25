@@ -1,8 +1,9 @@
 <template>
     <div>
         <div> 
-            <p>{{ userId }}</p>
+            <p>{{ firstName }} {{ lastName }}</p>
             <p>{{ text }} </p>
+            <p>{{ date()}}</p>
         </div>
 
     </div>
@@ -12,15 +13,37 @@
 export default {
     name: "CommentComp",
     props:{
-        userId:{
-            type: Number
+        firstName: {
+            type: String
+        },
+        lastName: {
+            type: String
         },
         text: {
             type: String,
         },
-        postId:{
-            type: Number,
+        created_at: {
+            type: String,
         }
     },
+    data: function(){
+        return {
+            
+        }
+    },
+    methods:{
+        date(){
+            const date =  this.created_at.split('T')[0]
+            const day = date.split('-')[2]
+            const month = date.split('-')[1]
+            const year = date.split('-')[0]
+            return day+ '/' + month + '/' + year
+            
+        }
+    },
+    computed:{
+        
+    },
+    
 }
 </script>

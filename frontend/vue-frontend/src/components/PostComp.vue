@@ -50,8 +50,10 @@
                 
                 <p v-if="show"><CommentComp v-for="(comment, index) in this.comments"
                 :key="index"
-                :userId="comment.userId"
+                :firstName="comment.UserFirstName"
+                :lastName="comment.UserLastName"
                 :text="comment.text"
+                :created_at="comment.created_at"
                 /></p>
             </section>
         </section>
@@ -137,8 +139,10 @@ import axios from 'axios'
             .then(comments => {
                 comments.data.forEach(element => {
                     this.comments.push({
-                        userId: element.UserId,
-                        text: element.text
+                        UserFirstName: element.User.firstName,
+                        UserLastName: element.User.lastName,
+                        text: element.text,
+                        created_at: element.createdAt
                     })
                 })
             }).then(() => {

@@ -53,6 +53,9 @@ export default {
             this.$router.push('/' + data.postId)                
         },
     },
+    computed:{
+        
+    }
 }
 </script>
 
