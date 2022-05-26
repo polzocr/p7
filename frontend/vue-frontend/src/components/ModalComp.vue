@@ -1,33 +1,30 @@
 <template>
-<div>
     <transition name="modal-transition">
         <div class="modal">
             <form enctype="multipart/form-data" class="modal__box">
-                <div class="modal__box__header"> 
-                    <input id="title" :value="title" type="text" />
+                <div class="modal__box__title">
+                    <input id="title" :value="title" type="text">
+                    <button class="btn btn-close" @click="$emit('close')"><i class="fa fa-times" aria-hidden="true"></i></button>
                 </div>
-                <div>
-                    <input id="text" :value="text" type="textarea" />
+                <div class="modal__box__text">
+                    <textarea id="text" :value="text" rows="5" cols="60"></textarea>
                 </div>
-                <div>
-                    <div>
-                        <img :src="image_url" alt="image_PutRequest"/>
-                    </div>
-                    <div>
-                        <input @change="changeFile()" type="file" accept="image/*" ref="fileInput" name="image">
-                    </div>
+                <div class="modal__box__image">
+                    <img :src="image_url" alt="image_PutRequest"/>
                 </div>
-                <div>
-                    <button @click.prevent="ModifyRequest()">Modifier</button>
-                    <button class="btn btn-modal" @click="$emit('close')">OK</button>
+                <div class="modal__box__file">
+                    <label class="btn upload" for="upload">Choisir un fichier</label>
+                    <input @change="changeFile()" id="upload" type="file" accept="image/*" ref="fileInput" name="image">
                 </div>
-                <div>
-                    <button @click.prevent="DeleteRequest()">Supprimer</button>
+                <div class="modal__box__btn">
+                    <button class="btn" @click.prevent="ModifyRequest()">Modifier</button>
+                    
+                    <button class="btn" @click.prevent="DeleteRequest()">Supprimer</button>
                 </div>
-            </form>      
+            </form>    
+              
         </div>
     </transition>
-</div>
         
 </template>
 
@@ -102,28 +99,105 @@ export default {
     align-items: center;
     transition: opacity 0.3s ease;
     &__box{
-        width: 300px;
-        margin: 0px auto;
-        padding: 20px 30px;
-        background-color: #fff;
-        border-radius: 2px;
+        background-color: $secondary-color;
         box-shadow: 0 2px 8px rgba(0, 0, 0, 0.33);
         transition: all 0.3s ease;
-        &__header{
-            
-        }
-        &__body{
+        
+        width: 60%;
+        border-radius: 20px;
+        margin: auto;
+        padding: 2%;
 
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        position: relative;
+        
+        
+        &__title{
+            display: flex;
+            justify-content: center;
+            input{
+                padding-left: 2%;
+                font-size: 20px;
+                color: $tertiary-color;
+                border: none;
+                border-radius: 20px;
+                width: 50%;
+                height: 40px;
+                //word-break: break-word;
+                &:focus{
+                    outline: 2px solid $primary-color;
+                }
+            }
         }
-        &__footer{
-
+        &__text{
+            display: flex;
+            align-items: center;
+            textarea{
+                font-family: Avenir, Helvetica, Arial, sans-serif;
+                padding: 2%;
+                font-size: 20px;
+                color: $tertiary-color;
+                border: none;
+                border-radius: 20px;
+                width: 90%;
+                height: 60%;
+                margin: auto;
+                &:focus{
+                    outline: 2px solid $primary-color;
+                }
+            }
+        }
+        &__image{
+            width: 93%;
+            height: 50%;
+            margin: 0 auto 0 auto;
+            img{
+                width: 100%;
+                height: 100%;
+                border-radius: 20px;
+            }
+        }
+        &__file{
+            display: flex;
+            justify-content: start;
+            position: relative;
+            z-index: 1;
+            margin: 2% 0 0 4%;
+            input[type="file" i]{
+                font-size: 20px;
+                position: absolute;
+                z-index: -1;
+                left: 21px;
+                top: 5px;
+                
+                
+            }
+        }
+        &__btn{
+            display: flex;
+            justify-content: space-between;
+            padding: 2%;
         }
     }
 }
-
-.btn-modal{
-    float: right;
+.btn-close{
+    position: absolute;
+    right: 0;
+    top: 0;
+    border-radius: 10px;
+    border-top-right-radius: 20px;
+    padding:7px 15px;
+    background-color:$secondary-color;
+    border: none;
+    i{
+        font-size: 30px;
+        color: $tertiary-color;
+    }
 }
+
+
 
 
 .modal-transition-enter,.modal-transition-leave-to {
