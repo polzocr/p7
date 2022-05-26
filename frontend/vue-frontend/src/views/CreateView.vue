@@ -13,7 +13,7 @@
                 <input @change="changeFile()" id="upload" type="file" accept="image/*" ref="fileInput" name="image">
             </div>  
             <div class="createPost__form__button">
-                <button class="btn" type="submit">Créer votre post</button>
+                <button class="btn" type="submit">Créer votre article</button>
             </div>            
         </form>
     </section>
@@ -53,13 +53,16 @@ export default {
 
 <style lang="scss">
 .createPost{
-    height: 856px;
+    height: 1073px;
+    @include tablets{
+        margin-top: 15%;
+    }
     margin-top: 10%;
     &__form{
        background-color: $secondary-color;
         border-radius: 20px;
         padding: 2%;
-        width: 40%;
+        width: 50%;
         height: 50%;
         margin: auto;
         display: flex;
