@@ -13,7 +13,7 @@
         <router-view/>
       </div>
     </div>
-    <div v-else>
+    <div class="bodyPage" v-else>
       <nav class="navbar">
           <router-link to="/" class="navbar__icon"><img src="../public/images/icon-white.png" alt="icone-groupomania"/></router-link>
           <router-link to="/createpost" class="navbar__create"><i class="fa fa-plus" aria-hidden="true"></i></router-link>
@@ -22,7 +22,6 @@
             <router-link @click.native="deconnexion()" to=""><i class="fa fa-arrow-right" aria-hidden="true"></i></router-link> 
           </div>
       </nav>
-      
       <router-view/>
     </div> 
     
@@ -87,7 +86,14 @@ body{
   background-size: 100% 100%;
   object-fit: cover;
   margin: 0;
+  @include mobiles{
+      background-color: $tertiary-color;
+  }
 
+}
+
+.bodyPage{
+  width: 100%;
 }
 
 .login{
@@ -225,7 +231,7 @@ nav{
   width: 100%;
   height: 70px;;
   overflow: hidden;
-  z-index: 1;
+  z-index: 2;
   &__icon{
     float:left;
     padding-left: 1%;

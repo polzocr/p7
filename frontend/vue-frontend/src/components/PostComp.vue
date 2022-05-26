@@ -233,10 +233,13 @@ import axios from 'axios'
 </script>
 
 <style lang="scss">
-
 .home{
     width: 70%;
     margin:7% auto auto auto;
+    @include mobiles{
+        width: 95%;
+        margin: 25% auto 0 auto;
+    }
     @include tablets{
         margin-top: 10%;
         width: 80%;
@@ -244,6 +247,8 @@ import axios from 'axios'
     @include big-desktop{
         width: 55%;
     }
+
+    
 }
 
 
@@ -251,8 +256,10 @@ import axios from 'axios'
 .homePost{
     background-color: $secondary-color;
     border-radius: 30px;
+    @include mobiles{
+        border-radius: 20px;
+    }
     &__title{
-        font-size: 22px;
         padding: 0 2%;
         display: flex;
         justify-content: space-between;
@@ -264,6 +271,9 @@ import axios from 'axios'
             bottom: 0;
             left: 15px;
             border-bottom: 1px solid $tertiary-color;
+            @include mobiles{
+                width: 90%;
+            }
         }        
     }
     &__link{
@@ -277,6 +287,9 @@ import axios from 'axios'
     }
     &__image{
         height: 430px;
+        @include mobiles{
+            height: 300px;
+        }
         img{
             width: 100%;
             height: 100%;
@@ -298,10 +311,16 @@ import axios from 'axios'
             bottom: 0;
             left: 15px;
             border-bottom: 1px solid $tertiary-color;
+            @include mobiles{
+                width: 90%;
+            }
         }
         i{
             font-size: 35px;
             color: $tertiary-color;
+            @include mobiles{
+               font-size: 25px;;
+            }
         }
         &__comment{
             display: flex;
@@ -315,7 +334,6 @@ import axios from 'axios'
             }
         }
         &__like{
-            width: 10%;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -327,16 +345,26 @@ import axios from 'axios'
         padding: 2%;
         box-sizing: border-box;
         width: 100%;
+        @include mobiles{
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+        }
         &__input{
             width: 70%;
+            @include mobiles{
+                width: 90%;
+                height: 40px;
+            }
             input{
-                padding-left: 1%;
+                padding-left: 3%;
                 font-size: 20px;
                 color: $tertiary-color;
                 border: none;
                 border-radius: 20px;
                 width: 100%;
                 height: 90%;
+                box-sizing: border-box;
                 &:focus{
                     outline: 2px solid $primary-color;
                 }
@@ -344,6 +372,9 @@ import axios from 'axios'
         }
         &__button{
             width: 30%;
+            @include mobiles{
+                width: 100%;
+            }
         }
         
 
@@ -355,6 +386,12 @@ import axios from 'axios'
     width: 90%;
     display: flex;
     justify-content: center;
+    @include mobiles{
+        width: 40%;
+        margin: auto;
+        padding: 15px 45px;
+    }
+    
 }
 
 #names{
@@ -362,11 +399,25 @@ import axios from 'axios'
     display: flex;
     justify-content: center;
     align-items: center;
+    @include mobiles{
+        width: 35%;
+        align-items: end;
+        margin-bottom: 5px; 
+        font-size: 18px;
+        justify-content: start;
+    }
 }
 #post-title{
     margin-right: 10%;
+    font-size: 22px;
     @include tablets{
         margin-right: 5%;
+    }
+    @include mobiles{
+        width: 100%;
+        margin-right: 5%;
+        margin-bottom:40px;
+        margin-top: 5px;
     }
 }
 #delete__flexbox{
@@ -377,6 +428,11 @@ import axios from 'axios'
     p{
         font-size: 15px;
     }
+    @include mobiles{
+        flex-direction: column-reverse;
+        padding-top: 3%;
+        gap: 0px;
+    }
 }
 .btn-delete{
     padding:7px 7px;
@@ -385,6 +441,9 @@ import axios from 'axios'
     border: none;
     i{
         color: $primary-color;
+    }
+    @include mobiles{
+        margin-bottom: 6px ;
     }
 }
 
@@ -403,6 +462,14 @@ import axios from 'axios'
     align-items: center;
     &:hover .dropdown__icon{
         opacity: 0;
+        @include mobiles{
+            opacity: 1;
+        }
+    }
+    &__icon{
+        @include mobiles{
+            display: none;
+        }
     }
     &__content{
         display: none;
@@ -410,6 +477,11 @@ import axios from 'axios'
         z-index: 1;
         top: 20px;
         right: 25px;
+        @include mobiles{
+            display: flex;
+            gap: 10px;
+            position: initial;
+        }
         button{
             display: block;
         }
@@ -418,6 +490,10 @@ import axios from 'axios'
         display: flex;
         flex-direction:column;
         gap: 3px;
+        @include mobiles{
+            flex-direction: row;
+            gap: 10px;
+        }
         
     }
     
