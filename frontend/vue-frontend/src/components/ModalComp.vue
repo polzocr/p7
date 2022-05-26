@@ -151,7 +151,7 @@ export default {
         }
         &__image{
             width: 93%;
-            height: 50%;
+            height: 400px;
             margin: 0 auto 0 auto;
             img{
                 width: 100%;
@@ -179,6 +179,7 @@ export default {
             display: flex;
             justify-content: space-between;
             padding: 2%;
+            padding-bottom: 0;
         }
     }
 }

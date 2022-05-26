@@ -2,15 +2,15 @@
     <section class="home">
             <section class="homePost">
                 <div class="homePost__title">
-                    <p>{{ firstName }} {{ lastName }} </p>
-                    <p>{{ title }}</p>
+                    <p id="names">{{ firstName }} {{ lastName }} </p>
+                    <p id="post-title">{{ title }}</p>
                     <div id="delete__flexbox">
                         <p>{{ date() }} </p>
                         <div v-if="ownPost()" class="dropdown">
-                            <button class="btn delete dropdown__icon"><i class="fa fa-ellipsis-h" aria-hidden="true"></i></button>
+                            <button class="btn btn-delete dropdown__icon"><i class="fa fa-ellipsis-h" aria-hidden="true"></i></button>
                             <div class="dropdown__content">
-                                <button @click.prevent="showModal = true" class="btn delete"><i class="fa fa-pen" aria-hidden="true"></i></button>
-                                <button @click.prevent="DeleteRequest()" class="btn delete"><i class="fa fa-trash" aria-hidden="true"></i></button>
+                                <button @click.prevent="showModal = true" class="btn btn-delete"><i class="fa fa-pen" aria-hidden="true"></i></button>
+                                <button @click.prevent="DeleteRequest()" class="btn btn-delete"><i class="fa fa-trash" aria-hidden="true"></i></button>
                             </div>
                         </div>
                     </div>
@@ -26,10 +26,7 @@
                 <div class="homePost__text">
                     <p>Text: {{ text }} je vais devoir ecrire bcp de texteuuuuuuuuu  je vais devoir ecrire bcp de texteuuuuuuuuu 
                     je vais devoir ecrire bcp de texteuuuuuuuuu je vais devoir ecrire bcp de texteuuuuuuuuu </p>
-                    <p>je vais devoir ecrire bcp de texteuuuuuuuuu je vais devoir ecrire bcp de texteuuuuuuuuu</p>
-                    <p>Text: {{ text }} je vais devoir ecrire bcp de texteuuuuuuuuu  je vais devoir ecrire bcp de texteuuuuuuuuu
-                    je vais devoir ecrire bcp de texteuuuuuuuuu je vais devoir ecrire bcp de texteuuuuuuuuu </p>
-                    <p>je vais devoir ecrire bcp de texteuuuuuuuuu je vais devoir ecrire bcp de texteuuuuuuuuu</p>
+                    
                 </div>
                 <div class="homePost__image">
                     <img :src="image_url" alt="imagePost"/>
@@ -37,7 +34,7 @@
                 <div class="homePost__footer">
                         <div class="homePost__footer__comment">
                             <i @click="showComments()" class="fa fa-comment" aria-hidden="true"></i>
-                            <p>{{ nbComments }}</p>
+                            <p id="nbComments">{{ nbComments }}</p>
                         </div>
                         <div class="homePost__footer__like">
                             <i class="fa fa-thumbs-up" aria-hidden="true"></i>
@@ -48,8 +45,8 @@
                     <div class="homePost__comment__input">
                         <input v-model="textComment" id="textComment" type="text" placeholder="Votre commentaire"/>
                     </div>
-                    <div>
-                        <button @click.prevent="CommentRequest()" class="btn homePost__comment__button" >Commenter</button>
+                    <div class="homePost__comment__button">
+                        <button @click.prevent="CommentRequest()" class="btn btn-comment" >Commenter</button>
                     </div>
                 </div>
                 
@@ -239,7 +236,14 @@ import axios from 'axios'
 
 .home{
     width: 70%;
-    margin:6% auto auto auto;
+    margin:7% auto auto auto;
+    @include tablets{
+        margin-top: 10%;
+        width: 80%;
+    }
+    @include big-desktop{
+        width: 55%;
+    }
 }
 
 
@@ -272,7 +276,7 @@ import axios from 'axios'
         text-align: left;
     }
     &__image{
-        height: 600px;
+        height: 430px;
         img{
             width: 100%;
             height: 100%;
@@ -282,7 +286,8 @@ import axios from 'axios'
         }
     }
     &__footer{
-        padding:2.5%;
+        padding-left:2.5%;
+        padding-right:2.5%;
         display: flex;
         justify-content: space-between;
         position: relative;
@@ -298,18 +303,32 @@ import axios from 'axios'
             font-size: 35px;
             color: $tertiary-color;
         }
+        &__comment{
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            height: 18%;
+            p{
+                font-size: 24px;
+                color: $tertiary-color;
+                font-weight: 700;
+            }
+        }
         &__like{
             width: 10%;
             display: flex;
             justify-content: space-between;
+            align-items: center;
         }
     }
     &__comment{
         display: flex;
         justify-content: space-between;
         padding: 2%;
+        box-sizing: border-box;
+        width: 100%;
         &__input{
-            width: 78%;
+            width: 70%;
             input{
                 padding-left: 1%;
                 font-size: 20px;
@@ -323,11 +342,43 @@ import axios from 'axios'
                 }
             }
         }
+        &__button{
+            width: 30%;
+        }
         
 
     }
 }
-.delete{
+
+.btn-comment{
+    margin: auto 0 auto auto;
+    width: 90%;
+    display: flex;
+    justify-content: center;
+}
+
+#names{
+    font-size: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#post-title{
+    margin-right: 10%;
+    @include tablets{
+        margin-right: 5%;
+    }
+}
+#delete__flexbox{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    p{
+        font-size: 15px;
+    }
+}
+.btn-delete{
     padding:7px 7px;
     border-radius: 5px;
     background-color: $tertiary-color;
@@ -336,10 +387,7 @@ import axios from 'axios'
         color: $primary-color;
     }
 }
-#delete__flexbox{
-    display: flex;
-    gap: 10px;
-}
+
 .fa-comment{
     &:hover{
         cursor: pointer;
@@ -361,7 +409,7 @@ import axios from 'axios'
         position: absolute;
         z-index: 1;
         top: 20px;
-        right: 20px;
+        right: 25px;
         button{
             display: block;
         }
