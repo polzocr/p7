@@ -1,12 +1,13 @@
 <template>
-    <div>
-        <div> 
-            <p>{{ firstName }} {{ lastName }}</p>
-            <p>{{ text }} </p>
-            <p>{{ date()}}</p>
+        <div class="comments"> 
+            <div class="comments__title">
+                <p id="name">{{ firstName }} {{ lastName }}</p>
+                <p id="date">{{ date()}}</p>
+            </div>
+            <div class="comments__text">
+                <p>{{ text }} </p>
+            </div>
         </div>
-
-    </div>
 </template>
 
 <script>
@@ -28,7 +29,7 @@ export default {
     },
     data: function(){
         return {
-            
+          exist: false  
         }
     },
     methods:{
@@ -40,7 +41,7 @@ export default {
                 const year = date.split('-')[0]
                 return day+ '/' + month + '/' + year
             }
-        }
+        },
     },
     computed:{
         
@@ -48,3 +49,32 @@ export default {
     
 }
 </script>
+
+<style lang="scss">
+
+
+
+.comments{
+    border-bottom: 1px solid $tertiary-color;
+    width: 90%;
+    margin: auto;
+    color: $tertiary-color;
+    &__title{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    &__text{
+        text-align: start;
+    }
+}
+
+#date{
+    font-size: 13px;
+}
+#name{
+    font-size: 18px;
+    font-weight: 700;
+}
+
+</style>
