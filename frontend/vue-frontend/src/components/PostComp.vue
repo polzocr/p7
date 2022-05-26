@@ -28,7 +28,7 @@
                     je vais devoir ecrire bcp de texteuuuuuuuuu je vais devoir ecrire bcp de texteuuuuuuuuu </p>
                     
                 </div>
-                <div class="homePost__image">
+                <div class="homePost__image" v-if="this.image_url !== null">
                     <img :src="image_url" alt="imagePost"/>
                 </div>
                 <div class="homePost__footer">
