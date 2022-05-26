@@ -505,7 +505,6 @@ import axios from 'axios'
 .commentsPage{
     width: 95%;
     margin: auto;
-    padding-bottom: 3%;
 }
 
 
