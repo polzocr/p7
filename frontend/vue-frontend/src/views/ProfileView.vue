@@ -160,6 +160,13 @@ export default {
     @include big-desktop{
         margin-top: 8%;
     }
+    @include tablets{
+        height: 980px;
+    }
+    @include mobiles{
+        margin-top: 25%;
+        height: 1000px;
+    }
     
 }
 
@@ -174,10 +181,35 @@ export default {
     @include small-desktop{
         height: 50%;
     }
+    @include tablets{
+        flex-direction: column;
+        gap: 20px;
+    }
+    @include mobiles{
+        flex-direction: column;
+        height: 80%;
+        width: 87%;
+        margin: auto;
+
+    }
     &__perso{
         width: 50%;
+            @include tablets{
+                width: 100%;
+                height: 70%;
+            }
+            @include mobiles{
+                width: 100%;
+                height: 50%;
+            }
         &__icon{
             height: 65%;
+            @include tablets{
+                height: 55%;
+            }
+            @include mobiles{
+                height: 50%;
+            }
             i{
                 //font-size: 390px;
                 font-size: 2420%;
@@ -185,6 +217,12 @@ export default {
                 color: $tertiary-color;
                 @include small-desktop{
                     font-size: 2100%;
+                }
+                @include tablets{
+                    font-size: 1300%;
+                }
+                @include mobiles{
+                    font-size: 1000%;
                 }
             }
         }
@@ -196,6 +234,24 @@ export default {
         flex-direction: column;
         justify-content: center;
         gap: 70px;
+        @include tablets{
+            flex-direction: row;
+            border-top: 1px solid black;
+            border-left: none;
+            width: 100%;
+            justify-content: space-around;
+            height: 30%;
+            align-items: end;
+        }
+        @include mobiles{
+            border-top: 1px solid black;
+            border-left: none;
+            width: 100%;
+            height: 50%;
+            margin-top: 2%;
+            padding-top: 2%;
+            gap: 20px;
+        }
         i{
                 font-size: 70px;
                 color: $primary-color;
@@ -203,6 +259,12 @@ export default {
                     font-size: 50px;
                     display: flex;
                     align-items: center;
+                }
+                @include tablets{
+                    font-size: 40px;
+                }
+                @include mobiles{
+                    font-size: 30px;
                 }
         }
         p{
@@ -213,11 +275,31 @@ export default {
             display: flex;
             margin-left:25%;
             gap: 30px;
+            @include tablets{
+                margin: 0;
+                flex-direction: column;
+                gap: 0;
+            }
+            @include mobiles{
+                margin: 0;
+                flex-direction: column;
+                gap: 0;
+            }
         }
         &__likes{
             display: flex;
             margin-left:25%;
             gap: 30px;
+            @include tablets{
+                margin: 0;
+                flex-direction: column;
+                gap:0;
+            }
+            @include mobiles{
+                margin: 0;
+                flex-direction: column;
+                gap:0;
+            }
         }
     }
 }
@@ -226,10 +308,26 @@ export default {
     display: flex;
     margin-left:25%;
     gap: 30px;
+    @include tablets{
+        flex-direction: column;
+        gap:0;
+        margin: 0;
+    }
+    @include mobiles{
+        flex-direction: column;
+        gap:0;
+        margin: 0;
+    }
 }
 
 .infos{
     height: 35%;
+    @include tablets{
+        height: 45%;
+    }
+    @include mobiles{
+        height: 45%;
+    }
     &__name{
         display: flex;
         justify-content: start;
@@ -237,12 +335,20 @@ export default {
         font-size: 30px;
         height: 30%;
         color: $tertiary-color;
+        @include mobiles{
+            font-size: 20px;
+            justify-content: space-around;
+        }
     }
     &__email{
         font-size: 20px;
         height: 30%;
         color: $tertiary-color; 
         text-align: start;
+        @include mobiles{
+            font-size: 18px;
+            text-align: center;
+        }
     }
     &__button{
         width: 45%;
@@ -251,11 +357,23 @@ export default {
         padding-left: 0;
         @include small-desktop{
             width: 100%;
+            display: flex;
+            justify-content: center;
         }
+        @include tablets{
+            margin: auto;
+        }
+        @include mobiles{
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            padding-bottom: 2%;
+        }
+        
         button{
             padding: 12px 45px;
-            @include small-desktop{
-                    margin: auto;
+            @include mobiles{
+            padding: 10px 10px;
             }
         }
     }
@@ -299,11 +417,29 @@ export default {
         display: flex;
         justify-content: space-between;
         align-items: center;
+        @include mobiles{
+            flex-direction: column;
+            gap: 10px;
+            padding: 0;
+            padding-top: 2%;
+            width: 100%;
+        }
         button{
             padding: 12px 45px;
             @include small-desktop{
                 padding: 12px 30px;
             }
+            @include mobiles{
+                width: 70%;
+                padding: 10px 30px;
+                display: flex;
+                justify-content: center;
+            }
+        }
+        &__1, &__2{
+            width: 100%;
+            display: flex;
+            justify-content: center;
         }
     }
 }

@@ -17,9 +17,9 @@
                     <input @change="changeFile()" id="upload" type="file" accept="image/*" ref="fileInput" name="image">
                 </div>
                 <div class="modal__box__btn">
-                    <button class="btn" @click.prevent="ModifyRequest()">Modifier</button>
+                    <button class="btn btn-modal" @click.prevent="ModifyRequest()">Modifier</button>
                     
-                    <button class="btn" @click.prevent="DeleteRequest()">Supprimer</button>
+                    <button class="btn btn-modal" @click.prevent="DeleteRequest()">Supprimer</button>
                 </div>
             </form>    
               
@@ -112,7 +112,10 @@ export default {
         flex-direction: column;
         gap: 20px;
         position: relative;
-        
+        @include mobiles{
+                width: 90%;
+                padding-top: 4%;
+        }
         
         &__title{
             display: flex;
@@ -125,6 +128,10 @@ export default {
                 border-radius: 20px;
                 width: 50%;
                 height: 40px;
+                @include mobiles{
+                    margin-top:5%;
+                    width: 70%;
+                }
                 //word-break: break-word;
                 &:focus{
                     outline: 2px solid $primary-color;
@@ -153,6 +160,12 @@ export default {
             width: 93%;
             height: 400px;
             margin: 0 auto 0 auto;
+            @include mobiles{
+                height: 220px;
+            }
+            @include tablets{
+                height: 300px;
+            }
             img{
                 width: 100%;
                 height: 100%;
@@ -165,6 +178,7 @@ export default {
             position: relative;
             z-index: 1;
             margin: 2% 0 0 4%;
+            overflow: scroll;
             input[type="file" i]{
                 font-size: 20px;
                 position: absolute;
@@ -180,6 +194,11 @@ export default {
             justify-content: space-between;
             padding: 2%;
             padding-bottom: 0;
+            @include mobiles{
+                flex-direction: column;
+                gap: 10px;
+                padding: 0;
+            }
         }
     }
 }
@@ -195,6 +214,15 @@ export default {
     i{
         font-size: 30px;
         color: $tertiary-color;
+    }
+}
+
+.btn-modal{
+    @include mobiles{
+        width: 60%;
+        display: flex;
+        justify-content: center;
+        padding: 10px 49px
     }
 }
 

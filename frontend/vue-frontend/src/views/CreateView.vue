@@ -57,6 +57,10 @@ export default {
     @include tablets{
         margin-top: 15%;
     }
+    @include mobiles{
+        margin-top: 25%;
+    }
+    
     margin-top: 10%;
     &__form{
        background-color: $secondary-color;
@@ -68,6 +72,10 @@ export default {
         display: flex;
         flex-direction: column;
         gap: 7%;
+        @include mobiles{
+            width: 90%;
+            gap: 2%;
+        }
         &__title{
             height: 10%;
             input{
@@ -78,6 +86,12 @@ export default {
                 border-radius: 20px;
                 width: 60%;
                 height: 90%;
+                @include mobiles{
+                    margin-top: 2%;
+                    width: 70%;
+                    height: 80%;
+                    padding-left: 4%;
+                }
                 //word-break: break-word;
                 &:focus{
                     outline: 2px solid $primary-color;
@@ -97,6 +111,10 @@ export default {
                 border-radius: 20px;
                 width: 100%;
                 height: 80%;
+                @include mobiles{
+                    padding-left: 4%;
+                    padding-top: 4%;
+                }
                 &:focus{
                     outline: 2px solid $primary-color;
                 }
@@ -107,6 +125,9 @@ export default {
             justify-content: start;
             position: relative;
             z-index: 1;
+            @include mobiles{
+                 overflow: scroll;
+            }
             input[type="file" i]{
                 font-size: 20px;
                 position: absolute;

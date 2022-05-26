@@ -387,7 +387,7 @@ import axios from 'axios'
     display: flex;
     justify-content: center;
     @include mobiles{
-        width: 40%;
+        width: 50%;
         margin: auto;
         padding: 15px 45px;
     }
@@ -410,11 +410,12 @@ import axios from 'axios'
 #post-title{
     margin-right: 10%;
     font-size: 22px;
+    word-break: break-word;
     @include tablets{
         margin-right: 5%;
     }
     @include mobiles{
-        width: 100%;
+        width: 60%;
         margin-right: 5%;
         margin-bottom:40px;
         margin-top: 5px;
