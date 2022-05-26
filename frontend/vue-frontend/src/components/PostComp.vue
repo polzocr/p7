@@ -3,21 +3,25 @@
             <section class="homePost">
                 <div class="homePost__title">
                     <p>{{ firstName }} {{ lastName }} </p>
-                    <p>Titre: {{ title }}</p>
-                    <p id="delete__flexbox">
-                        date : 12/01/2078 
-                        <button v-if="ownPost()" @click.prevent="GetToPost()" class="btn delete"><i class="fa fa-pen" aria-hidden="true"></i></button>
-                        <button v-if="ownPost()" @click.prevent="DeleteRequest()" class="btn delete"><i class="fa fa-trash" aria-hidden="true"></i></button>
-                        <div id="test-modal">
-                            <button id="show-modal" @click="showModal = true">Show Modal</button>
-                            <Modal v-if="showModal" @close="showModal = false"
-                            :id="this.id"
-                            :userId="this.userId"
-                            :title="this.title"
-                            :text="this.text"
-                            :image_url="this.image_url"
-                            />
+                    <p>{{ title }}</p>
+                    <div id="delete__flexbox">
+                        <p>12/01/2078 </p>
+                        <div class="dropdown">
+                            <button class="btn delete dropdown__icon"><i class="fa fa-ellipsis-h" aria-hidden="true"></i></button>
+                            <div class="dropdown__content">
+                                <button v-if="ownPost()" @click.prevent="showModal = true" class="btn delete"><i class="fa fa-pen" aria-hidden="true"></i></button>
+                                <button v-if="ownPost()" @click.prevent="DeleteRequest()" class="btn delete"><i class="fa fa-trash" aria-hidden="true"></i></button>
+                            </div>
                         </div>
+                    </div>
+                        
+                    <Modal v-if="showModal" @close="showModal = false"
+                    :id="this.id"
+                    :userId="this.userId"
+                    :title="this.title"
+                    :text="this.text"
+                    :image_url="this.image_url"
+                    />
                 </div>
                 <div class="homePost__text">
                     <p>Text: {{ text }} je vais devoir ecrire bcp de texteuuuuuuuuu  je vais devoir ecrire bcp de texteuuuuuuuuu 
@@ -331,6 +335,32 @@ import axios from 'axios'
         transform: scale(1.2);
         transition: all 200ms ease-in-out;
     }
+}
+
+.dropdown{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    &:hover .dropdown__icon{
+        opacity: 0;
+    }
+    &__content{
+        display: none;
+        position: absolute;
+        z-index: 1;
+        top: 20px;
+        right: 20px;
+        button{
+            display: block;
+        }
+    }
+    &:hover .dropdown__content{
+        display: flex;
+        flex-direction:column;
+        gap: 3px;
+        
+    }
+    
 }
 
 
