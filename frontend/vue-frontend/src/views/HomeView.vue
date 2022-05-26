@@ -7,6 +7,7 @@
        :key="index"
        :id="post.id"
        :userId="post.userId"
+       :created_at="post.createdAt"
        :firstName="post.User.firstName" 
        :lastName="post.User.lastName" 
        :title="post.name"

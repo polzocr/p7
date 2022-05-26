@@ -5,12 +5,12 @@
                     <p>{{ firstName }} {{ lastName }} </p>
                     <p>{{ title }}</p>
                     <div id="delete__flexbox">
-                        <p>12/01/2078 </p>
-                        <div class="dropdown">
+                        <p>{{ date() }} </p>
+                        <div v-if="ownPost()" class="dropdown">
                             <button class="btn delete dropdown__icon"><i class="fa fa-ellipsis-h" aria-hidden="true"></i></button>
                             <div class="dropdown__content">
-                                <button v-if="ownPost()" @click.prevent="showModal = true" class="btn delete"><i class="fa fa-pen" aria-hidden="true"></i></button>
-                                <button v-if="ownPost()" @click.prevent="DeleteRequest()" class="btn delete"><i class="fa fa-trash" aria-hidden="true"></i></button>
+                                <button @click.prevent="showModal = true" class="btn delete"><i class="fa fa-pen" aria-hidden="true"></i></button>
+                                <button @click.prevent="DeleteRequest()" class="btn delete"><i class="fa fa-trash" aria-hidden="true"></i></button>
                             </div>
                         </div>
                     </div>
@@ -93,6 +93,9 @@ import axios from 'axios'
                 required: true,
                 default: 0
             },
+            created_at:{
+                type: String
+            },
             nbComments:{
                 type: Number,
             },
@@ -129,6 +132,15 @@ import axios from 'axios'
             
         },
         methods: {
+            date(){
+                if(typeof this.created_at !== 'undefined'){
+                    const date =  this.created_at.split('T')[0]
+                    const day = date.split('-')[2]
+                    const month = date.split('-')[1]
+                    const year = date.split('-')[0]
+                    return day+ '/' + month + '/' + year
+                }
+            },
             CommentRequest(){
                 const textComment = document.getElementById('textComment').value
                 console.log('Voicie le text: ' + textComment)
