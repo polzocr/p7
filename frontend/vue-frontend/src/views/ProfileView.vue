@@ -155,8 +155,11 @@ export default {
 
 <style lang="scss">
 .profilePage{
-    height: 856px;
+    height: 1044px;
     margin-top:12%;
+    @include big-desktop{
+        margin-top: 8%;
+    }
     
 }
 
@@ -165,9 +168,12 @@ export default {
     border-radius: 20px;
     padding: 2%;
     width: 70%;
-    height: 70%;
+    height: 60%;
     margin: auto;
     display: flex;
+    @include small-desktop{
+        height: 50%;
+    }
     &__perso{
         width: 50%;
         &__icon{
@@ -177,6 +183,9 @@ export default {
                 font-size: 2420%;
                 //color: $primary-color;
                 color: $tertiary-color;
+                @include small-desktop{
+                    font-size: 2100%;
+                }
             }
         }
     }
@@ -190,6 +199,11 @@ export default {
         i{
                 font-size: 70px;
                 color: $primary-color;
+                @include small-desktop{
+                    font-size: 50px;
+                    display: flex;
+                    align-items: center;
+                }
         }
         p{
             font-size: 25px;
@@ -235,8 +249,14 @@ export default {
         height: 40%;
         margin-top: 2%;
         padding-left: 0;
+        @include small-desktop{
+            width: 100%;
+        }
         button{
             padding: 12px 45px;
+            @include small-desktop{
+                    margin: auto;
+            }
         }
     }
 }
@@ -281,6 +301,9 @@ export default {
         align-items: center;
         button{
             padding: 12px 45px;
+            @include small-desktop{
+                padding: 12px 30px;
+            }
         }
     }
 }
