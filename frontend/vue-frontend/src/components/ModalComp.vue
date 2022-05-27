@@ -9,7 +9,7 @@
                 <div class="modal__box__text">
                     <textarea id="text" :value="text" rows="5" cols="60"></textarea>
                 </div>
-                <div class="modal__box__image">
+                <div class="modal__box__image"  v-if="this.image_url !== null">
                     <img :src="image_url" alt="image_PutRequest"/>
                 </div>
                 <div class="modal__box__file">

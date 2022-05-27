@@ -10,7 +10,7 @@
                 <p v-if="haveError()"> {{ $store.state.error }} </p>
             </div>
             <div class="">
-               <button @blur="cleanStore()" type="submit" :disabled="isDisabled()" class="btn form__button" :class="{'disabled':isDisabled()}">
+               <button @blur="cleanStore()" type="submit" class="btn form__button" :class="{'disabled':isDisabled()}">
                   <span v-if="$store.state.status == 'loading'">Connexion en cours...</span>
                   <span v-else>Se connecter</span>
                </button>

@@ -2,7 +2,7 @@
     <section class="home">
             <section class="homePost">
                 <div class="homePost__title">
-                    <p id="names">{{ firstName }} {{ lastName }} </p>
+                    <p id="names" v-if="firstName">{{ firstName }} {{ lastName }} </p>
                     <p id="post-title">{{ title }}</p>
                     <div id="delete__flexbox">
                         <p>{{ date() }} </p>
@@ -46,7 +46,7 @@
                         <input v-model="textComment" id="textComment" type="text" placeholder="Votre commentaire"/>
                     </div>
                     <div class="homePost__comment__button">
-                        <button @click.prevent="CommentRequest()" class="btn btn-comment" >Commenter</button>
+                        <button @click.prevent="CommentRequest()" class="btn btn-comment" :class="{'disabled':isDisabled()}" >Commenter</button>
                     </div>
                 </div>
                 
@@ -123,7 +123,7 @@ import axios from 'axios'
                 showComment: false,
                 textComment: '',
                 comments: [{}],
-                showModal: false
+                showModal: false,
             }
         },
         beforeMount(){
@@ -141,13 +141,19 @@ import axios from 'axios'
                 }
             },
             CommentRequest(){
-                const textComment = document.getElementById('textComment').value
-                console.log('Voicie le text: ' + textComment)
-                console.log(this.textComment)
-                this.$store.dispatch('CreateCommentRequest', {
-                    PostId: this.id ,
-                    text: this.textComment
-                })
+                if(this.textComment !== ''){
+                    this.$store.dispatch('CreateCommentRequest', {
+                        PostId: this.id ,
+                        text: this.textComment
+                    })
+                }
+            },
+            isDisabled(){
+                if(this.textComment == "" ){
+                    return true;
+                }else {
+                    return false;
+                }
             },
             showComments(){
             this.comments = [{}];
@@ -388,11 +394,21 @@ import axios from 'axios'
     width: 90%;
     display: flex;
     justify-content: center;
+    
     @include mobiles{
         width: 50%;
         margin: auto;
         padding: 15px 45px;
     }
+    &.disabled{
+         background-color:darken($primary-color, 5);
+         color:lighten($primary-color, 20);
+         &:hover{
+            box-shadow:none;
+            cursor: wait ;
+            
+         }
+      }
     
 }
 
