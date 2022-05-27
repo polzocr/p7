@@ -14,14 +14,46 @@
       </div>
     </div>
     <div class="bodyPage" v-else>
-      <nav class="navbar">
+      <!-- <nav class="navbar">
           <router-link to="/" class="navbar__icon"><img src="../public/images/icon-white.png" alt="icone-groupomania"/></router-link>
           <router-link to="/createpost" class="navbar__create"><i class="fa fa-plus" aria-hidden="true"></i></router-link>
           <div class="navbar__profil">
             <router-link :to="{name: 'ProfileView', params:{id: this.$store.state.user.userId} }" ><i class="fa fa-user" aria-hidden="true"></i></router-link>
             <router-link @click.native="deconnexion()" to=""><i class="fa fa-arrow-right" aria-hidden="true"></i></router-link> 
           </div>
-      </nav>
+      </nav> -->
+      <div id="sidemenu">
+        <div class="sidemenu__nav">
+          <button class="sidemenu__btn" @blur="navOpen=!navOpen" @click="navOpen=!navOpen" :class="{active:navOpen}">
+              <span class="top"></span>
+              <span class="mid"></span>
+              <span class="bottom"></span>
+          </button>
+          <div class="sidemenu__logo">
+            <router-link to="/" class="top__logo__img"><img src="../public/images/icon-white.png" alt="icone-groupomania"/></router-link>
+          </div>
+        </div>
+        
+        <transition name="translateX">
+          <nav v-show="navOpen">
+            <div class="sidemenu__wrapper">
+              <div class="sidemenu__create">
+                <router-link to="/createpost" class="sidemenu__create__link"><i class="fa fa-plus" aria-hidden="true"></i>
+                  <p>Créer un article</p>
+                </router-link>
+              </div>
+              <div class="sidemenu__user">
+                <router-link :to="{name: 'ProfileView', params:{id: this.$store.state.user.userId} }" class="sidemenu__user__link" ><i class="fa fa-user" aria-hidden="true"></i>
+                  <p>Votre profile</p>
+                </router-link>
+                <router-link @click.native="deconnexion()" to="" class="sidemenu__user__link"><i class="fa fa-arrow-right" aria-hidden="true"></i>
+                  <p>Se Deconnecter</p>
+                </router-link> 
+              </div>
+            </div>
+          </nav>
+        </transition>
+      </div>
       <router-view/>
     </div> 
     
@@ -34,6 +66,7 @@ export default {
   name: 'App',
   data: function(){
     return {
+      navOpen: false
     }
   },
   methods: {
@@ -65,7 +98,10 @@ export default {
                 token: ''
             });
             this.$router.push('/login')
-        },
+    },
+    leaveNav(){
+      this.navOpen = false;
+    }
   },
 }
 </script>
@@ -232,22 +268,22 @@ nav{
   height: 70px;;
   overflow: hidden;
   z-index: 2;
-  &__icon{
-    float:left;
-    padding-left: 1%;
-    width: 250px;
-    height: 100%;
-    &:hover{
-      transform: scale(1.1);
-      transition: all 400ms;
-    }
+  // // &__icon{
+  // //   float:left;
+  // //   padding-left: 1%;
+  // //   width: 250px;
+  // //   height: 100%;
+  // //   &:hover{
+  // //     transform: scale(1.1);
+  // //     transition: all 400ms;
+  // //   }
 
-  }
-  & img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
+  // }
+  // & img {
+  //   width: 100%;
+  //   height: 100%;
+  //   object-fit: cover;
+  // }
   &__create{
     display: flex;
     justify-content: center;
@@ -286,10 +322,206 @@ nav{
       &:hover{
       transform: scale(1.2);
       transition: all 400ms;
-    }
+      }
     }
   }
 }
+
+
+
+#sidemenu {
+	nav {
+		width: 100%;
+		background: $tertiary-color;
+		position: fixed;
+		top: 70px;
+		left: 0;
+		z-index: 99;
+		// box-shadow: 2px 0 3px$grey-6;
+		// overflow-y: scroll;
+	}
+
+	.sidemenu {
+    &__nav{
+      width: 100%;
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 99;
+      display: flex;
+      gap: 2%;
+      padding-right: 2%;
+      background-color: $tertiary-color;
+    }
+    &__logo{
+      width: 78%;
+      height: 70px;
+      & img{
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+    }
+		&__btn {
+			display: block;
+			// width: 50px;
+      width: 18%;
+			height: 70px;
+			background: $tertiary-color;
+			border: none;
+			position: relative;
+			z-index: 100;
+			appearance: none;
+			cursor: pointer;
+			outline: none;
+
+			span {
+				display: block;
+				width: 20px;
+				height: 2px;
+				margin: auto;
+				background: white;
+				position: absolute;
+				top: 0;
+				bottom: 0;
+				left: 0;
+				right: 0;
+				transition: all .4s ease;
+
+				&.top {
+					transform: translateY(-8px);
+				}
+
+				&.bottom {
+					transform: translateY(8px);
+				}
+			}
+			&.active{
+				.top {
+					transform: rotate(-45deg);
+				}
+				.mid{
+					transform: translateX(-20px) rotate(360deg);
+					opacity: 0;
+				}
+				.bottom {
+					transform: rotate(45deg);
+				}
+			}
+
+		}
+
+  
+
+    
+
+
+
+		&__wrapper {
+      width: 95%;
+      margin: auto;
+      padding: 2%;
+      display: flex;
+      flex-direction: column;
+      align-items: start;
+      gap: 5px;
+      
+    }
+
+    &__create{
+      width: 100%;
+      &__link{
+        display: flex;
+        align-items: center;
+        justify-content: start;
+        width: 100%;
+        text-decoration: none;
+        gap: 10px;
+        i{
+          color: $primary-color;
+          font-size: 30px;
+          border: 2px solid $primary-color;
+          border-radius: 50%;
+          padding: 3%;
+           &:hover{
+            transform: scale(1.2);
+            transition: all 400ms ease-in-out;
+          }
+        }
+        p{
+          text-align: start;
+          font-size: 25px;
+          color: $primary-color;
+        }
+      }
+    }
+
+    &__user{
+      width: 100%;
+      &__link{
+        display: flex;
+        align-items: center;
+        justify-content: start;
+        width: 100%;
+        text-decoration: none;
+        gap: 10px;
+        i{
+          color: $primary-color;
+          font-size: 30px;
+          border: 2px solid $primary-color;
+          border-radius: 50%;
+          padding: 3%;
+           &:hover{
+            transform: scale(1.2);
+            transition: all 400ms ease-in-out;
+          }
+        }
+        p{
+          text-align: start;
+          font-size: 25px;
+          color: $primary-color;
+        }
+      }
+    }
+
+		
+
+		&__item {
+			a {
+        text-decoration: none;
+				line-height: 1.6em;
+				font-size: 1.6em;
+				padding: .5em;
+				display: block;
+				color: white;
+				transition: .4s ease;
+
+				&:hover {
+					background: lightgrey;
+					color: dimgrey;
+				}
+			}
+		}
+	}
+}
+
+
+
+.translateX-enter{
+	transform:translateX(-200px);
+	opacity: 0;
+}
+
+.translateX-enter-active,.translateX-leave-active{
+	transform-origin: top left 0;
+	transition:.2s ease;
+}
+
+.translateX-leave-to{
+	transform: translateX(-200px);
+	opacity: 0;
+}
+
 
 
 </style>
