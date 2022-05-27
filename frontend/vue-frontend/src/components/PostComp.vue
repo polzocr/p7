@@ -51,7 +51,7 @@
                 </div>
                 
 
-                <section class="commentsPage" v-if="showComments">
+                <section class="commentsPage" v-if="showComment">
                 <CommentComp v-for="(comment, index) in this.comments"
                 :key="index"
                 :firstName="comment.UserFirstName"
@@ -505,6 +505,7 @@ import axios from 'axios'
 .commentsPage{
     width: 95%;
     margin: auto;
+    padding-bottom: 3%;
 }
 
 
