@@ -8,12 +8,11 @@
        :id="post.id"
        :userId="post.userId"
        :created_at="post.createdAt"
-       :firstName="post.User.firstName" 
-       :lastName="post.User.lastName" 
+       :user="post.User"  
        :title="post.name"
        :text="post.text"
        :image_url="post.image_url"
-       :nbComments="post.Comments.length"
+       :nbComments="post.Comments"
        />
     </main>
 </template>

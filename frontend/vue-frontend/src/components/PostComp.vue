@@ -2,7 +2,7 @@
     <section class="home">
             <section class="homePost">
                 <div class="homePost__title">
-                    <p id="names" >{{ firstName }} {{ lastName }} </p>
+                    <p id="names" v-if="user" >{{ user.firstName }} {{ user.lastName }}</p>
                     <p id="post-title">{{ title }}</p>
                     <div id="delete__flexbox">
                         <p>{{ date() }} </p>
@@ -34,7 +34,7 @@
                 <div class="homePost__footer">
                         <div class="homePost__footer__comment">
                             <i @click="showComments()" class="fa fa-comment" aria-hidden="true"></i>
-                            <p id="nbComments">{{ nbComments }}</p>
+                            <p id="nbComments" v-if="nbComments">{{ nbComments.length }}</p>
                         </div>
                         <div class="homePost__footer__like">
                             <i class="fa fa-thumbs-up" aria-hidden="true"></i>
@@ -96,14 +96,12 @@ import axios from 'axios'
                 type: String
             },
             nbComments:{
-                type: Number,
+                type: Array,
             },
-            firstName: {
-                type:String,
+            user: {
+                type:Object,
             },
-            lastName: {
-                type: String,
-            },
+            
             title: {
                 type: String,
             },
@@ -126,8 +124,7 @@ import axios from 'axios'
                 showModal: false,
             }
         },
-        beforeMount(){
-            //this.$store.dispatch('GetCommentsRequest', this.id );
+        computed:{
             
         },
         methods: {
