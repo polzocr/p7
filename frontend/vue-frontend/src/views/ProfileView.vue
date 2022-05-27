@@ -44,7 +44,7 @@
                         <input type="text" v-model="firstName">
                     </div>
                     <div class="modify__email">
-                        <input type="text" v-model="email">
+                        <input id="email" type="text" v-model="email">
                     </div>
                     <div class="modify__button">
                         <div class="modify__button__1">
@@ -124,26 +124,43 @@ export default {
         ModifyUser(){
             this.modify= false
         },
+        testEmail(){
+            const regexEmail = /^(([^<>()\]\\.,;:\s@"]+(\.[^<>()\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+            if(regexEmail.test(this.email)){
+                return true;
+            } else {
+                document.getElementById('email').value = "L'email n'est pas valide!"
+                return false;
+            }
+        },
+        isEmpty(){
+            if(this.lastName == "" || this.email == "" ){
+                return true;
+            }else {
+                return false;
+            }
+        },
         UpdateUserRequest(){
-            const user = JSON.parse(localStorage.getItem('user'));
-            const instance = axios.create({baseURL: 'http://localhost:3000/',});
-            instance.defaults.headers.common['Authorization'] = 'Bearer ' + user.token;
-            const id = this.$store.state.user.userId;
-            instance.put('/user/' + id, {
-                lastName: this.lastName,
-                firstName: this.firstName,
-                email: this.email
-            })
-            .then(user => {
-                console.log(user.data);
-                this.$router.push('/')
-                .then(() => {
-                    this.$router.push('/profile/' + id)
+            if(!this.isEmpty() && this.testEmail()){
+                const user = JSON.parse(localStorage.getItem('user'));
+                const instance = axios.create({baseURL: 'http://localhost:3000/',});
+                instance.defaults.headers.common['Authorization'] = 'Bearer ' + user.token;
+                const id = this.$store.state.user.userId;
+                instance.put('/user/' + id, {
+                    lastName: this.lastName,
+                    firstName: this.firstName,
+                    email: this.email
                 })
-                .catch(error => console.log({error}))
-                
-            })
-            .catch(error => console.log(error));
+                .then(user => {
+                    console.log(user.data);
+                    this.$router.push('/')
+                    .then(() => {
+                        this.$router.push('/profile/' + id)
+                    })
+                    .catch(error => console.log({error}))
+                })
+                .catch(error => console.log(error));
+            }
         },
         DeleteUserRequest(){
             const id = this.$route.params.id;

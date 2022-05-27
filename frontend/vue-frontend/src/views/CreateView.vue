@@ -2,7 +2,7 @@
     <section class="createPost">
         <form action="" @submit.prevent="PostRequest" class="createPost__form">
             <div class="createPost__form__title">
-                <input v-model="name" type="text" placeholder="Titre">
+                <input v-model="title" type="text" placeholder="Titre">
             </div>
             <div class="createPost__form__text">
                 <!-- <input v-model="text" type="text" placeholder="Text"> -->
@@ -12,8 +12,8 @@
                 <label class="btn upload" for="upload">Choisir un fichier</label>
                 <input @change="changeFile()" id="upload" type="file" accept="image/*" ref="fileInput" name="image">
             </div>  
-            <div class="createPost__form__button">
-                <button class="btn" type="submit">Créer votre article</button>
+            <div class="createPost__form__button" >
+                <button class="btn" :class="{'disabled': isDisabled()}" type="submit">Créer votre article</button>
             </div>            
         </form>
     </section>
@@ -25,7 +25,7 @@ export default {
     name: 'CreateView',
     data: function(){
         return {
-            name: '',
+            title: '',
             text: '',
             file: '',
         }
@@ -35,8 +35,17 @@ export default {
                 this.file = this.$refs.fileInput.files[0];
             },
         PostRequest(){
-            const data = {'image': this.file, 'name':this.name, 'text':this.text, 'userId': this.$store.state.user.userId}
-            this.$store.dispatch('PostPostRequest', {data})
+            const data = {'image': this.file, 'name':this.title, 'text':this.text, 'userId': this.$store.state.user.userId}
+            if(!this.isDisabled()){
+                this.$store.dispatch('PostPostRequest', {data})
+            }
+        },
+        isDisabled(){
+            if(this.title == ''){
+                return true;
+            }else {
+                return false;
+            }
         },
     },
     beforeCreate(){
@@ -143,9 +152,23 @@ export default {
             display: flex;
             justify-content: center;
             align-items: center;
+            .btn{
+                &.disabled{
+                    background-color:darken($primary-color, 5);
+                    color:lighten($primary-color, 20);
+                    &:hover{
+                        box-shadow:none;
+                        cursor: wait ;
+                        
+                    }
+                }
+            }
         }
+
     }    
 }
+
+
 
 .upload {
     background-color: $tertiary-color;

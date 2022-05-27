@@ -2,7 +2,7 @@
     <section class="home">
             <section class="homePost">
                 <div class="homePost__title">
-                    <p id="names" v-if="firstName">{{ firstName }} {{ lastName }} </p>
+                    <p id="names" >{{ firstName }} {{ lastName }} </p>
                     <p id="post-title">{{ title }}</p>
                     <div id="delete__flexbox">
                         <p>{{ date() }} </p>
@@ -408,7 +408,7 @@ import axios from 'axios'
             cursor: wait ;
             
          }
-      }
+    }
     
 }
 

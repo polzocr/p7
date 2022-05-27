@@ -33,7 +33,7 @@ export default {
         name: "ModalComp",
         data: function(){
             return {
-
+                getDisabled: false,
             }
         },
         props: {
@@ -58,6 +58,15 @@ export default {
             }
         },
         methods: {
+            isDisabled(){
+                const title = document.getElementById('title').value
+                console.log(title)
+                if(title == ''){
+                    return this.getDisabled = true;
+                }else {
+                    return this.getDisabled = false;
+                }
+            },
             changeFile(){
                 this.file = this.$refs.fileInput.files[0];
             },
@@ -66,11 +75,16 @@ export default {
                 const title = document.getElementById('title').value;
                 const text = document.getElementById('text').value;
                 const data = {'image': this.file, 'name':title, 'text':text , 'id':this.id}
-                if(user.userId !== this.userId){
-                    this.$router.push('/login')
+                if(title !== ''){
+                    if(user.userId !== this.userId){
+                        this.$router.push('/login')
+                    } else {
+                        this.$store.dispatch('PutPostRequest', {data})
+                    }
                 } else {
-                this.$store.dispatch('PutPostRequest', {data})
+                    document.getElementById('title').placeholder = "Le titre est indispensable"
                 }
+                
             },
             DeleteRequest(){
                 const user =  JSON.parse(localStorage.getItem('user'))
@@ -223,6 +237,15 @@ export default {
         display: flex;
         justify-content: center;
         padding: 10px 49px
+    }
+    &.disabled{
+        background-color:darken($primary-color, 5);
+        color:lighten($primary-color, 20);
+        &:hover{
+            box-shadow:none;
+            cursor: wait ;
+            
+        }
     }
 }
 

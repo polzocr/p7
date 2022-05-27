@@ -99,9 +99,6 @@ export default {
             });
             this.$router.push('/login')
     },
-    leaveNav(){
-      this.navOpen = false;
-    }
   },
 }
 </script>

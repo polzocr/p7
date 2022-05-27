@@ -1,6 +1,6 @@
 <template>
     <main>
-       <PostComp v-for="(post, index) in this.$store.state.posts.slice().reverse()"
+       <PostComp  v-for="(post, index) in postsReverse"
        @Commenting="CommentRequest" 
        @modify="getToPost"
        :modify="modify"
@@ -56,7 +56,9 @@ export default {
         },
     },
     computed:{
-        
+        postsReverse(){
+            return this.$store.state.posts.slice().reverse()
+        }
     }
 }
 </script>
