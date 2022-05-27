@@ -40,7 +40,7 @@
                 </div>
                 <div class="modify">
                     <div class="modify__name">
-                        <input type="text" v-model="lastName">
+                        <input id="lastname" type="text" v-model="lastName">
                         <input type="text" v-model="firstName">
                     </div>
                     <div class="modify__email">
@@ -133,15 +133,25 @@ export default {
                 return false;
             }
         },
-        isEmpty(){
-            if(this.lastName == "" || this.email == "" ){
-                return true;
-            }else {
+        nameExist(){
+            if(this.lastName == ""){
+                document.getElementById('lastname').placeholder = "Votre nom est requis"
+                document.getElementById('email').placeholder = "Votre e-mail est requis"
                 return false;
+            }else {
+                return true;
+            }
+        },
+        emailExist(){
+            if(this.email == ""){
+                document.getElementById('email').placeholder = "Votre e-mail est requis"
+                return false;
+            }else {
+                return true;
             }
         },
         UpdateUserRequest(){
-            if(!this.isEmpty() && this.testEmail()){
+            if(this.nameExist() && this.emailExist() && this.testEmail()){
                 const user = JSON.parse(localStorage.getItem('user'));
                 const instance = axios.create({baseURL: 'http://localhost:3000/',});
                 instance.defaults.headers.common['Authorization'] = 'Bearer ' + user.token;
