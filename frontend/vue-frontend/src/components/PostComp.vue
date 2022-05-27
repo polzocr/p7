@@ -479,7 +479,7 @@ import axios from 'axios'
         position: absolute;
         z-index: 1;
         top: 20px;
-        right: 25px;
+        right: 20px;
         @include mobiles{
             display: flex;
             gap: 10px;

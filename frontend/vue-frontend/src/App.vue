@@ -24,7 +24,7 @@
       </nav> -->
       <div id="sidemenu">
         <div class="sidemenu__nav">
-          <button class="sidemenu__btn" @blur="navOpen=!navOpen" @click="navOpen=!navOpen" :class="{active:navOpen}">
+          <button class="sidemenu__btn" @blur="navOpen=false" @click="navOpen=!navOpen" :class="{active:navOpen}">
               <span class="top"></span>
               <span class="mid"></span>
               <span class="bottom"></span>
@@ -330,6 +330,16 @@ nav{
 
 
 #sidemenu {
+  @include all-desktop{
+    width: 100%;
+    height: 80px;
+    background-color: $tertiary-color;
+    display: flex;
+    justify-content: center;
+    position: fixed;
+    top: 0;
+    z-index: 2;
+  }
 	nav {
 		width: 100%;
 		background: $tertiary-color;
@@ -337,11 +347,15 @@ nav{
 		top: 70px;
 		left: 0;
 		z-index: 99;
-		// box-shadow: 2px 0 3px$grey-6;
-		// overflow-y: scroll;
+    @include all-desktop{
+      display: block !important;
+      width: 70%;
+      position: initial;
+    }
 	}
 
 	.sidemenu {
+    
     &__nav{
       width: 100%;
       position: fixed;
@@ -352,10 +366,19 @@ nav{
       gap: 2%;
       padding-right: 2%;
       background-color: $tertiary-color;
+      @include all-desktop{
+        padding-left: 1%;
+        position: initial;
+        width: 30%;
+      }
     }
     &__logo{
       width: 78%;
       height: 70px;
+      @include all-desktop{
+        width: 100%;
+        height: 80px;
+      }
       & img{
         width: 100%;
         height: 100%;
@@ -364,8 +387,7 @@ nav{
     }
 		&__btn {
 			display: block;
-			// width: 50px;
-      width: 18%;
+      width: 16%;
 			height: 70px;
 			background: $tertiary-color;
 			border: none;
@@ -374,6 +396,9 @@ nav{
 			appearance: none;
 			cursor: pointer;
 			outline: none;
+      @include all-desktop{
+        display: none;
+      }
 
 			span {
 				display: block;
@@ -425,11 +450,45 @@ nav{
       flex-direction: column;
       align-items: start;
       gap: 5px;
-      
+      @include all-desktop{
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0;
+        width: 100%;
+        height: 100%;
+      }
+      p{
+        text-align: start;
+        font-size: 25px;
+        color: $primary-color;
+        @include all-desktop{
+          display: none;
+        }
+      }
+      i{
+        color: $primary-color;
+        font-size: 30px;
+        border: 2px solid $primary-color;
+        border-radius: 50%;
+        padding: 3%;
+          &:hover{
+          transform: scale(1.2);
+          transition: all 400ms ease-in-out;
+        }
+        @include all-desktop{
+          font-size: 50px;
+          padding: 3%;
+        }
+      }
     }
 
     &__create{
       width: 100%;
+      @include all-desktop{
+        width: 25%;
+        margin-left: 15%;
+      }
       &__link{
         display: flex;
         align-items: center;
@@ -437,27 +496,19 @@ nav{
         width: 100%;
         text-decoration: none;
         gap: 10px;
-        i{
-          color: $primary-color;
-          font-size: 30px;
-          border: 2px solid $primary-color;
-          border-radius: 50%;
-          padding: 3%;
-           &:hover{
-            transform: scale(1.2);
-            transition: all 400ms ease-in-out;
-          }
-        }
-        p{
-          text-align: start;
-          font-size: 25px;
-          color: $primary-color;
+        @include all-desktop{
+          justify-content: center;
         }
       }
     }
 
     &__user{
       width: 100%;
+      @include all-desktop{
+        display: flex;
+        align-items: center;
+        width: 15%;
+      }
       &__link{
         display: flex;
         align-items: center;
@@ -465,21 +516,13 @@ nav{
         width: 100%;
         text-decoration: none;
         gap: 10px;
-        i{
-          color: $primary-color;
-          font-size: 30px;
-          border: 2px solid $primary-color;
-          border-radius: 50%;
-          padding: 3%;
-           &:hover{
-            transform: scale(1.2);
-            transition: all 400ms ease-in-out;
-          }
+        @include all-desktop{
+          justify-content: center;
         }
-        p{
-          text-align: start;
-          font-size: 25px;
-          color: $primary-color;
+        i{
+          @include all-desktop{
+            border: none;
+          }
         }
       }
     }
@@ -504,7 +547,6 @@ nav{
 		}
 	}
 }
-
 
 
 .translateX-enter{
