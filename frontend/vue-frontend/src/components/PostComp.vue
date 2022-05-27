@@ -51,7 +51,7 @@
                 </div>
                 
 
-                <section class="commentsPage" v-if="showComment">
+                <section class="commentsPage" v-if="showComment && nbComments.length !== 0">
                 <CommentComp v-for="(comment, index) in this.comments"
                 :key="index"
                 :firstName="comment.UserFirstName"
