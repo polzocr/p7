@@ -1,5 +1,6 @@
 <template>
     <main>
+        
        <PostComp  v-for="(post, index) in postsReverse"
        @Commenting="CommentRequest" 
        @modify="getToPost"

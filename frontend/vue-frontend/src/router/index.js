@@ -6,6 +6,7 @@ import SignupView from '../views/SignupView.vue'
 import PostView from '../views/PostView.vue'
 import CreateView from '../views/CreateView.vue'
 import ProfileView from '../views/ProfileView.vue'
+import AdminView from '../views/AdminView.vue'
 
 Vue.use(VueRouter)
 
@@ -40,6 +41,11 @@ Vue.use(VueRouter)
     path: '/post/:id',
     name: 'PostView',
     component: PostView
+  },
+  {
+    path: '/users',
+    name: 'AdminView',
+    component: AdminView
   },
   
 ]

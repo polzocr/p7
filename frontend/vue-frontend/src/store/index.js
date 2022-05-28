@@ -40,6 +40,7 @@ export default new Vuex.Store({
     error: '',
     status: '',
     user: userLocal,
+    users: [{}],
     posts: [{}],
     post : {
 
@@ -112,6 +113,14 @@ export default new Vuex.Store({
       localStorage.removeItem('user');
       context.state.user = userInit;
     },
+    GetAllUsersRequest(context){
+      instance.get('/users')
+      .then(users => {
+        context.state.users = users.data
+        console.log(users.data)
+      })
+      .catch(error => console.log(error))
+    },
     GetPostsRequest(context){
       instance.get('/')
       .then(posts => {
@@ -153,10 +162,15 @@ export default new Vuex.Store({
     DeleteUserRequest(context, id){
       instance.delete('/user/' + id)
       .then(() => {
-        console.log('Utilisateur supprimé avec succès');
-        localStorage.removeItem('user');
-        context.state.user = userInit;
-        router.push('/login')
+        if(context.state.user.userId == 1){
+          router.push('/')
+          .then(() => router.push('/users'))
+          .catch(error => console.log(error))          
+        } else {
+          localStorage.removeItem('user');
+          context.state.user = userInit;
+          router.push('/login')
+        }
       })
       .catch(error => console.log(error));
     },

@@ -49,6 +49,9 @@
                 <router-link @click.native="deconnexion()" to="" class="sidemenu__user__link"><i class="fa fa-arrow-right" aria-hidden="true"></i>
                   <p>Se Deconnecter</p>
                 </router-link> 
+                <router-link v-if="isAdmin()" to="/users" class="sidemenu__user__link"><i class="fa fa-lock" aria-hidden="true"></i>
+                  <p>Page Admin</p>
+                </router-link> 
               </div>
             </div>
           </nav>
@@ -98,6 +101,14 @@ export default {
                 token: ''
             });
             this.$router.push('/login')
+    },
+    isAdmin(){
+      const user = JSON.parse(localStorage.getItem('user'));
+      if(user.userId == 1){
+          return true
+      } else {
+          return false
+      }
     },
   },
 }
@@ -245,6 +256,13 @@ body{
   &:hover {
     box-shadow: 0 0 10px 0 $primary-color inset, 0 0 10px 4px $primary-color;
     background-color: transparent;
+  }
+}
+
+.admin{
+  &__link{
+    text-decoration: none;
+    color: $tertiary-color;
   }
 }
 
@@ -504,7 +522,7 @@ nav{
       @include all-desktop{
         display: flex;
         align-items: center;
-        width: 15%;
+        width: 20%;
       }
       &__link{
         display: flex;
