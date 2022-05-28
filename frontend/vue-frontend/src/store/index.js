@@ -117,7 +117,6 @@ export default new Vuex.Store({
       instance.get('/users')
       .then(users => {
         context.state.users = users.data
-        console.log(users.data)
       })
       .catch(error => console.log(error))
     },

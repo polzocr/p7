@@ -4,7 +4,6 @@
             <div>
                 <h1>Page administrateur</h1>
             </div>
-            <div class="users">
                 <User v-for="(user,index) in this.$store.state.users"
                 :key="index"
                 :id="user.id"
@@ -12,7 +11,6 @@
                 :lastName="user.lastName"
                 :email="user.email"
                 />
-            </div>
         </section>
     </main>
 </template>
