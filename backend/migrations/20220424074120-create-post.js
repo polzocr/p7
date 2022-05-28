@@ -26,18 +26,6 @@ module.exports = {
       },
       image_url: {
         type: Sequelize.STRING
-      },
-      likes: {
-        type: Sequelize.INTEGER
-      },
-      dislikes: {
-        type: Sequelize.INTEGER
-      },
-      userLiked: {
-        type: Sequelize.STRING
-      },
-      userDisliked: {
-        type: Sequelize.STRING
       },      
       createdAt: {
         allowNull: false,

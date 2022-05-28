@@ -28,7 +28,7 @@ module.exports = {
       },
       stateLike: {
         allowNull:false,
-        type: Sequelize.INTEGER
+        type: Sequelize.BOOLEAN
       },
       createdAt: {
         allowNull: false,

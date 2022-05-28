@@ -45,6 +45,12 @@ exports.getOneUser = (req,res,next) => {
     .catch(error => res.status(404).json({error:'Utilisateur non trouvé'}));
 };
 
+exports.getAllUsers = (req, res, next) => {
+    db.User.findAll()
+    .then(users => res.status(200).json(users))
+    .catch(error => res.status(400).json({error}));
+}
+
 exports.updateUser = (req, res, next) => {
     const userObject = {...req.body};
     db.User.findOne({where: {id:req.params.id} })
@@ -65,12 +71,13 @@ exports.deleteUser = (req,res,next) => {
         if(!user){
             return res.status(404).json({error: "Utilisateur non trouvé 1"})
         }
-        if(user.id !== req.auth.userId){
+        if(req.auth.userId == 1 || user.id == req.auth.userId){
+            db.User.destroy({where: {id:req.params.id} })
+            .then(() => res.status(200).json({message: 'Utilisateur supprimé avec succès !'}))
+            .catch(error => res.status(400).json({error:"Erreur ici"}));
+        } else {
             return res.status(401).json({error: "Requête non autorisée"})
-        }
-        db.User.destroy({where: {id:req.params.id} })
-        .then(() => res.status(200).json({message: 'Utilisateur supprimé avec succès !'}))
-        .catch(error => res.status(400).json({error:"Erreur ici"}));
+        }        
     })
     .catch(error => res.status(404).json({error:'Utilisateur non trouvé 2'}));
 };
