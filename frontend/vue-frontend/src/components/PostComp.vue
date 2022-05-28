@@ -260,6 +260,7 @@ import axios from 'axios'
 
 .homePost{
     background-color: $secondary-color;
+    
     border-radius: 30px;
     @include mobiles{
         border-radius: 20px;

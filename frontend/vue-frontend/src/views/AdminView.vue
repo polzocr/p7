@@ -1,8 +1,9 @@
 <template>
     <main>
         <section>
-            <div>
+            <div class="title">
                 <h1>Page administrateur</h1>
+                <p>{{ this.$store.state.users.length }} utilisateurs</p>
             </div>
                 <User v-for="(user,index) in this.$store.state.users"
                 :key="index"
@@ -40,6 +41,17 @@ export default {
 main{
     margin-top: 25%;
     min-height: 1000px;
+    @include not-mobiles{
+        margin-top: 10%;
+    }
+}
+
+.title{
+    p{
+        font-size: 20px;
+        color: $tertiary-color;
+        font-weight: 700;
+    }
 }
 
 </style>
