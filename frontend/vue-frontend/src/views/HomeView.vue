@@ -65,5 +65,7 @@ export default {
 </script>
 
 <style lang='scss'>
-
+    main{
+        padding-bottom: 20%;
+    }
 </style>

@@ -36,16 +36,26 @@
                             <p id="nbComments" v-if="nbComments">{{ nbComments.length }}</p>
                         </div>
                             <div class="homePost__footer__like" v-if="likes && like()" >
-                                <p> {{nbLikes()}}</p>
-                                <i @click="LikePostRequest(2)" class="fa fa-thumbs-up" :class="this.liked? 'btn-like':'btn-unlike none'" aria-hidden="true"></i>
-                                <p> {{nbDislikes()}}</p>
-                                <i  @click="LikePostRequest(0)" class="fa fa-thumbs-down" :class="!this.liked? 'btn-like':'btn-unlike none'" aria-hidden="true"></i> 
+                                <div class="homePost__footer__like__like">
+                                    <i @click="LikePostRequest(2)" class="fa fa-thumbs-up" :class="this.liked? 'btn-like':'btn-unlike none'" aria-hidden="true"></i>
+                                    <p> {{nbLikes()}}</p>
+                                </div>
+                                <div class="homePost__footer__like__dislike">
+                                    <i  @click="LikePostRequest(0)" class="fa fa-thumbs-down" :class="!this.liked? 'btn-like':'btn-unlike none'" aria-hidden="true"></i> 
+                                    <p> {{nbDislikes()}}</p>
+                                </div>
                             </div>
                             <div class="homePost__footer__like" v-if="likes && !like()" >
-                                <p>{{ nbLikes() }}</p>
-                                <i  @click="LikePostRequest(1)" class="fa fa-thumbs-up btn-unlike liked" aria-hidden="true"></i>
-                                <p>{{ nbDislikes() }}</p>
-                                <i  @click="LikePostRequest(-1)" class="fa fa-thumbs-down btn-unlike liked" aria-hidden="true"></i>
+                                <div>
+                                    <i  @click="LikePostRequest(1)" class="fa fa-thumbs-up btn-unlike liked" aria-hidden="true"></i>
+                                    <p>{{ nbLikes() }}</p>
+                                </div>
+                                <div>
+                                    <i  @click="LikePostRequest(-1)" class="fa fa-thumbs-down btn-unlike liked" aria-hidden="true"></i>
+                                    <p>{{ nbDislikes() }}</p>
+                                </div>
+                                
+                                
                             </div>
                         </div>
                 <div class="homePost__comment">
@@ -215,26 +225,27 @@ import axios from 'axios'
                 }
             },
             showComments(){
-            this.comments = [{}];
-            const user =  JSON.parse(localStorage.getItem('user'))
-            const instance = axios.create({baseURL: 'http://localhost:3000/',});
-            instance.defaults.headers.common['Authorization'] = 'Bearer ' + user.token;
-            instance.get('/'+ this.id + '/comments')
-            .then(comments => {
-                comments.data.forEach(element => {
-                    this.comments.push({
-                        UserFirstName: element.User.firstName,
-                        UserLastName: element.User.lastName,
-                        text: element.text,
-                        created_at: element.createdAt
+                if(this.nbComments.length !== 0){
+                    this.comments = [{}];
+                    const user =  JSON.parse(localStorage.getItem('user'))
+                    const instance = axios.create({baseURL: 'http://localhost:3000/',});
+                    instance.defaults.headers.common['Authorization'] = 'Bearer ' + user.token;
+                    instance.get('/'+ this.id + '/comments')
+                    .then(comments => {
+                        comments.data.forEach(element => {
+                            this.comments.push({
+                                UserFirstName: element.User.firstName,
+                                UserLastName: element.User.lastName,
+                                text: element.text,
+                                created_at: element.createdAt
+                            })
+                        })
+                    }).then(() => {
+                        this.showComment = !this.showComment
                     })
-                })
-            }).then(() => {
-                this.showComment = !this.showComment
-            })
-            .catch(error => console.log(error))
-            .catch(error => console.log(error ,'Insuccès de lappel des commentaires'));
-            
+                    .catch(error => console.log(error))
+                    .catch(error => console.log(error ,'Insuccès de lappel des commentaires'));
+                }
             },
             ownPost(){
                 const user = JSON.parse(localStorage.getItem('user'))
@@ -369,9 +380,14 @@ import axios from 'axios'
     &__footer{
         padding-left:2.5%;
         padding-right:2.5%;
+        padding-top: 5%;
         display: flex;
         justify-content: space-between;
+        align-items: center;
         position: relative;
+        @include all-desktop{
+            padding-top: 2%;
+        }
         &:after{
             content:"";
             position: absolute;
@@ -398,6 +414,20 @@ import axios from 'axios'
             display: flex;
             justify-content: space-between;
             align-items: center;
+            gap: 20px;
+            p{
+                font-size: 13px;
+                color: $tertiary-color;
+                font-weight: 700;
+                margin-bottom: 0;
+                text-align: center;
+            }
+            &__like{
+                width: 50%;
+            }
+            &__dislike{
+                width: 50%;
+            }
             
         }
     }
@@ -578,18 +608,25 @@ import axios from 'axios'
     &:hover{
         cursor: pointer;
         color: $tertiary-color;
-        transform: scale(1.2);
-        transition: all 200ms ease-in-out;
+        @include mobiles{
+        font-size: 25px;
+    }
     }
 }
 
 
 .none{
-    font-size: 25px;
+    font-size: 35px;
+    @include mobiles{
+        font-size: 25px;
+    }
     &:hover{
         cursor: default;
         color: rgb(190, 187, 187);
         transform: none;
+        @include mobiles{
+        font-size: 25px;
+    }
     }
 }
 
@@ -603,8 +640,9 @@ import axios from 'axios'
     &:hover{
         cursor: pointer;
         color: rgb(190, 187, 187);
-        transform: scale(0.8);
-        transition: all 200ms ease-in-out;
+        @include mobiles{
+        font-size: 25px;
+    }
     }
 }
 
