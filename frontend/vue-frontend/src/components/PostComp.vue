@@ -32,22 +32,22 @@
                 </div>
                 <div class="homePost__footer">
                         <div class="homePost__footer__comment">
-                            <i @click="showComments()" class="fa fa-comment" aria-hidden="true"></i>
+                            <i @click="showComments()" class="fa fa-comment btn-normal" aria-hidden="true"></i>
                             <p id="nbComments" v-if="nbComments">{{ nbComments.length }}</p>
                         </div>
-                        <div class="homePost__footer__like" v-if="likes && like()">
+                            <div class="homePost__footer__like" v-if="likes && like()" >
                                 <p> {{nbLikes()}}</p>
-                                <i  class="fa fa-thumbs-up" :class="{'btn-like': this.liked}" aria-hidden="true"></i>
+                                <i @click="LikePostRequest(2)" class="fa fa-thumbs-up" :class="this.liked? 'btn-like':'btn-unlike none'" aria-hidden="true"></i>
                                 <p> {{nbDislikes()}}</p>
-                                <i  class="fa fa-thumbs-down" :class="{'btn-like': !this.liked}" aria-hidden="true"></i> 
+                                <i  @click="LikePostRequest(0)" class="fa fa-thumbs-down" :class="!this.liked? 'btn-like':'btn-unlike none'" aria-hidden="true"></i> 
+                            </div>
+                            <div class="homePost__footer__like" v-if="likes && !like()" >
+                                <p>{{ nbLikes() }}</p>
+                                <i  @click="LikePostRequest(1)" class="fa fa-thumbs-up btn-unlike liked" aria-hidden="true"></i>
+                                <p>{{ nbDislikes() }}</p>
+                                <i  @click="LikePostRequest(-1)" class="fa fa-thumbs-down btn-unlike liked" aria-hidden="true"></i>
+                            </div>
                         </div>
-                        <div class="homePost__footer__like" v-else>
-                            <p>{{ nbLikes() }}</p>
-                            <i class="fa fa-thumbs-up" aria-hidden="true"></i>
-                            <p>{{ nbDislikes() }}</p>
-                            <i class="fa fa-thumbs-down" aria-hidden="true"></i>
-                        </div>
-                </div>
                 <div class="homePost__comment">
                     <div class="homePost__comment__input">
                         <input v-model="textComment" id="textComment" type="text" placeholder="Votre commentaire"/>
@@ -131,7 +131,7 @@ import axios from 'axios'
                 textComment: '',
                 comments: [{}],
                 showModal: false,
-                liked: false
+                liked: -1
             }
         },
         computed:{
@@ -173,7 +173,22 @@ import axios from 'axios'
                 } else {
                     return false
                 }
-                
+            },
+            LikePostRequest(like){
+                if(like == -1 || like == 1){
+                    this.$store.dispatch('LikePostRequest', {
+                        id: this.id,
+                        //exactLocation: y, 
+                        like: like,
+                    })
+                } else if((like == 2 && this.liked) || (like == 0 && !this.liked)){
+                    this.$store.dispatch('LikePostRequest', {
+                        id: this.id,
+                        //exactLocation :y,
+                        like: 0
+
+                    })
+                }              
             },
             date(){
                 if(typeof this.created_at !== 'undefined'){
@@ -505,15 +520,6 @@ import axios from 'axios'
     }
 }
 
-.fa-comment{
-    &:hover{
-        cursor: pointer;
-        color: $primary-color;
-        transform: scale(1.2);
-        transition: all 200ms ease-in-out;
-    }
-}
-
 .dropdown{
     display: flex;
     justify-content: center;
@@ -563,19 +569,61 @@ import axios from 'axios'
     padding-bottom: 3%;
 }
 
-.btn-like{
-    color: yellow;
+.btn-unlike{
+    color: rgb(190, 187, 187);
+    font-size: 35px;
+    @include mobiles{
+        font-size: 25px;
+    }
+    &:hover{
+        cursor: pointer;
+        color: $tertiary-color;
+        transform: scale(1.2);
+        transition: all 200ms ease-in-out;
+    }
 }
 
-.homePost__footer__like {
-    i{
-        font-size: 35px;
-        color: $tertiary-color;
-        @include mobiles{
-            font-size: 25px;;
-        }
-    }   
+
+.none{
+    font-size: 25px;
+    &:hover{
+        cursor: default;
+        color: rgb(190, 187, 187);
+        transform: none;
+    }
 }
+
+.btn-like{
+    font-size: 35px;
+    color: $tertiary-color;
+    @include mobiles{
+        font-size: 25px;;
+    }
+    
+    &:hover{
+        cursor: pointer;
+        color: rgb(190, 187, 187);
+        transform: scale(0.8);
+        transition: all 200ms ease-in-out;
+    }
+}
+
+.btn-normal{
+    font-size: 35px;
+    color: $tertiary-color;
+    @include mobiles{
+        font-size: 25px;;
+    }
+    
+    &:hover{
+        cursor: pointer;
+        color: $primary-color;
+        transform: scale(1.2);
+        transition: all 200ms ease-in-out;
+    }
+}
+
+
 
 
 </style>

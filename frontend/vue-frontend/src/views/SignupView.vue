@@ -104,7 +104,6 @@ export default {
         SignupRequest(){
             if(this.testPassword() && this.testEmail() && this.testLastName() && !this.isDisabled()){
                 this.errorValidation = '';
-                console.log("La validation est correcte");
 
                 this.$store.dispatch('SignupRequest', {
                 lastName: this.lastName,

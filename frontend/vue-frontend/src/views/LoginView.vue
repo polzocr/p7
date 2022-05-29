@@ -67,10 +67,12 @@ export default {
       },
       
       LoginRequest(){
-         this.$store.dispatch('LoginRequest', {
+         if(this.email !== '' && this.password !== ''){
+            this.$store.dispatch('LoginRequest', {
             email: this.email,
             password: this.password
-         })
+            })
+         }
       }
   },
 

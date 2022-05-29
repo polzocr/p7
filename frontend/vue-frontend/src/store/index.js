@@ -192,6 +192,21 @@ export default new Vuex.Store({
         console.log(context.state.comments.data)
       })
       .catch(error => console.log(error ,'Insuccès de lappel des commentaires'));
+    },
+    LikePostRequest(context, data){
+      //const location = data.exactLocation;
+      instance.post('/' + data.id + '/like' , {
+        like: data.like
+      })
+      .then(() => {
+        console.log('cest passé');
+        router.push('/createpost').then(() => {
+          router.push('/')
+          // console.log(data.location)
+          // window.scrollTo(0,location)
+        })
+      })
+      .catch(error => console.log(error))
     }
   },
  
