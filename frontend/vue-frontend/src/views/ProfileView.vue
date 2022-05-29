@@ -29,7 +29,7 @@
                 </div>
                 <div class="profile__content__likes">
                     <i class="fa fa-heart" aria-hidden="true"></i>
-                    <p>{{ nbLikes }} Likes</p>
+                    <p>{{ nbLikes }} Likes/Dislikes</p>
                 </div>
             </div>
         </section>
@@ -70,7 +70,7 @@
                 </div>
                 <div class="profile__content__likes">
                     <i class="fa fa-heart" aria-hidden="true"></i>
-                    <p>{{nbLikes}} Likes</p>
+                    <p>{{nbLikes}} Likes/Dislikes</p>
                 </div>
             </div>
 
@@ -110,6 +110,7 @@ export default {
                 this.email = user.data.email;
                 this.nbPosts = user.data.posts.length
                 this.nbComments = user.data.comments.length
+                this.nbLikes = user.data.likes.length
                 })
                 .catch(error => console.log(error));
         } else {
