@@ -22,7 +22,7 @@ exports.likeOrDislikePost = (req,res,next) => {
                     db.Like.create({
                     UserId: req.auth.userId,
                     PostId: req.params.id,
-                    stateLike: 1
+                    stateLike: true
                     })
                     .then(() => res.status(201).json({message:'liké avec succès !'}))
                     .catch(error => res.status(401).json({error: 'Le like est pas passé'}))
@@ -39,7 +39,7 @@ exports.likeOrDislikePost = (req,res,next) => {
                     db.Like.create({
                     UserId: req.auth.userId,
                     PostId: req.params.id,
-                    stateLike: -1
+                    stateLike: false
                     })
                     .then(() => res.status(201).json({message:'disliké avec succès !'}))
                     .catch(error => res.status(401).json({error: 'Le dislike est pas passé'}))

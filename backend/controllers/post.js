@@ -24,7 +24,7 @@ exports.createPost = (req, res, next) => {
 };
 
 exports.getAllPosts = (req, res, next) => {
-    db.Post.findAll({ include:[{model: db.User, attributes:['firstName', 'lastName']},{model: db.Comment}] })
+    db.Post.findAll({ include:[{model: db.User, attributes:['firstName', 'lastName']},{model: db.Comment}, {model: db.Like, }] })
     .then(posts => res.status(200).json(posts))
     .catch(error => res.status(400).json({error}));
 };
