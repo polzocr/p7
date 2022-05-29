@@ -24,8 +24,7 @@
                     />
                 </div>
                 <div class="homePost__text">
-                    <p>Text: {{ text }} je vais devoir ecrire bcp de texteuuuuuuuuu  je vais devoir ecrire bcp de texteuuuuuuuuu 
-                    je vais devoir ecrire bcp de texteuuuuuuuuu je vais devoir ecrire bcp de texteuuuuuuuuu </p>
+                    <p> {{ text }} </p>
                     
                 </div>
                 <div class="homePost__image" v-if="this.image_url !== null">
@@ -36,9 +35,17 @@
                             <i @click="showComments()" class="fa fa-comment" aria-hidden="true"></i>
                             <p id="nbComments" v-if="nbComments">{{ nbComments.length }}</p>
                         </div>
-                        <div class="homePost__footer__like">
+                        <div class="homePost__footer__like" v-if="likes && like()">
+                                <p> {{nbLikes()}}</p>
+                                <i  class="fa fa-thumbs-up" :class="{'btn-like': this.liked}" aria-hidden="true"></i>
+                                <p> {{nbDislikes()}}</p>
+                                <i  class="fa fa-thumbs-down" :class="{'btn-like': !this.liked}" aria-hidden="true"></i> 
+                        </div>
+                        <div class="homePost__footer__like" v-else>
+                            <p>{{ nbLikes() }}</p>
                             <i class="fa fa-thumbs-up" aria-hidden="true"></i>
-                            <i class="fa fa-thumbs-down" aria-hidden="true"></i> 
+                            <p>{{ nbDislikes() }}</p>
+                            <i class="fa fa-thumbs-down" aria-hidden="true"></i>
                         </div>
                 </div>
                 <div class="homePost__comment">
@@ -99,9 +106,11 @@ import axios from 'axios'
                 type: Array,
             },
             user: {
-                type:Object,
+                type: Object,
             },
-            
+            likes:{
+                type: Array
+            },
             title: {
                 type: String,
             },
@@ -122,12 +131,50 @@ import axios from 'axios'
                 textComment: '',
                 comments: [{}],
                 showModal: false,
+                liked: false
             }
         },
         computed:{
             
         },
+        created(){
+
+        },     
         methods: {
+            nbLikes(){
+                let nb = 0;
+                this.likes.forEach(like => {
+                    if(like.stateLike == true){
+                        nb = nb + 1;
+                    }
+                })
+                return nb
+            },
+            nbDislikes(){
+                let nb = 0;
+                this.likes.forEach(like => {
+                    if(like.stateLike == false){
+                        nb = nb + 1;
+                    }
+                })
+                return nb
+            },
+            like(){
+                const user =  JSON.parse(localStorage.getItem('user'))
+                let like_exist = false
+                if(this.likes.length !== 0){
+                    this.likes.forEach(like => {
+                        if(like.userId == user.userId){
+                            this.liked = like.stateLike
+                            like_exist = true
+                        } 
+                    })
+                    return like_exist
+                } else {
+                    return false
+                }
+                
+            },
             date(){
                 if(typeof this.created_at !== 'undefined'){
                     const date =  this.created_at.split('T')[0]
@@ -321,13 +368,6 @@ import axios from 'axios'
                 width: 90%;
             }
         }
-        i{
-            font-size: 35px;
-            color: $tertiary-color;
-            @include mobiles{
-               font-size: 25px;;
-            }
-        }
         &__comment{
             display: flex;
             align-items: center;
@@ -343,6 +383,7 @@ import axios from 'axios'
             display: flex;
             justify-content: space-between;
             align-items: center;
+            
         }
     }
     &__comment{
@@ -520,6 +561,20 @@ import axios from 'axios'
     width: 95%;
     margin: auto;
     padding-bottom: 3%;
+}
+
+.btn-like{
+    color: yellow;
+}
+
+.homePost__footer__like {
+    i{
+        font-size: 35px;
+        color: $tertiary-color;
+        @include mobiles{
+            font-size: 25px;;
+        }
+    }   
 }
 
 

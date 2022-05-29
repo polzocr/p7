@@ -14,6 +14,7 @@
        :text="post.text"
        :image_url="post.image_url"
        :nbComments="post.Comments"
+       :likes="post.Likes"
        />
     </main>
 </template>
