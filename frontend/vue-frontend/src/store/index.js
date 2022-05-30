@@ -65,7 +65,6 @@ export default new Vuex.Store({
       instance.defaults.headers.common['Authorization'] = 'Bearer ' + user.token;
       instancePut.defaults.headers.common['Authorization'] = 'Bearer ' + user.token;
       state.user = user;
-      console.log(state.user)
       localStorage.setItem('user', JSON.stringify(user))
     },
   },
@@ -154,11 +153,7 @@ export default new Vuex.Store({
     },
     PostPostRequest(context, datas){
       instance.post('/', datas.data , { headers: {"Content-Type": "multipart/form-data"}})
-      .then(res => {
-        console.log("Post Crée avec succès")
-        console.log(res)
-        router.push('/')
-      })
+      .then(() => router.push('/'))
       .catch(error => console.log(error))
     },
     DeleteUserRequest(context, id){

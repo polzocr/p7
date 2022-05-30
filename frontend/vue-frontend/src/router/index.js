@@ -90,11 +90,6 @@ router.beforeEach((to, from, next) => {
   }
 })
 
-router.afterEach((to, from, failure) => {
-  if(!failure) {
-    console.log(failure)
-  }
-})
 
 
 

@@ -114,7 +114,6 @@ export default {
                 })
                 .catch(error => console.log(error));
         } else {
-            console.log('Unauthorized')
             this.$router.push('/');
         }
     },

@@ -48,7 +48,6 @@ export default {
     },
     created(){
         window.addEventListener('scroll', () => {
-        console.log(window.scrollY)
         if(window.scrollY > 600){
             this.visible = true
         } else {
