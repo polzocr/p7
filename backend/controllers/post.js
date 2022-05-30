@@ -46,7 +46,9 @@ exports.modifyPost = (req, res, next) => {
         if(post.userId !== req.auth.userId){
             res.status(401).json({error: "Requête non autorisée"})
         }
-        filename = post.image_url.split('/images/')[1];
+        if(post.image_url !== null){
+            filename = post.image_url.split('/images/')[1];
+        }
         db.Post.update({ ...postObject}, {where: {id: req.params.id} })
         .then(() => {
             fs.unlink(`images/${filename}`, () => {
