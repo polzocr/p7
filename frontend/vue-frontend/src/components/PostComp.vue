@@ -511,7 +511,8 @@ import axios from 'axios'
 }
 #post-title{
     margin-right: 10%;
-    font-size: 22px;
+    font-size: 25px;
+    font-weight: 700;
     word-break: break-word;
     @include tablets{
         margin-right: 5%;
