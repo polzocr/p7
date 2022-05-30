@@ -36,6 +36,7 @@ exports.getOnePost = (req, res, next) => {
 };
 
 exports.modifyPost = (req, res, next) => {
+    let filename = null;
     const postObject = req.file?{
         ...req.body,
         image_url: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
@@ -45,8 +46,14 @@ exports.modifyPost = (req, res, next) => {
         if(post.userId !== req.auth.userId){
             res.status(401).json({error: "Requête non autorisée"})
         }
+        filename = post.image_url.split('/images/')[1];
         db.Post.update({ ...postObject}, {where: {id: req.params.id} })
-        .then(() => res.status(200).json({message:'Objet modifié avec succès !'}))
+        .then(() => {
+            fs.unlink(`images/${filename}`, () => {
+                res.status(200).json({message:'Objet modifié avec succès !'})
+            })
+            
+        })
         .catch(error => res.status(400).json({error}));
     })
     .catch(error => res.status(404).json({error: "Post non trouvé"}));
