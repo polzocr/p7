@@ -7,6 +7,7 @@ import PostView from '../views/PostView.vue'
 import CreateView from '../views/CreateView.vue'
 import ProfileView from '../views/ProfileView.vue'
 import AdminView from '../views/AdminView.vue'
+import NotFound from '../views/NotFound.vue'
 import store from '../store'
 
 Vue.use(VueRouter)
@@ -58,7 +59,11 @@ Vue.use(VueRouter)
       }
     }
   },
-  
+  {
+    path :'*',
+    name: 'All',
+    component: NotFound
+  }
 ]
 
 const router = new VueRouter({
@@ -82,6 +87,12 @@ router.beforeEach((to, from, next) => {
     next('/')
   } else {
     next(true)
+  }
+})
+
+router.afterEach((to, from, failure) => {
+  if(!failure) {
+    console.log(failure)
   }
 })
 
