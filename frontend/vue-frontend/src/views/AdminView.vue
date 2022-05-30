@@ -30,6 +30,7 @@ export default {
             
         }
     },
+    
     beforeCreate(){
         this.$store.dispatch('GetAllUsersRequest');
     },

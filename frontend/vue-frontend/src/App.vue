@@ -43,15 +43,15 @@
                 </router-link>
               </div>
               <div class="sidemenu__user">
-                <router-link :to="{name: 'ProfileView', params:{id: this.$store.state.user.userId} }" class="sidemenu__user__link" ><i class="fa fa-user" aria-hidden="true"></i>
+                <router-link :to="{name: 'Profile', params:{id: this.$store.state.user.userId} }" class="sidemenu__user__link" ><i class="fa fa-user" aria-hidden="true"></i>
                   <p>Votre profile</p>
+                </router-link>
+                <router-link v-if="isAdmin()" to="/users" class="sidemenu__user__link"><i class="fa fa-lock" aria-hidden="true"></i>
+                  <p>Page Admin</p>
                 </router-link>
                 <router-link @click.native="deconnexion()" to="" class="sidemenu__user__link"><i class="fa fa-arrow-right" aria-hidden="true"></i>
                   <p>Se Deconnecter</p>
-                </router-link> 
-                <router-link v-if="isAdmin()" to="/users" class="sidemenu__user__link"><i class="fa fa-lock" aria-hidden="true"></i>
-                  <p>Page Admin</p>
-                </router-link> 
+                </router-link>  
               </div>
             </div>
           </nav>
@@ -65,12 +65,19 @@
 </template>
 
 <script>
+
+// import {mapState} from 'vuex'
+
+
 export default {
   name: 'App',
   data: function(){
     return {
-      navOpen: false
+      navOpen: false,
     }
+  },
+  computed: {
+    // ...mapState(['connected'])
   },
   methods: {
     loginPage(){

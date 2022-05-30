@@ -54,11 +54,11 @@ export default {
         
     },
     mounted() {
-        const user = JSON.parse(localStorage.getItem('user'));
-        if(user && this.$store.state.user.userId == user.userId){
-            this.$router.push('/');
-            return ;
-        }
+        // const user = JSON.parse(localStorage.getItem('user'));
+        // if(user && this.$store.state.user.userId == user.userId){
+        //     this.$router.push('/');
+        //     return ;
+        // }
     },
     methods:{
         testPassword(){

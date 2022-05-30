@@ -49,7 +49,8 @@ export default new Vuex.Store({
     postIdComments: '',
     postUserId: '',
     postFirstName: '',
-    postLastName: ''
+    postLastName: '',
+    connected: false
   },
   getters: {
   },
@@ -139,14 +140,16 @@ export default new Vuex.Store({
     },
     PutPostRequest(context, datas){   
       instancePut.put('/' + datas.data.id, datas.data)
-      .then(() => {
-        router.push('/login')
-      })
+      .then(() => router.push('/createPost').then(() => {
+        router.push('/')
+      }))
       .catch(error => console.log(error, "yeah"))
     },
     DeleteRequest(context, id){
       instance.delete('/' + id.id)
-      .then(() => router.push('/login'))
+      .then(() => router.push('/createPost').then(() => {
+        router.push('/')
+      }))
       .catch(error => console.log(error))
     },
     PostPostRequest(context, datas){
@@ -178,18 +181,15 @@ export default new Vuex.Store({
         PostId: data.PostId,
         text: data.text
       })
-      .then(comment => {
-        console.log('Commentaire créé avec succès !');
-        console.log(comment);
-        router.push('/login');
-      })
+      .then(() => router.push('/createPost').then(() => {
+        router.push('/')
+      }))
       .catch(error => console.log(error))
     },
     GetCommentsRequest(context, id){
       instance.get('/'+ id + '/comments')
       .then(comments => {
         context.state.comments = comments;
-        console.log(context.state.comments.data)
       })
       .catch(error => console.log(error ,'Insuccès de lappel des commentaires'));
     },
@@ -198,7 +198,6 @@ export default new Vuex.Store({
         like: data.like
       })
       .then(() => {
-        console.log('cest passé');
         router.push('/createpost').then(() => {
           router.push('/')
         })

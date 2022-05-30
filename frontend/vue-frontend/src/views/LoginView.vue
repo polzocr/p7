@@ -36,12 +36,12 @@ export default {
      }
   },
   mounted() {
-        const user = JSON.parse(localStorage.getItem('user'));
-        if(user && this.$store.state.user.userId == user.userId){
-            console.log(user)
-            this.$router.push('/');
-            return ;
-        }
+      //   const user = JSON.parse(localStorage.getItem('user'));
+      //   if(user && this.$store.state.user.userId == user.userId){
+      //       console.log(user)
+      //       this.$router.push('/');
+      //       return ;
+      //   }
     },
   computed: {
 
