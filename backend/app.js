@@ -51,6 +51,11 @@ app.use('/', userRoutes);
 app.use('/', postRoutes);
 
 
-
+app.use(function(err, req, res, next) {
+    if(err.code === "FILE_TYPE"){
+        res.status(401).json({error: "wrong file type"});
+        return;
+    }
+})
 
 module.exports = app;
