@@ -34,6 +34,7 @@ export default {
         data: function(){
             return {
                 getDisabled: false,
+                error: false,
             }
         },
         props: {
@@ -60,7 +61,6 @@ export default {
         methods: {
             isDisabled(){
                 const title = document.getElementById('title').value
-                console.log(title)
                 if(title == ''){
                     return this.getDisabled = true;
                 }else {
@@ -68,21 +68,30 @@ export default {
                 }
             },
             changeFile(){
-                this.file = this.$refs.fileInput.files[0];
+                const file = this.$refs.fileInput.files[0];
+                const MIME_TYPES = {'image/jpg' : 'jpg','image/jpeg': 'jpg','image/png': 'png','image/gif':'gif'};
+                if(Object.keys(MIME_TYPES).includes(file.type)){
+                    this.error = false;
+                    this.file = file;
+                } else {
+                    this.error = true;
+                    alert('Uniquement les images et les gifs sont acceptés')
+                }
             },
             ModifyRequest(){
                 const user =  JSON.parse(localStorage.getItem('user'))
                 const title = document.getElementById('title').value;
                 const text = document.getElementById('text').value;
                 const data = {'image': this.file, 'name':title, 'text':text , 'id':this.id}
-                if(title !== ''){
+                if(title !== '' && this.error == false){
                     if(user.userId !== this.userId){
                         this.$router.push('/login')
                     } else {
                         this.$store.dispatch('PutPostRequest', {data})
                     }
                 } else {
-                    document.getElementById('title').placeholder = "Le titre est indispensable"
+                    document.getElementById('title').placeholder = "Le titre est indispensable";
+                    alert('Uniquement les images et les gifs sont acceptés')
                 }
                 
             },

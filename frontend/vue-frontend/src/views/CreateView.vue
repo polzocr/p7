@@ -28,20 +28,29 @@ export default {
             title: '',
             text: '',
             file: '',
+            error: false,
         }
     },
     methods:{
         changeFile(){
-                this.file = this.$refs.fileInput.files[0];
-            },
+            const file = this.$refs.fileInput.files[0];
+            const MIME_TYPES = {'image/jpg' : 'jpg','image/jpeg': 'jpg','image/png': 'png','image/gif':'gif'};
+            if(Object.keys(MIME_TYPES).includes(file.type)){
+                this.error = false;
+                this.file = file;
+            } else {
+                this.error = true;
+                alert('Uniquement les images et les gifs sont acceptés')
+            }
+        },
         PostRequest(){
             const data = {'image': this.file, 'name':this.title, 'text':this.text, 'userId': this.$store.state.user.userId}
-            if(!this.isDisabled()){
+            if(!this.isDisabled() && this.error == false){
                 this.$store.dispatch('PostPostRequest', {data})
             }
         },
         isDisabled(){
-            if(this.title == ''){
+            if(this.title == '' || this.error == true){
                 return true;
             }else {
                 return false;
