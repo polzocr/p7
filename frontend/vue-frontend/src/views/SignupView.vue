@@ -111,6 +111,21 @@ export default {
                 email: this.email,
                 password: this.password
                 })
+                .then(() => {
+                    this.$toasted.show('Inscription réussie !', {
+                        icon : {
+                            //name : 'exclamation-triangle',
+                            name : 'check',
+                        },
+                        position : 'top-left',
+                        duration: 2500,
+                        keepOnHover: true,
+                        containerClass: 'toast-container',
+                        className: 'toast',
+                        theme:'bubble'
+                    });
+                })
+                .catch(error => error)
             } else {
                 this.errorValidation = 'Veuillez remplir correctement vos informations personnelles';
             }

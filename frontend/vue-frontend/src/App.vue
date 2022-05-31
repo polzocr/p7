@@ -108,6 +108,21 @@ export default {
                 token: ''
             });
             this.$router.push('/login')
+            .then(() => {
+              this.$toasted.show('Déconnecté !', {
+                  icon : {
+                      //name : 'exclamation-triangle',
+                      name : 'check',
+                  },
+                  position : 'top-left',
+                  duration: 2500,
+                  keepOnHover: true,
+                  containerClass: 'toast-container',
+                  className: 'toast',
+                  theme:'bubble'
+              });
+          })
+          .catch(error => error)
     },
     isAdmin(){
       const user = JSON.parse(localStorage.getItem('user'));

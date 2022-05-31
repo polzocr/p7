@@ -47,6 +47,24 @@ export default {
             const data = {'image': this.file, 'name':this.title, 'text':this.text, 'userId': this.$store.state.user.userId}
             if(!this.isDisabled() && this.error == false){
                 this.$store.dispatch('PostPostRequest', {data})
+                .then(() => {
+                    this.$toasted.show(
+                        'Article créé avec succès !', {
+                            icon : {
+                                //name : 'exclamation-triangle',
+                                name : 'check',
+                            },
+                            position : 'top-left',
+                            duration: 2500,
+                            keepOnHover: true,
+                            containerClass: 'toast-container',
+                            className: 'toast',
+                            theme:'bubble'
+                            
+
+                    });
+                })
+                .catch(error => error)
             }
         },
         isDisabled(){
@@ -189,6 +207,19 @@ export default {
         box-shadow: 0 0 10px 0 $primary-color inset, 0 0 10px 4px $primary-color;
         background-color: $tertiary-color;
     }
+}
+
+.toast-container{
+   left: 10px !important;
+}
+
+.toast{
+    background-color: rgb(63, 216, 63) !important;
+    font-size: 17px !important;
+    font-weight: 500 !important;
+    color: $tertiary-color !important;
+}
+.fa-check{
 }
 
 </style>

@@ -215,6 +215,24 @@ import axios from 'axios'
                         PostId: this.id ,
                         text: this.textComment
                     })
+                    .then(() => {
+                    this.$toasted.show(
+                        'Commentaire créé avec succès !', {
+                            icon : {
+                                //name : 'exclamation-triangle',
+                                name : 'check',
+                            },
+                            position : 'top-left',
+                            duration: 2500,
+                            keepOnHover: true,
+                            containerClass: 'toast-container',
+                            className: 'toast',
+                            theme:'bubble'
+                            
+
+                    });
+                })
+                .catch(error => error)
                 }
             },
             isDisabled(){
@@ -294,6 +312,21 @@ import axios from 'axios'
                 // this.$emit('modify', {postId: this.id})
                 if(confirm('Vous-vous supprimer cet article ?')){
                     this.$store.dispatch('DeleteRequest', {id:this.id})
+                    .then(() => {
+                        this.$toasted.show('Article supprimé !', {
+                            icon : {
+                                //name : 'exclamation-triangle',
+                                name : 'check',
+                            },
+                            position : 'top-left',
+                            duration: 2500,
+                            keepOnHover: true,
+                            containerClass: 'toast-container',
+                            className: 'toast',
+                            theme:'bubble'
+                        });
+                    })
+                    .catch(error => error)
                 }
             },
             GetToPost(){

@@ -88,6 +88,21 @@ export default {
                         this.$router.push('/login')
                     } else {
                         this.$store.dispatch('PutPostRequest', {data})
+                        .then(() => {
+                            this.$toasted.show('Modification Réussie !', {
+                                icon : {
+                                    //name : 'exclamation-triangle',
+                                    name : 'check',
+                                },
+                                position : 'top-left',
+                                duration: 2500,
+                                keepOnHover: true,
+                                containerClass: 'toast-container',
+                                className: 'toast',
+                                theme:'bubble'
+                            });
+                        })
+                        .catch(error => error)
                     }
                 } else {
                     document.getElementById('title').placeholder = "Le titre est indispensable";
@@ -101,8 +116,22 @@ export default {
                     this.$router.push('/login')
                 } else if(confirm('Vous-vous supprimer cet article ?')){ 
                     this.$store.dispatch('DeleteRequest', {id:this.id})
+                    .then(() => {
+                        this.$toasted.show('Article supprimé !', {
+                            icon : {
+                                //name : 'exclamation-triangle',
+                                name : 'check',
+                            },
+                            position : 'top-left',
+                            duration: 2500,
+                            keepOnHover: true,
+                            containerClass: 'toast-container',
+                            className: 'toast',
+                            theme:'bubble'
+                        });
+                    })
+                    .catch(error => error)
                 }
-                
             },
         },
 }
