@@ -108,21 +108,6 @@ export default {
                 token: ''
             });
             this.$router.push('/login')
-            .then(() => {
-              this.$toasted.show('Déconnecté !', {
-                  icon : {
-                      //name : 'exclamation-triangle',
-                      name : 'check',
-                  },
-                  position : 'top-left',
-                  duration: 2500,
-                  keepOnHover: true,
-                  containerClass: 'toast-container',
-                  className: 'toast',
-                  theme:'bubble'
-              });
-          })
-          .catch(error => error)
     },
     isAdmin(){
       const user = JSON.parse(localStorage.getItem('user'));
@@ -601,6 +586,29 @@ nav{
 	opacity: 0;
 }
 
+.toast-container{
+   left: 10px !important;
+   @include mobiles-toaster{
+     flex-direction: row !important;
+     top: 10% !important;
+     min-width: 100%;
+   }
+}
+
+.toast{
+    background-color: rgb(63, 216, 63) !important;
+    font-size: 17px !important;
+    font-weight: 500 !important;
+    color: $tertiary-color !important;
+    @include mobiles-toaster{
+      border-radius: 30px !important;
+      margin: 2% auto 0 auto;
+    }
+    &.error{
+      background-color: rgb(255, 9, 9) !important;  
+      color: white !important;
+    }
+}
 
 
 </style>

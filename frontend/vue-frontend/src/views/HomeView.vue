@@ -39,12 +39,6 @@ export default {
     },
     beforeCreate(){
         this.$store.dispatch('GetPostsRequest');
-        // const user = JSON.parse(localStorage.getItem('user'));
-        // if(!user || this.$store.state.user.userId !== user.userId){
-        //     console.log(user)
-        //     this.$router.push('/login');
-        //     return ;
-        // } 
     },
     created(){
         window.addEventListener('scroll', () => {
@@ -54,8 +48,6 @@ export default {
             this.visible = false
         }
         });
-    },
-    mounted() {
     },
     methods: {
         CreateRequest(){

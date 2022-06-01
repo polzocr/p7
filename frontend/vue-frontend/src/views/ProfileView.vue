@@ -165,46 +165,21 @@ export default {
                     console.log(user.data);
                     this.$router.push('/')
                     .then(() => {
-                        this.$router.push('/profile/' + id)
+                        this.$router.push('/profile/' + id);
+                        this.$store.commit('toasting', 'Modification réussie !')
                     })
-                    .then(() => {
-                        this.$toasted.show('Modification réussie !', {
-                            icon : {
-                                //name : 'exclamation-triangle',
-                                name : 'check',
-                            },
-                            position : 'top-left',
-                            duration: 2500,
-                            keepOnHover: true,
-                            containerClass: 'toast-container',
-                            className: 'toast',
-                            theme:'bubble'
-                        });
+                    .catch(() => {
+                        this.$store.commit('error_toasting', 'Une erreur est survenue')
                     })
-                    .catch(error => error)
-                    .catch(error => console.log({error}))
                 })
-                .catch(error => console.log(error));
+                .catch(() => {
+                    this.$store.commit('error_toasting', 'Une erreur est survenue')
+                });
             }
         },
         DeleteUserRequest(){
             const id = this.$route.params.id;
             this.$store.dispatch('DeleteUserRequest', id)
-            .then(() => {
-                this.$toasted.show('Suppression réussie !', {
-                    icon : {
-                        //name : 'exclamation-triangle',
-                        name : 'check',
-                    },
-                    position : 'top-left',
-                    duration: 2500,
-                    keepOnHover: true,
-                    containerClass: 'toast-container',
-                    className: 'toast',
-                    theme:'bubble'
-                });
-            })
-            .catch(error => error)
         }
     },
 }

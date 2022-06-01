@@ -1,8 +1,12 @@
 import router from '@/router';
 import Vue from 'vue'
 import Vuex from 'vuex'
+import Toasted from 'vue-toasted'
 const axios = require('axios').default;
 
+Vue.use(Toasted, {
+    iconPack : 'fontawesome' 
+});
 Vue.use(Vuex)
 
 
@@ -44,9 +48,6 @@ export default new Vuex.Store({
     user: userLocal,
     users: [{}],
     posts: [{}],
-    post : {
-
-    },
     comments: {},
     postIdComments: '',
     postUserId: '',
@@ -69,6 +70,33 @@ export default new Vuex.Store({
       state.user = user;
       localStorage.setItem('user', JSON.stringify(user))
     },
+    toasting(state, msg){
+      this._vm.$toasted.show(msg, {
+        icon : {
+            name : 'check',
+        },
+        position : 'top-left',
+        duration: 2500,
+        keepOnHover: true,
+        containerClass: 'toast-container',
+        className: 'toast',
+        theme:'bubble'
+      });
+    },
+    error_toasting(state, msg){
+      this._vm.$toasted.show(msg, {
+        icon : {
+            name : 'exclamation-triangle',
+        },
+        position : 'top-left',
+        duration: 2500,
+        keepOnHover: true,
+        containerClass: 'toast-container',
+        className: 'toast error',
+        type: "error",
+        theme:'bubble'
+      });
+    }
   },
   actions: {
     SignupRequest(context , user){
@@ -79,14 +107,13 @@ export default new Vuex.Store({
         email: user.email,
         password: user.password
       })
-    .then(res => {
-      console.log("Inscription réussie", res);
+    .then(() => {
       context.dispatch('LoginRequest', user);
       context.commit('changeStatus', 'created');
     })
-    .catch(error => {
-      console.log("Inscription ratée", error );
+    .catch(() => {
       context.commit('changeStatus', 'error_signup');
+      context.commit('error_toasting','Inscription raté')
     });
     },
     LoginRequest(context, user){
@@ -97,16 +124,16 @@ export default new Vuex.Store({
         password: user.password
       })
       .then(res => {
-        console.log("Connexion réussie");
         context.commit('changeStatus', 'logged');
         context.commit('userLogin', res.data);
+        context.commit('toasting','Connexion réussie')
         router.push('/');
 
       })
       .catch(error => {
-        console.log('Inconnexion réussie', error);
         this.state.error = error.response.data.error;
         context.commit('changeStatus', 'error_login');
+        context.commit('error_toasting', error.response.data.error)
       })
     },
     deconnexion(context, user){
@@ -114,6 +141,7 @@ export default new Vuex.Store({
       context.commit('changeStatus', '');
       localStorage.removeItem('user');
       context.state.user = userInit;
+      context.commit('toasting','Deconnecté')
     },
     GetAllUsersRequest(context){
       instance.get('/users')
@@ -129,49 +157,52 @@ export default new Vuex.Store({
       })
       .catch(error => console.log(error));
     },
-    GetPostRequest(context, id){
-      instance.get('/' + id)
-      .then(post => {
-        context.state.post = post.data
-        // if(context.state.post.userId !== context.state.user.userId){
-        //   router.push('/login')
-        // }
-      })
-      .catch(error => console.log(error))
-    },
     PutPostRequest(context, datas){   
       instancePut.put('/' + datas.data.id, datas.data)
       .then(() => router.push('/createPost').then(() => {
         router.push('/')
+        context.commit('toasting','Modification réussie !')
       }))
-      .catch(error => console.log(error, "yeah"))
+      .catch(() => {
+        context.commit('error_toasting','La modification a échoué')
+      })
     },
     DeleteRequest(context, id){
       instance.delete('/' + id.id)
       .then(() => router.push('/createPost').then(() => {
-        router.push('/')
+        router.push('/');
+        context.commit('toasting','Article supprimé !')
       }))
-      .catch(error => console.log(error))
+      .catch(() => {
+        context.commit('error_toasting','Une erreur est survenue')
+      })
     },
     PostPostRequest(context, datas){
       instance.post('/', datas.data , { headers: {"Content-Type": "multipart/form-data"}})
-      .then(() => router.push('/'))
-      .catch(error => console.log(error))
+      .then(() => {
+        router.push('/');
+        context.commit('toasting','Article créé avec succès')
+      })
+      .catch(() => context.commit('error_toasting','Une erreur est survenue'))
     },
     DeleteUserRequest(context, id){
       instance.delete('/user/' + id)
       .then(() => {
         if(context.state.user.userId == 1){
           router.push('/')
-          .then(() => router.push('/users'))
-          .catch(error => console.log(error))          
+          .then(() => {
+            router.push('/users')
+            context.commit('toasting','Utilisateur supprimé !')
+          })
+          .catch(() => context.commit('error_toasting','Erreur lors de la suppression'))          
         } else {
           localStorage.removeItem('user');
           context.state.user = userInit;
-          router.push('/login')
+          router.push('/login');
+          context.commit('toasting','A très vite !')
         }
       })
-      .catch(error => console.log(error));
+      .catch(() => context.commit('error_toasting','Erreur lors de la suppression'));
     },
     CreateCommentRequest(context, data){
       instance.post('/'+ data.PostId + '/comment', {
@@ -179,16 +210,10 @@ export default new Vuex.Store({
         text: data.text
       })
       .then(() => router.push('/createPost').then(() => {
-        router.push('/')
+        router.push('/');
+        context.commit('toasting','Commentaire créé avec succès')
       }))
-      .catch(error => console.log(error))
-    },
-    GetCommentsRequest(context, id){
-      instance.get('/'+ id + '/comments')
-      .then(comments => {
-        context.state.comments = comments;
-      })
-      .catch(error => console.log(error ,'Insuccès de lappel des commentaires'));
+      .catch(() => {context.commit('error_toasting','Une erreur est survenue')})
     },
     LikePostRequest(context, data){
       instance.post('/' + data.id + '/like' , {

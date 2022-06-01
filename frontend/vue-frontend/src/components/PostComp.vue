@@ -188,13 +188,11 @@ import axios from 'axios'
                 if(like == -1 || like == 1){
                     this.$store.dispatch('LikePostRequest', {
                         id: this.id,
-                        //exactLocation: y, 
                         like: like,
                     })
                 } else if((like == 2 && this.liked) || (like == 0 && !this.liked)){
                     this.$store.dispatch('LikePostRequest', {
                         id: this.id,
-                        //exactLocation :y,
                         like: 0
 
                     })
@@ -215,24 +213,6 @@ import axios from 'axios'
                         PostId: this.id ,
                         text: this.textComment
                     })
-                    .then(() => {
-                    this.$toasted.show(
-                        'Commentaire créé avec succès !', {
-                            icon : {
-                                //name : 'exclamation-triangle',
-                                name : 'check',
-                            },
-                            position : 'top-left',
-                            duration: 2500,
-                            keepOnHover: true,
-                            containerClass: 'toast-container',
-                            className: 'toast',
-                            theme:'bubble'
-                            
-
-                    });
-                })
-                .catch(error => error)
                 }
             },
             isDisabled(){
@@ -273,22 +253,6 @@ import axios from 'axios'
                     return false
                 }
             },
-            modifyComp(){
-                const paramsId =  this.$route.params.id;
-                const id = this.id;
-                console.log('--------------------')
-                console.log("paramsId: " + paramsId);
-                console.log("id: "+id)
-                if(paramsId == id && this.ownPost()) {
-                    console.log("true")
-                    return true
-                } else if (paramsId == undefined) {
-                    console.log('false')
-                    return false 
-                } else {
-                    console.log("REDIRIRECTION")
-                }
-            },
             emitModify(){
                 const title = document.getElementById('title').value;
                 const text = document.getElementById('text').value;
@@ -309,24 +273,8 @@ import axios from 'axios'
                 })
             },
             DeleteRequest(){
-                // this.$emit('modify', {postId: this.id})
                 if(confirm('Vous-vous supprimer cet article ?')){
                     this.$store.dispatch('DeleteRequest', {id:this.id})
-                    .then(() => {
-                        this.$toasted.show('Article supprimé !', {
-                            icon : {
-                                //name : 'exclamation-triangle',
-                                name : 'check',
-                            },
-                            position : 'top-left',
-                            duration: 2500,
-                            keepOnHover: true,
-                            containerClass: 'toast-container',
-                            className: 'toast',
-                            theme:'bubble'
-                        });
-                    })
-                    .catch(error => error)
                 }
             },
             GetToPost(){

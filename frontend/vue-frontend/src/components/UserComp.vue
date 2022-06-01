@@ -45,21 +45,6 @@ export default{
         DeleteUser(){
             const id = this.id;
             this.$store.dispatch('DeleteUserRequest', id)
-            .then(() => {
-                this.$toasted.show('Utilisateur supprimé !', {
-                    icon : {
-                        //name : 'exclamation-triangle',
-                        name : 'check',
-                    },
-                    position : 'top-left',
-                    duration: 2500,
-                    keepOnHover: true,
-                    containerClass: 'toast-container',
-                    className: 'toast',
-                    theme:'bubble'
-                });
-            })
-            .catch(error => error)
         },
         ActivityUser(){
             alert('Bientôt disponible !')
