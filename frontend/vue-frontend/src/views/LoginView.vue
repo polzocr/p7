@@ -1,16 +1,16 @@
 <template>
-   <div class="composant">
+   <section class="composant" role="region" aria-label="page-connexion">
       <form action="" @submit.prevent="LoginRequest" class="composant__form">
          <div class="form log">
             <div class="form__input">
-                <input v-model.trim="email" type="email" name="email" placeholder="E-mail">
+                <input v-model.trim="email" type="email" name="email" placeholder="E-mail" aria-required="true" aria-invalid="true">
             </div>
             <div class="form__input">
-                <input v-model.trim="password" type="password" name="password" placeholder="Mot de passe">
+                <input v-model.trim="password" type="password" name="password" placeholder="Mot de passe" aria-required="true" aria-invalid="true">
                 <p v-if="haveError()"> {{ $store.state.error }} </p>
             </div>
             <div class="">
-               <button @blur="cleanStore()" type="submit" class="btn form__button" :class="{'disabled':isDisabled()}">
+               <button @blur="cleanStore()" type="submit" class="btn form__button" :class="{'disabled':isDisabled()}" role="button" aria-label="bouton validation formulaire">
                   <span v-if="$store.state.status == 'loading'">Connexion en cours...</span>
                   <span v-else>Se connecter</span>
                </button>
@@ -20,7 +20,7 @@
       <div class="logo">
           <img src="../../public/images/black-logo.png" alt="logo-groupomania"/>
       </div>
-   </div>
+   </section>
 </template>
 
 <script>
@@ -35,19 +35,8 @@ export default {
         password: '',
      }
   },
-  mounted() {
-      //   const user = JSON.parse(localStorage.getItem('user'));
-      //   if(user && this.$store.state.user.userId == user.userId){
-      //       console.log(user)
-      //       this.$router.push('/');
-      //       return ;
-      //   }
-    },
-  computed: {
-
-    
-  },
   methods: {
+     //Y-a-t-il une erreur ?
       haveError(){
          if(this.$store.state.error){
             return true
@@ -55,9 +44,11 @@ export default {
             return false
          }
       },
+      //remise à zéro des erreurs
       cleanStore(){
          this.$store.commit('clearError');
       },
+      // impossible de valider si les champs ne sont pas tous remplis
       isDisabled(){
          if(this.email == "" || this.password == ""){
                return true;
@@ -65,7 +56,7 @@ export default {
                return false;
          }
       },
-      
+      //appel de la requête post de login de l'utilisateur
       LoginRequest(){
          if(this.email !== '' && this.password !== ''){
             this.$store.dispatch('LoginRequest', {
@@ -81,7 +72,9 @@ export default {
 
 <style lang="scss">
 
-
+//=================================
+//    style du conteneur
+//=================================
 
 
 .composant{
@@ -111,6 +104,9 @@ export default {
       justify-content: center;
    }
 }
+//=================================
+//    style du logo
+//=================================
 .logo{
    height:30%;
    width: 100%;
@@ -124,6 +120,10 @@ export default {
       }
    }
 }
+
+//=================================
+// style du formulaire de saisie
+//=================================
 .form{
    height: 80%;
    width: 60%;
@@ -175,7 +175,9 @@ export default {
       }
    }
 }
-
+//=================================
+//    style des erreurs
+//=================================
 .error{
    font-size: 14px;
    margin: 2% auto 0 auto;

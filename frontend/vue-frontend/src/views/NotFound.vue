@@ -1,6 +1,6 @@
 <template>
-    <section>
-        <img src="../../public/images/not-found.jpg" alt="">
+    <section role="region" aria-label="conteneur de l'image">
+        <img src="../../public/images/not-found.jpg" alt="Image pour une page non trouvé" aria-label="Nous sommes désolés, la page que vous recherchez n'existe pas">
     </section>
 </template>
 

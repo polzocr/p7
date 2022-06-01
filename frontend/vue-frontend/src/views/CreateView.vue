@@ -1,18 +1,18 @@
 <template>
-    <section class="createPost">
+    <section class="createPost" role="region" aria-label="Formulaire de creation d'article">
         <form action="" @submit.prevent="PostRequest" class="createPost__form">
             <div class="createPost__form__title">
-                <input v-model="title" type="text" placeholder="Titre">
+                <input v-model="title" type="text" placeholder="Titre" aria-required="true" aria-invalid="true" aria-label="titre">
             </div>
             <div class="createPost__form__text">
-                <textarea v-model="text" rows="5" cols="60"  placeholder="Votre texte"></textarea>
+                <textarea v-model="text" rows="5" cols="60"  placeholder="Votre texte" aria-required="false" aria-invalid="false" aria-label="text"></textarea>
             </div>
             <div class="createPost__form__file">
-                <label class="btn upload" for="upload">Choisir un fichier</label>
-                <input @change="changeFile()" id="upload" type="file" accept="image/*" ref="fileInput" name="image">
+                <label class="btn upload" for="upload" role="button" aria-label="bouton navigation dans les fichiers">Choisir un fichier</label>
+                <input @change="changeFile()" id="upload" type="file" accept="image/*" ref="fileInput" name="image" aria-required="false" aria-invalid="false" aria-label="choix d'une image">
             </div>  
             <div class="createPost__form__button" >
-                <button class="btn" :class="{'disabled': isDisabled()}" type="submit">Créer votre article</button>
+                <button class="btn" :class="{'disabled': isDisabled()}" type="submit" role="bouton" aria-label="bouton validation formulaire">Créer votre article</button>
             </div>            
         </form>
     </section>
@@ -31,6 +31,8 @@ export default {
         }
     },
     methods:{
+        //changement du fichier avec vérification du format
+        //error == true si format incorrect
         changeFile(){
             const file = this.$refs.fileInput.files[0];
             const MIME_TYPES = {'image/jpg' : 'jpg','image/jpeg': 'jpg','image/png': 'png','image/gif':'gif'};
@@ -42,12 +44,14 @@ export default {
                 this.$store.commit('error_toasting', 'Uniquement les images et les gifs sont acceptés')
             }
         },
+        //requete de créatioin de l'article
         PostRequest(){
             const data = {'image': this.file, 'name':this.title, 'text':this.text, 'userId': this.$store.state.user.userId}
             if(!this.isDisabled() && this.error == false){
                 this.$store.dispatch('PostPostRequest', {data})
             }
         },
+        //impossible de créé l'article sans titre et sans bon format
         isDisabled(){
             if(this.title == '' || this.error == true){
                 return true;
@@ -56,19 +60,16 @@ export default {
             }
         },
     },
-    beforeCreate(){
-        const user = JSON.parse(localStorage.getItem('user'));
-        if(!user || this.$store.state.user.userId !== user.userId){
-            console.log(user)
-            this.$router.push('/login');
-            return ;
-        } 
-    },
 
 }
 </script>
 
 <style lang="scss">
+
+//=================================
+// style du formulaire de création
+//=================================
+
 .createPost{
     height: 1073px;
     @include tablets{
@@ -176,7 +177,9 @@ export default {
     }    
 }
 
-
+//=================================
+//    style du choix de fichier
+//=================================
 
 .upload {
     background-color: $tertiary-color;

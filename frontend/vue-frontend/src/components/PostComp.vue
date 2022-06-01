@@ -1,16 +1,16 @@
 <template>
-    <section class="home">
-            <section class="homePost">
+    <section class="home" role="region" aria-label="Conteneur de l'article">
+            <section class="homePost" role="region" aria-label="Article">
                 <div class="homePost__title">
                     <p id="names" v-if="user" >{{ user.firstName }} {{ user.lastName }}</p>
                     <p id="post-title">{{ title }}</p>
                     <div id="delete__flexbox">
                         <p>{{ date() }} </p>
                         <div v-if="ownPost()" class="dropdown">
-                            <button class="btn btn-delete dropdown__icon"><i class="fa fa-ellipsis-h" aria-hidden="true"></i></button>
+                            <button class="btn btn-delete dropdown__icon"><i class="fa fa-ellipsis-h" role="button" aria-label="dropdown-bouton"></i></button>
                             <div class="dropdown__content">
-                                <button @click.prevent="showModal = true" class="btn btn-delete"><i class="fa fa-pen" aria-hidden="true"></i></button>
-                                <button @click.prevent="DeleteRequest()" class="btn btn-delete"><i class="fa fa-trash" aria-hidden="true"></i></button>
+                                <button @click.prevent="showModal = true" class="btn btn-delete"><i class="fa fa-pen" role="link" aria-label="Modifier-article"></i></button>
+                                <button @click.prevent="DeleteRequest()" class="btn btn-delete"><i class="fa fa-trash" role="button" aria-label="Supprimer-article"></i></button>
                             </div>
                         </div>
                     </div>
@@ -28,30 +28,30 @@
                     
                 </div>
                 <div class="homePost__image" v-if="this.image_url !== null">
-                    <img :src="image_url" alt="imagePost"/>
+                    <img :src="image_url" alt="image article"/>
                 </div>
                 <div class="homePost__footer">
                         <div class="homePost__footer__comment">
-                            <i @click="showComments()" class="fa fa-comment btn-normal" aria-hidden="true"></i>
+                            <i @click="showComments()" class="fa fa-comment btn-normal" role="button" aria-label="afficher les commentaires"></i>
                             <p id="nbComments" v-if="nbComments">{{ nbComments.length }}</p>
                         </div>
                             <div class="homePost__footer__like" v-if="likes && like()" >
                                 <div class="homePost__footer__like__like">
-                                    <i @click="LikePostRequest(2)" class="fa fa-thumbs-up" :class="this.liked? 'btn-like':'btn-unlike none'" aria-hidden="true"></i>
+                                    <i @click="LikePostRequest(2)" class="fa fa-thumbs-up" :class="this.liked? 'btn-like':'btn-unlike none'" role="button" aria-label="Like ou dislike"></i>
                                     <p> {{nbLikes()}}</p>
                                 </div>
                                 <div class="homePost__footer__like__dislike">
-                                    <i  @click="LikePostRequest(0)" class="fa fa-thumbs-down" :class="!this.liked? 'btn-like':'btn-unlike none'" aria-hidden="true"></i> 
+                                    <i  @click="LikePostRequest(0)" class="fa fa-thumbs-down" :class="!this.liked? 'btn-like':'btn-unlike none'" role="button" aria-label="Like ou dislike"></i> 
                                     <p> {{nbDislikes()}}</p>
                                 </div>
                             </div>
                             <div class="homePost__footer__like" v-if="likes && !like()" >
                                 <div>
-                                    <i  @click="LikePostRequest(1)" class="fa fa-thumbs-up btn-unlike liked" aria-hidden="true"></i>
+                                    <i  @click="LikePostRequest(1)" class="fa fa-thumbs-up btn-unlike liked" role="button" aria-label="Like ou dislike"></i>
                                     <p>{{ nbLikes() }}</p>
                                 </div>
                                 <div>
-                                    <i  @click="LikePostRequest(-1)" class="fa fa-thumbs-down btn-unlike liked" aria-hidden="true"></i>
+                                    <i  @click="LikePostRequest(-1)" class="fa fa-thumbs-down btn-unlike liked" role="button" aria-label="Like ou dislike"></i>
                                     <p>{{ nbDislikes() }}</p>
                                 </div>
                                 
@@ -60,15 +60,15 @@
                         </div>
                 <div class="homePost__comment">
                     <div class="homePost__comment__input">
-                        <input v-model="textComment" id="textComment" type="text" placeholder="Votre commentaire"/>
+                        <input v-model="textComment" id="textComment" type="text" placeholder="Votre commentaire" aria-required="true" aria-invalid="true"/>
                     </div>
                     <div class="homePost__comment__button">
-                        <button @click.prevent="CommentRequest()" class="btn btn-comment" :class="{'disabled':isDisabled()}" >Commenter</button>
+                        <button @click.prevent="CommentRequest()" class="btn btn-comment" :class="{'disabled':isDisabled()}" role="button" aria-label="Créer un commentaire">Commenter</button>
                     </div>
                 </div>
                 
 
-                <section class="commentsPage" v-if="showComment && nbComments.length !== 0">
+                <section class="commentsPage" v-if="showComment && nbComments.length !== 0" role="region" aria-label="commentaires">
                 <CommentComp v-for="(comment, index) in this.comments"
                 :key="index"
                 :firstName="comment.UserFirstName"
@@ -91,14 +91,6 @@ import axios from 'axios'
             CommentComp, Modal
         },
         props: {
-            modify: {
-                type: Boolean,
-                default: () => false
-            },
-            clickable: {
-                type: Boolean,
-                default:() => true
-            },
             id:{
                 type: Number,
                 required: true,
@@ -136,7 +128,6 @@ import axios from 'axios'
                 localName: this.title,
                 localText: this.text,
                 file: this.image_url,
-                idPost: '',
                 showComment: false,
                 textComment: '',
                 comments: [{}],
@@ -169,6 +160,8 @@ import axios from 'axios'
                 })
                 return nb
             },
+            //On regarde si l'utilisateur a déja liké ou disliké les articles
+            //On crée en affichage en fonction du résultat
             like(){
                 const user =  JSON.parse(localStorage.getItem('user'))
                 let like_exist = false
@@ -184,6 +177,7 @@ import axios from 'axios'
                     return false
                 }
             },
+            //on appelle la requête like en fonction de ou l'utilisateur a cliqué
             LikePostRequest(like){
                 if(like == -1 || like == 1){
                     this.$store.dispatch('LikePostRequest', {
@@ -198,6 +192,7 @@ import axios from 'axios'
                     })
                 }              
             },
+            //affichage de la date avec un format différent
             date(){
                 if(typeof this.created_at !== 'undefined'){
                     const date =  this.created_at.split('T')[0]
@@ -207,6 +202,7 @@ import axios from 'axios'
                     return day+ '/' + month + '/' + year
                 }
             },
+            //creation d'un commentaire
             CommentRequest(){
                 if(this.textComment !== ''){
                     this.$store.dispatch('CreateCommentRequest', {
@@ -215,6 +211,7 @@ import axios from 'axios'
                     })
                 }
             },
+            //impossible de créé un commentaire vide
             isDisabled(){
                 if(this.textComment == "" ){
                     return true;
@@ -222,6 +219,9 @@ import axios from 'axios'
                     return false;
                 }
             },
+            //affichage des commentaires en lien avec l'article
+            //appel de la requête des commentaires
+            //on passe le résultats dans le tablea 'comments'
             showComments(){
                 if(this.nbComments.length !== 0){
                     this.comments = [{}];
@@ -245,6 +245,7 @@ import axios from 'axios'
                     .catch(error => console.log(error ,'Insuccès de lappel des commentaires'));
                 }
             },
+            //on ne peut supprimer ou modifier que notre propre article
             ownPost(){
                 const user = JSON.parse(localStorage.getItem('user'))
                 if(this.userId == user.userId){
@@ -253,45 +254,21 @@ import axios from 'axios'
                     return false
                 }
             },
-            emitModify(){
-                const title = document.getElementById('title').value;
-                const text = document.getElementById('text').value;
-                const data = {'image': this.file, 'title':title, 'text':text , 'id':this.$route.params.id}
-                this.$emit('Modifying', { data })
-            },
-            changeFile(){
-                this.file = this.$refs.fileInput.files[0];
-            },
-            emitDelete(){
-                this.$store.dispatch('DeleteRequest', {id:this.id})
-            },
-            emitComment(){
-                const textComment = document.getElementById('textComment').value
-                this.$emit('Commenting', {
-                    PostId: this.id ,
-                    text: textComment
-                })
-            },
+            //suppression de l'article
             DeleteRequest(){
                 if(confirm('Vous-vous supprimer cet article ?')){
                     this.$store.dispatch('DeleteRequest', {id:this.id})
                 }
-            },
-            GetToPost(){
-                this.$store.state.postUserId = this.userId
-                this.$router.push('/post/' + this.id)
-            },
-            ModifyRequest(){
-                const title = document.getElementById('title').value;
-                const text = document.getElementById('text').value;
-                const data = {'image': this.file, 'title':title, 'text':text , 'id':this.$route.params.id}
-                this.$store.dispatch('PutPostRequest', {data})
             },
         }
     }
 </script>
 
 <style lang="scss">
+
+//=================================
+//    style des conteneurs
+//=================================
 .home{
     width: 70%;
     margin:7% auto auto auto;
@@ -310,7 +287,9 @@ import axios from 'axios'
     
 }
 
-
+//=================================
+//    style des articles
+//=================================
 
 .homePost{
     background-color: $secondary-color;
@@ -454,28 +433,10 @@ import axios from 'axios'
     }
 }
 
-.btn-comment{
-    margin: auto 0 auto auto;
-    width: 90%;
-    display: flex;
-    justify-content: center;
-    
-    @include mobiles{
-        width: 50%;
-        margin: auto;
-        padding: 15px 45px;
-    }
-    &.disabled{
-         background-color:darken($primary-color, 5);
-         color:lighten($primary-color, 20);
-         &:hover{
-            box-shadow:none;
-            cursor: wait ;
-            
-         }
-    }
-    
-}
+//=================================
+//    style du header des articles
+//=================================
+
 
 #names{
     font-size: 20px;
@@ -505,32 +466,11 @@ import axios from 'axios'
         margin-top: 5px;
     }
 }
-#delete__flexbox{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 10px;
-    p{
-        font-size: 15px;
-    }
-    @include mobiles{
-        flex-direction: column-reverse;
-        padding-top: 3%;
-        gap: 0px;
-    }
-}
-.btn-delete{
-    padding:7px 7px;
-    border-radius: 5px;
-    background-color: $tertiary-color;
-    border: none;
-    i{
-        color: $primary-color;
-    }
-    @include mobiles{
-        margin-bottom: 6px ;
-    }
-}
+
+//=================================
+//    style du dropdown
+//=================================
+
 
 .dropdown{
     display: flex;
@@ -572,13 +512,71 @@ import axios from 'axios'
         }
         
     }
-    
 }
+
+#delete__flexbox{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    p{
+        font-size: 15px;
+    }
+    @include mobiles{
+        flex-direction: column-reverse;
+        padding-top: 3%;
+        gap: 0px;
+    }
+}
+
+//=================================
+//    style affichage commentaires
+//=================================
 
 .commentsPage{
     width: 95%;
     margin: auto;
     padding-bottom: 3%;
+}
+
+//=================================
+//    style des boutons
+//=================================
+
+
+.btn-comment{
+    margin: auto 0 auto auto;
+    width: 90%;
+    display: flex;
+    justify-content: center;
+    
+    @include mobiles{
+        width: 50%;
+        margin: auto;
+        padding: 15px 45px;
+    }
+    &.disabled{
+         background-color:darken($primary-color, 5);
+         color:lighten($primary-color, 20);
+         &:hover{
+            box-shadow:none;
+            cursor: wait ;
+            
+         }
+    }
+}
+
+.btn-delete{
+    padding:7px 7px;
+    border-radius: 5px;
+    background-color: $tertiary-color;
+    border: none;
+    i{
+        color: $primary-color;
+    }
+    @include mobiles{
+        margin-bottom: 6px ;
+    }
 }
 
 .btn-unlike{

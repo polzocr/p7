@@ -1,24 +1,24 @@
 <template>
-   <div class="composant">
+   <section class="composant" role="region" aria-label="page-inscription">
        <form action="" @submit.prevent="SignupRequest" class="composant__form">
             <div class="form signup">
                 <div class="form__input">
-                    <input @input="testLastName()" v-model.trim="lastName" type="text" name="lastName" placeholder="Nom">
+                    <input @input="testLastName()" v-model.trim="lastName" type="text" name="lastName" placeholder="Nom" aria-required="true" aria-invalid="true">
                     <p class="error" v-if="errorLastName">{{ errorLastName }}</p>
                 </div>
                 <div class="form__input">
-                    <input v-model.trim="firstName" type="text" name="firstName" placeholder="Prénom">
+                    <input v-model.trim="firstName" type="text" name="firstName" placeholder="Prénom" aria-required="true" aria-invalid="true">
                 </div>
                 <div class="form__input">
-                    <input @input="testEmail()" v-model.trim="email" type="email" name="email" placeholder="E-mail"> 
+                    <input @input="testEmail()" v-model.trim="email" type="email" name="email" placeholder="E-mail" aria-required="true" aria-invalid="true"> 
                     <p class="error" v-if="errorEmail">{{ errorEmail }}</p>
                 </div>
                 <div class="form__input">
-                    <input @input="testPassword()" v-model.trim="password" type="password" name="password" placeholder="Mot de passe">
+                    <input @input="testPassword()" v-model.trim="password" type="password" name="password" placeholder="Mot de passe" aria-required="true" aria-invalid="true">
                     <p class="error" v-if="errorPassword">{{ errorPassword }}</p>
                 </div>
                 <div class="">
-                    <button type="submit" :disabled="isDisabled()" class="btn form__button btn-signup" :class="{'disabled':isDisabled()}">
+                    <button type="submit" :disabled="isDisabled()" class="btn form__button btn-signup" :class="{'disabled':isDisabled()}" role="button" aria-label="bouton validation formulaire">
                         <span v-if="$store.state.status == 'loading'">Création en cours...</span>
                         <span v-else>S'enregistrer</span>
                     </button>
@@ -29,7 +29,7 @@
         <div class="logo">
           <img src="../../public/images/black-logo.png" alt="logo-groupomania"/>
         </div>
-    </div>
+    </section>
 </template>
 
 <script>
@@ -49,18 +49,9 @@ export default {
                 errorPassword: '',
                 errorValidation: '',
             }
-            },
-    computed: {
-        
-    },
-    mounted() {
-        // const user = JSON.parse(localStorage.getItem('user'));
-        // if(user && this.$store.state.user.userId == user.userId){
-        //     this.$router.push('/');
-        //     return ;
-        // }
-    },
+        },
     methods:{
+        //validation mot de passe
         testPassword(){
             const regexPassword = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{8,}$/;
             if(regexPassword.test(this.password)){
@@ -72,6 +63,7 @@ export default {
                 return false;
             }
         },
+        //validation email
         testEmail(){
             const regexEmail = /^(([^<>()\]\\.,;:\s@"]+(\.[^<>()\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
             if(regexEmail.test(this.email)){
@@ -83,6 +75,7 @@ export default {
                 return false;
             }
         },
+        //validation nom de famille
         testLastName(){
             const regexLastName =  /^[a-zA-Zàáâäãåąčćęèéêëėįìíîïłńòóôöõùúûüųūÿýżźñç ,.'-]+$/u;
             if(regexLastName.test(this.lastName)){
@@ -94,6 +87,7 @@ export default {
                 return false;
             }
         },
+        //impossible de valider le formulaire si les champs ne sont pas remplis
         isDisabled(){
             if(this.lastName == "" || this.email == "" || this.password == ""){
                 return true;
@@ -101,6 +95,7 @@ export default {
                 return false;
             }
         },
+        //appel de la requete Post pour l'inscription d'un utilisateur
         SignupRequest(){
             if(this.testPassword() && this.testEmail() && this.testLastName() && !this.isDisabled()){
                 this.errorValidation = '';
@@ -111,8 +106,6 @@ export default {
                 email: this.email,
                 password: this.password
                 })
-                .then(() => {this.Toaster('Inscription réussie !') })
-                .catch(error => error)
             } else {
                 this.errorValidation = 'Veuillez remplir correctement vos informations personnelles';
             }

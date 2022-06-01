@@ -1,9 +1,9 @@
 <template>
-    <section class="profilePage">
-       <section class="profile" v-if="modify">
+    <section class="profilePage" role="region" aria-label="conteneur page profil utilisateur">
+       <section class="profile" v-if="modify" role="region" aria-label="page profil utilisateur">
             <div class="profile__perso">
                 <div class="profile__perso__icon">
-                    <i class="fa fa-user-circle" aria-hidden="true"></i>
+                    <i class="fa fa-user-circle" aria-describedby="icon profil"></i>
                 </div>
                 <div class="infos">
                     <div class="infos__name">
@@ -14,44 +14,44 @@
                         <p> {{ email }}</p>
                     </div>
                     <div class="infos__button">
-                        <button class="btn" @click.prevent="ModifyUser()">Modifier le profil</button>
+                        <button class="btn" @click.prevent="ModifyUser()" role="button" aria-label="bouton modifier profil">Modifier le profil</button>
                     </div>
                 </div>
             </div>
             <div class="profile__content">
                 <div class="profile__content__posts">
-                    <i class="fa fa-file-image" aria-hidden="true"></i>
+                    <i class="fa fa-file-image" aria-describedby="icon articles"></i>
                     <p>{{ nbPosts }} Posts</p>
                 </div>
                 <div id = "comments">
-                    <i class="fa fa-comment" aria-hidden="true"></i>
+                    <i class="fa fa-comment" aria-describedby="icon commentaires"></i>
                     <p>{{ nbComments }} Commentaires</p>
                 </div>
                 <div class="profile__content__likes">
-                    <i class="fa fa-heart" aria-hidden="true"></i>
+                    <i class="fa fa-heart" aria-describedby="icon likes"></i>
                     <p>{{ nbLikes }} Likes/Dislikes</p>
                 </div>
             </div>
         </section>
-        <section v-else class="profile">
+        <section v-else class="profile" role="region" aria-label="page profil utilisateur">
             <div class="profile__perso">
                 <div class="profile__perso__icon">
-                    <i class="fa fa-user-circle" aria-hidden="true"></i>
+                    <i class="fa fa-user-circle" aria-describedby="icon profil"></i>
                 </div>
                 <div class="modify">
                     <div class="modify__name">
-                        <input id="lastname" type="text" v-model="lastName">
-                        <input type="text" v-model="firstName">
+                        <input id="lastname" type="text" v-model="lastName" aria-required="true" aria-invalid="true">
+                        <input type="text" v-model="firstName" aria-required="false" aria-invalid="false">
                     </div>
                     <div class="modify__email">
-                        <input id="email" type="text" v-model="email">
+                        <input id="email" type="text" v-model="email" aria-required="true" aria-invalid="true">
                     </div>
                     <div class="modify__button">
                         <div class="modify__button__1">
-                            <button @click.prevent="UpdateUserRequest()" class="btn">Valider</button>
+                            <button @click.prevent="UpdateUserRequest()" class="btn" role="button" aria-label="modifier utilisateur">Valider</button>
                         </div>
                         <div class="modify__button__2">
-                            <button @click.prevent="DeleteUserRequest()" class="btn">Supprimer</button>
+                            <button @click.prevent="DeleteUserRequest()" class="btn" role="button" aria-label="supprimer utilisateur">Supprimer</button>
                         </div>
                     </div>
                 </div>
@@ -61,15 +61,15 @@
 
             <div class="profile__content">
                 <div class="profile__content__posts">
-                    <i class="fa fa-file-image" aria-hidden="true"></i>
+                    <i class="fa fa-file-image" aria-describedby="icon articles"></i>
                     <p>{{ nbPosts }} Posts</p>
                 </div>
                 <div id = "comments">
-                    <i class="fa fa-comment" aria-hidden="true"></i>
+                    <i class="fa fa-comment" aria-describedby="icon commentaires"></i>
                     <p>{{ nbComments }} Commentaires</p>
                 </div>
                 <div class="profile__content__likes">
-                    <i class="fa fa-heart" aria-hidden="true"></i>
+                    <i class="fa fa-heart" aria-describedby="icon likes"></i>
                     <p>{{nbLikes}} Likes/Dislikes</p>
                 </div>
             </div>
@@ -98,6 +98,8 @@ export default {
             email: '',
         }
     },
+
+    //affichage des infos utilisateur par la requete getUser
     beforeCreate(){
         const user = JSON.parse(localStorage.getItem('user'));
         const instance = axios.create({baseURL: 'http://localhost:3000/',});
@@ -117,13 +119,12 @@ export default {
             this.$router.push('/');
         }
     },
-    computed: {
-        
-    },
     methods:{
+        //on passe avec l'affichage de la modification
         ModifyUser(){
             this.modify= false
         },
+        //validation email
         testEmail(){
             const regexEmail = /^(([^<>()\]\\.,;:\s@"]+(\.[^<>()\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
             if(regexEmail.test(this.email)){
@@ -133,6 +134,7 @@ export default {
                 return false;
             }
         },
+        //validation Nom de famille obligatoire
         nameExist(){
             if(this.lastName == ""){
                 document.getElementById('lastname').placeholder = "Votre nom est requis"
@@ -142,6 +144,7 @@ export default {
                 return true;
             }
         },
+        //validation email obligatoire
         emailExist(){
             if(this.email == ""){
                 document.getElementById('email').placeholder = "Votre e-mail est requis"
@@ -150,6 +153,7 @@ export default {
                 return true;
             }
         },
+        //appel de la requete modification user
         UpdateUserRequest(){
             if(this.nameExist() && this.emailExist() && this.testEmail()){
                 const user = JSON.parse(localStorage.getItem('user'));
@@ -177,6 +181,7 @@ export default {
                 });
             }
         },
+        //suppression de l'utilisateur
         DeleteUserRequest(){
             const id = this.$route.params.id;
             this.$store.dispatch('DeleteUserRequest', id)
@@ -186,6 +191,10 @@ export default {
 </script>
 
 <style lang="scss">
+
+//=================================
+//    style conteneur
+//=================================
 .profilePage{
     height: 1044px;
     margin-top:12%;
@@ -201,6 +210,10 @@ export default {
     }
     
 }
+
+//=================================
+//   style affichage du profil
+//=================================
 
 .profile{
     background-color:$secondary-color;
@@ -336,6 +349,10 @@ export default {
     }
 }
 
+//=================================
+// style des activites des users
+//=================================
+
 #comments {
     display: flex;
     margin-left:25%;
@@ -410,6 +427,10 @@ export default {
         }
     }
 }
+
+//=================================
+//    style de la modification
+//=================================
 
 .modify{
     height: 40%;

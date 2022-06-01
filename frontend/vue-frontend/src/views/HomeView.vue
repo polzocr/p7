@@ -1,10 +1,7 @@
 <template>
-    <main>
-        <div class="scrollTop" :class="{'visibility': visible}"><button @click="topOrFeed()" class="btn"><i class="fa fa-arrow-up" aria-hidden="true"></i></button></div>
+    <main role="main">
+        <div class="scrollTop" :class="{'visibility': visible}" role="navigation"><button @click="topOrFeed()" class="btn" role="button"><i class="fa fa-arrow-up"></i></button></div>
         <PostComp  v-for="(post, index) in postsReverse"
-        @Commenting="CommentRequest" 
-        @modify="getToPost"
-        :modify="modify"
         :key="index"
         :id="post.id"
         :userId="post.userId"
@@ -32,14 +29,14 @@ export default {
     },
     data: function(){
         return {
-            idLocal: this.$route.params.id,
-            modify: false,
             visible: false,
         }
     },
+    //appel des articles
     beforeCreate(){
         this.$store.dispatch('GetPostsRequest');
     },
+    //écoute du scroll pour le goToTop
     created(){
         window.addEventListener('scroll', () => {
         if(window.scrollY > 600){
@@ -50,20 +47,13 @@ export default {
         });
     },
     methods: {
-        CreateRequest(){
-           this.$store.dispatch()
-        },
-        CommentRequest(data){
-            this.$store.dispatch('CreateCommentRequest', data)
-        },
-        getToPost(data){
-            this.$router.push('/' + data.postId)                
-        },
+        //retour en haut de page
         topOrFeed(){
             window.scrollTo(0,0)
         }
     },
     computed:{
+        //affichage du dernier post en haut de page
         postsReverse(){
             return this.$store.state.posts.slice().reverse()
         }
@@ -72,13 +62,13 @@ export default {
 </script>
 
 <style lang='scss'>
-html {
-  scroll-behavior: smooth;
-}
+
 main{
     padding-bottom: 20%;
 }
-
+//=================================
+//    style btn haut de page
+//=================================
 .scrollTop{
     opacity: 0;
     button{

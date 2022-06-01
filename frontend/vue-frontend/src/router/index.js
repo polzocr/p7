@@ -3,7 +3,6 @@ import VueRouter from 'vue-router'
 import Home from '../views/HomeView.vue'
 import LoginView from '../views/LoginView.vue'
 import SignupView from '../views/SignupView.vue'
-import PostView from '../views/PostView.vue'
 import CreateView from '../views/CreateView.vue'
 import ProfileView from '../views/ProfileView.vue'
 import AdminView from '../views/AdminView.vue'
@@ -40,14 +39,10 @@ Vue.use(VueRouter)
     component: CreateView
   },
   {
-    path: '/post/:id',
-    name: 'Post',
-    component: PostView
-  },
-  {
     path: '/users',
     name: 'Admin',
     component: AdminView,
+    //uniquement les utilisateurs admin peuvent utiliser cette route
     beforeEnter(to, from, next){
       to.name
       from.name
@@ -71,6 +66,7 @@ const router = new VueRouter({
   mode: "history"
 })
 
+//les routes ne peuvent etre accédées que par des utilisateurs connectés
 router.beforeEach((to, from, next) => {
   const userStore = store.state.user;
   const user = JSON.parse(localStorage.getItem('user'));

@@ -1,29 +1,29 @@
 <template>
     <transition name="modal-transition">
-        <div class="modal">
+        <section class="modal" role="region" aria-label="modal modification article">
             <form enctype="multipart/form-data" class="modal__box">
                 <div class="modal__box__title">
-                    <input id="title" :value="title" type="text">
-                    <button class="btn btn-close" @click="$emit('close')"><i class="fa fa-times" aria-hidden="true"></i></button>
+                    <input id="title" :value="title" type="text" aria-required="true" aria-invalid="true" aria-label="titre">
+                    <button class="btn btn-close" @click="$emit('close')" role="button" aria-label="Fermer la modal"><i class="fa fa-times"></i></button>
                 </div>
                 <div class="modal__box__text">
-                    <textarea id="text" :value="text" rows="5" cols="60"></textarea>
+                    <textarea id="text" :value="text" rows="5" cols="60" aria-required="false" aria-invalid="false" aria-label="text"></textarea>
                 </div>
                 <div class="modal__box__image"  v-if="this.image_url !== null">
-                    <img :src="image_url" alt="image_PutRequest"/>
+                    <img :src="image_url" alt="image de l'article" aria-required="false" aria-invalid="false" aria-label="image"/>
                 </div>
                 <div class="modal__box__file">
                     <label class="btn upload" for="upload">Choisir un fichier</label>
-                    <input @change="changeFile()" id="upload" type="file" accept="image/*" ref="fileInput" name="image">
+                    <input @change="changeFile()" id="upload" type="file" accept="image/*" ref="fileInput" name="image" aria-label="changer d'image">
                 </div>
                 <div class="modal__box__btn">
-                    <button class="btn btn-modal" @click.prevent="ModifyRequest()">Modifier</button>
+                    <button class="btn btn-modal" @click.prevent="ModifyRequest()" role="button" aria-label="Modifier l'article">Modifier</button>
                     
-                    <button class="btn btn-modal" @click.prevent="DeleteRequest()">Supprimer</button>
+                    <button class="btn btn-modal" @click.prevent="DeleteRequest()" role="button" aria-label="Supprimer l'article">Supprimer</button>
                 </div>
             </form>    
               
-        </div>
+        </section>
     </transition>
         
 </template>
@@ -59,6 +59,7 @@ export default {
             }
         },
         methods: {
+            //Un article a au moins un titre
             isDisabled(){
                 const title = document.getElementById('title').value
                 if(title == ''){
@@ -67,6 +68,7 @@ export default {
                     return this.getDisabled = false;
                 }
             },
+            //changement de fichier avec vérification du format
             changeFile(){
                 const file = this.$refs.fileInput.files[0];
                 const MIME_TYPES = {'image/jpg' : 'jpg','image/jpeg': 'jpg','image/png': 'png','image/gif':'gif'};
@@ -78,6 +80,7 @@ export default {
                     this.$store.commit('error_toasting', 'Uniquement les images et les gifs sont acceptés')
                 }
             },
+            //appelle de la requete de modification de l'article avec les valeurs du formulaire
             ModifyRequest(){
                 const user =  JSON.parse(localStorage.getItem('user'))
                 const title = document.getElementById('title').value;
@@ -95,6 +98,7 @@ export default {
                 }
                 
             },
+            //suppressioin de l'article
             DeleteRequest(){
                 const user =  JSON.parse(localStorage.getItem('user'))
                 if(user.userId !== this.userId){
@@ -108,6 +112,10 @@ export default {
 </script>
 
 <style lang="scss">
+
+//=================================
+//          style modal 
+//=================================
 .modal {
     position: fixed;
     z-index: 9998;
@@ -224,6 +232,10 @@ export default {
         }
     }
 }
+
+//=================================
+//          style boutons
+//=================================
 .btn-close{
     position: absolute;
     right: 0;
@@ -258,7 +270,9 @@ export default {
 }
 
 
-
+//=================================
+//    transition à la fermeture
+//=================================
 
 .modal-transition-enter,.modal-transition-leave-to {
     opacity: 0;

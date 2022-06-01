@@ -1,36 +1,27 @@
 <template>
-  <div id="app">
+  <div id="app" role="main">
     <div v-if="!connected()" class="login">
       <div class="login__element">
-        <div class="login__element__nav">
+        <div class="login__element__nav" role="navigation">
           <div class="navigation left" :class="{'active':loginPage()}">
-            <router-link to="/login" id="login--signup"><i class="fa fa-user-circle"></i>Se connecter</router-link> 
+            <router-link to="/login" id="login--signup" aria-label="Direction Se connecter" role="link"><i class="fa fa-user-circle"></i>Se connecter</router-link> 
           </div>
           <div class="navigation" :class="{'active':signupPage()}" >
-            <router-link to="/signup" id="login--signup"><i class="fa fa-list-alt" aria-hidden="true"></i>S'inscrire</router-link>
+            <router-link to="/signup" id="login--signup" aria-label="Direction S'inscrire" role="link"><i class="fa fa-list-alt"  ></i>S'inscrire</router-link>
           </div>
         </div>
         <router-view/>
       </div>
     </div>
-    <div class="bodyPage" v-else>
-      <!-- <nav class="navbar">
-          <router-link to="/" class="navbar__icon"><img src="../public/images/icon-white.png" alt="icone-groupomania"/></router-link>
-          <router-link to="/createpost" class="navbar__create"><i class="fa fa-plus" aria-hidden="true"></i></router-link>
-          <div class="navbar__profil">
-            <router-link :to="{name: 'ProfileView', params:{id: this.$store.state.user.userId} }" ><i class="fa fa-user" aria-hidden="true"></i></router-link>
-            <router-link @click.native="deconnexion()" to=""><i class="fa fa-arrow-right" aria-hidden="true"></i></router-link> 
-          </div>
-      </nav> -->
-      <div id="sidemenu">
+      <div id="sidemenu" v-else role="navigation">
         <div class="sidemenu__nav">
-          <button class="sidemenu__btn" @blur="navOpen=false" @click="navOpen=!navOpen" :class="{active:navOpen}">
+          <button class="sidemenu__btn" @blur="navOpen=false" @click="navOpen=!navOpen" :class="{active:navOpen}" role="button">
               <span class="top"></span>
               <span class="mid"></span>
               <span class="bottom"></span>
           </button>
           <div class="sidemenu__logo">
-            <router-link to="/" class="top__logo__img"><img src="../public/images/icon-white.png" alt="icone-groupomania"/></router-link>
+            <router-link to="/" class="top__logo__img" aria-label="Direction Accueil" role="link"><img src="../public/images/icon-white.png" alt="icone-groupomania"/></router-link>
           </div>
         </div>
         
@@ -38,18 +29,18 @@
           <nav v-show="navOpen">
             <div class="sidemenu__wrapper">
               <div class="sidemenu__create">
-                <router-link to="/createpost" class="sidemenu__create__link"><i class="fa fa-plus" aria-hidden="true"></i>
+                <router-link to="/createpost" class="sidemenu__create__link" aria-label="Direction Creation d'article" role="link"><i class="fa fa-plus"></i>
                   <p>Créer un article</p>
                 </router-link>
               </div>
               <div class="sidemenu__user">
-                <router-link :to="{name: 'Profile', params:{id: this.$store.state.user.userId} }" class="sidemenu__user__link" ><i class="fa fa-user" aria-hidden="true"></i>
+                <router-link :to="{name: 'Profile', params:{id: this.$store.state.user.userId} }" class="sidemenu__user__link" aria-label="Direction page profile" role="link"><i class="fa fa-user" ></i>
                   <p>Votre profile</p>
                 </router-link>
-                <router-link v-if="isAdmin()" to="/users" class="sidemenu__user__link"><i class="fa fa-lock" aria-hidden="true"></i>
+                <router-link v-if="isAdmin()" to="/users" class="sidemenu__user__link" aria-label="Direction page admin" role="link"><i class="fa fa-lock" ></i>
                   <p>Page Admin</p>
                 </router-link>
-                <router-link @click.native="deconnexion()" to="" class="sidemenu__user__link"><i class="fa fa-arrow-right" aria-hidden="true"></i>
+                <router-link @click.native="deconnexion()" to="" class="sidemenu__user__link" aria-label="Deconnexion" role="link"><i class="fa fa-arrow-right"></i>
                   <p>Se Deconnecter</p>
                 </router-link>  
               </div>
@@ -57,8 +48,7 @@
           </nav>
         </transition>
       </div>
-      <router-view/>
-    </div> 
+      <router-view/> 
     
     
   </div>
@@ -66,7 +56,7 @@
 
 <script>
 
-// import {mapState} from 'vuex'
+
 
 
 export default {
@@ -76,10 +66,8 @@ export default {
       navOpen: false,
     }
   },
-  computed: {
-    // ...mapState(['connected'])
-  },
   methods: {
+    //sur quelle page est l'utilisateur pour savoir si on affiche le login ou le signup
     loginPage(){
       if(this.$route.path == '/login'){
         return true
@@ -94,6 +82,7 @@ export default {
         return false
       }  
     },
+    //l'utilisateur est-il connecté?
     connected(){
       const user = JSON.parse(localStorage.getItem('user'));
       if(user && this.$store.state.user.userId == user.userId ){
@@ -102,13 +91,15 @@ export default {
         return false;
       }
     },
+    //appel de la fonctions deconnexion du store
     deconnexion(){
-            this.$store.dispatch('deconnexion', {
-                userId: -1,
-                token: ''
-            });
-            this.$router.push('/login')
+      this.$store.dispatch('deconnexion', {
+          userId: -1,
+          token: ''
+      });
+      this.$router.push('/login')
     },
+    //l'utilisateur est-il un admin
     isAdmin(){
       const user = JSON.parse(localStorage.getItem('user'));
       if(user.userId == 1){
@@ -124,6 +115,12 @@ export default {
 
 <style lang="scss">
 
+//=================================
+//    style app entiere
+//=================================
+html {
+  scroll-behavior: smooth;
+}
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -140,12 +137,64 @@ body{
   @include mobiles{
       background-color: $tertiary-color;
   }
-
 }
 
-.bodyPage{
-  width: 100%;
+.btn{
+  background-color: $primary-color;
+  border: 2px solid $primary-color;
+  border-radius: 30px;
+  box-shadow: 0 0 40px 40px $primary-color inset, 0 0 0 0 primary-color;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1;
+  color: black;
+
+  cursor: pointer;
+  text-decoration: none;
+
+  display: flex;
+  align-self: center;
+  text-align: center;
+  text-transform: uppercase;
+
+  
+  
+  padding: 19px 45px;
+  
+  transition: all 150ms ease-in-out;
+  &:hover {
+    box-shadow: 0 0 10px 0 $primary-color inset, 0 0 10px 4px $primary-color;
+    background-color: transparent;
+  }
 }
+
+.toast-container{
+   left: 10px !important;
+   @include mobiles-toaster{
+     flex-direction: row !important;
+     top: 10% !important;
+     min-width: 100%;
+   }
+}
+
+.toast{
+    background-color: rgb(63, 216, 63) !important;
+    font-size: 17px !important;
+    font-weight: 500 !important;
+    color: $tertiary-color !important;
+    @include mobiles-toaster{
+      border-radius: 30px !important;
+      margin: 2% auto 0 auto;
+    }
+    &.error{
+      background-color: rgb(255, 9, 9) !important;  
+      color: white !important;
+    }
+}
+
+//=================================
+//    style page login et signup
+//=================================
 
 .login{
    display: flex;
@@ -235,120 +284,9 @@ body{
   background-color: $secondary-color;
 }
 
-
-
-.btn{
-  background-color: $primary-color;
-  border: 2px solid $primary-color;
-  border-radius: 30px;
-  box-shadow: 0 0 40px 40px $primary-color inset, 0 0 0 0 primary-color;
-  font-size: 16px;
-  font-weight: 700;
-  line-height: 1;
-  color: black;
-
-  cursor: pointer;
-  text-decoration: none;
-
-  display: flex;
-  align-self: center;
-  text-align: center;
-  text-transform: uppercase;
-
-  
-  
-  padding: 19px 45px;
-  
-  transition: all 150ms ease-in-out;
-  &:hover {
-    box-shadow: 0 0 10px 0 $primary-color inset, 0 0 10px 4px $primary-color;
-    background-color: transparent;
-  }
-}
-
-.admin{
-  &__link{
-    text-decoration: none;
-    color: $tertiary-color;
-  }
-}
-
-.focus{
-  background-color: $primary-color;
-}
-
-
-nav{
-  
-}
-
-.navbar{
-  background-color:$tertiary-color;
-  position:fixed;
-  top: 0;
-  width: 100%;
-  height: 70px;;
-  overflow: hidden;
-  z-index: 2;
-  // // &__icon{
-  // //   float:left;
-  // //   padding-left: 1%;
-  // //   width: 250px;
-  // //   height: 100%;
-  // //   &:hover{
-  // //     transform: scale(1.1);
-  // //     transition: all 400ms;
-  // //   }
-
-  // }
-  // & img {
-  //   width: 100%;
-  //   height: 100%;
-  //   object-fit: cover;
-  // }
-  &__create{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: absolute;
-    left: 47%;
-
-    height: 100%;
-    width: 75px;
-    
-    text-decoration: none;
-    &:hover{
-      transform: scale(1.1);
-      transition: all 400ms;
-    }
-    i{
-      color: $primary-color;
-      font-size: 45px;
-      width: 100%;
-      border: 2px solid $primary-color;
-      border-radius: 50%;
-      padding: 10%;
-    }
-    
-  }
-  &__profil{
-    float: right;
-    width: 200px;
-    height: 100%;
-    margin-top: 1%;
-    
-    i{
-      color: $primary-color;
-      font-size: 45px;
-      width: 50%;
-      &:hover{
-      transform: scale(1.2);
-      transition: all 400ms;
-      }
-    }
-  }
-}
-
+//=================================
+//  style navbar apres connexion
+//=================================
 
 
 #sidemenu {
@@ -455,16 +393,8 @@ nav{
 					transform: rotate(45deg);
 				}
 			}
-
-		}
-
-  
-
-    
-
-
-
-		&__wrapper {
+    }
+    &__wrapper {
       width: 95%;
       margin: auto;
       padding: 2%;
@@ -586,29 +516,8 @@ nav{
 	opacity: 0;
 }
 
-.toast-container{
-   left: 10px !important;
-   @include mobiles-toaster{
-     flex-direction: row !important;
-     top: 10% !important;
-     min-width: 100%;
-   }
-}
 
-.toast{
-    background-color: rgb(63, 216, 63) !important;
-    font-size: 17px !important;
-    font-weight: 500 !important;
-    color: $tertiary-color !important;
-    @include mobiles-toaster{
-      border-radius: 30px !important;
-      margin: 2% auto 0 auto;
-    }
-    &.error{
-      background-color: rgb(255, 9, 9) !important;  
-      color: white !important;
-    }
-}
+
 
 
 </style>

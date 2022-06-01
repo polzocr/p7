@@ -4,24 +4,30 @@ import Vuex from 'vuex'
 import Toasted from 'vue-toasted'
 const axios = require('axios').default;
 
+//package des toster
 Vue.use(Toasted, {
     iconPack : 'fontawesome' 
 });
+
+
 Vue.use(Vuex)
 
 
+//initialisation instance axios générale
 const instance = axios.create({
   baseURL: 'http://localhost:3000/',
 });
 
-
+//initialisation instance axios requête necessitant un type particulier
  const instancePut = axios.create({
    baseURL: 'http://localhost:3000/',
    headers: { "Content-Type": "multipart/form-data" }
 });
 
 
-
+//////////////////////////////////////////////////////////////////
+//au refresh de la page, on vérifie sur l'utilisateur est connecté
+//////////////////////////////////////////////////////////////////
 
 const userInit = {
   userId: -1,
@@ -39,7 +45,7 @@ if(!userLocal){
   instancePut.defaults.headers.common['Authorization'] = 'Bearer ' + userLocal.token;
 }
 
-
+////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 export default new Vuex.Store({
   state: {
@@ -64,12 +70,14 @@ export default new Vuex.Store({
     changeStatus(state, status){
       state.status = status;
     },
+    //connexion
     userLogin(state, user){
       instance.defaults.headers.common['Authorization'] = 'Bearer ' + user.token;
       instancePut.defaults.headers.common['Authorization'] = 'Bearer ' + user.token;
       state.user = user;
       localStorage.setItem('user', JSON.stringify(user))
     },
+    //toasters
     toasting(state, msg){
       this._vm.$toasted.show(msg, {
         icon : {

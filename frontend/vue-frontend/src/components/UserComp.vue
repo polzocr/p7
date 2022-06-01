@@ -1,5 +1,5 @@
 <template>
-    <section id="card">
+    <section id="card" role="region" aria-label="carte-utilisateur">
         <div class="userCard">
             <div class="userCard__infos">
                 <div class="userCard__infos__names">
@@ -11,8 +11,8 @@
                 </div>
             </div>
             <div class="userCard__buttons">
-                <button class="btn btn-admin" @click.prevent="ActivityUser()">Activités</button>
-                <button v-if="!isAdmin()" class="btn btn-admin" @click.prevent="DeleteUser()">Supprimer</button>
+                <button class="btn btn-admin" @click.prevent="ActivityUser()" role="button" aria-label="Activités">Activités</button>
+                <button v-if="!isAdmin()" class="btn btn-admin" @click.prevent="DeleteUser()" role="button" aria-label="Supprimer">Supprimer</button>
             </div>
         </div>
     </section>
@@ -42,13 +42,16 @@ export default{
         }
     },
     methods:{
+        //supprimer l'utilisateur
         DeleteUser(){
             const id = this.id;
             this.$store.dispatch('DeleteUserRequest', id)
         },
+        //voir les activités de l'utilisateur
         ActivityUser(){
             alert('Bientôt disponible !')
         },
+        //vérification admin
         isAdmin(){
             if(this.id == 1){
                 return true

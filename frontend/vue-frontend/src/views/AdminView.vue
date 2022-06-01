@@ -1,6 +1,6 @@
 <template>
     <main>
-        <section>
+        <section role="region" aria-label="page Admin">
             <div class="title">
                 <h1>Page administrateur</h1>
                 <p>{{ this.$store.state.users.length }} utilisateurs</p>
@@ -30,7 +30,7 @@ export default {
             
         }
     },
-    
+    //appel de tous les utilisateurs
     beforeCreate(){
         this.$store.dispatch('GetAllUsersRequest');
     },
