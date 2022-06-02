@@ -354,8 +354,7 @@ body{
 			position: relative;
 			z-index: 100;
 			appearance: none;
-			cursor: pointer;
-			outline: none;
+			cursor: pointer;  
       @include all-desktop{
         display: none;
       }
