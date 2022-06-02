@@ -48,7 +48,7 @@
           </nav>
         </transition>
       </div>
-      <router-view/> 
+      <router-view/>
     
     
   </div>
@@ -500,6 +500,10 @@ body{
 	}
 }
 
+//=================================
+//  style transitions
+//=================================
+
 
 .translateX-enter{
 	transform:translateX(-200px);
@@ -515,6 +519,7 @@ body{
 	transform: translateX(-200px);
 	opacity: 0;
 }
+
 
 
 
