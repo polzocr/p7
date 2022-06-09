@@ -26,7 +26,7 @@ const instance = axios.create({
 
 
 //////////////////////////////////////////////////////////////////
-//au refresh de la page, on vérifie sur l'utilisateur est connecté
+//au refresh de la page, on vérifie que l'utilisateur est connecté
 //////////////////////////////////////////////////////////////////
 
 const userInit = {

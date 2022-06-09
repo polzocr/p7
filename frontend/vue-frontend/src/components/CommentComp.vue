@@ -42,11 +42,7 @@ export default {
                 return day+ '/' + month + '/' + year
             }
         },
-    },
-    computed:{
-        
-    },
-    
+    },    
 }
 </script>
 
