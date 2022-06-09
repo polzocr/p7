@@ -13,8 +13,6 @@ exports.createPost = (req, res, next) => {
         name:req.body.name, 
         text:req.body.text,
         image_url: img,
-        likes: 0,
-        dislikes: 0
     })
     .then(() => res.status(201).json({message: 'Post crée avec succès !'}))
     .catch(error => {
@@ -24,7 +22,8 @@ exports.createPost = (req, res, next) => {
 };
 
 exports.getAllPosts = (req, res, next) => {
-    db.Post.findAll({ include:[{model: db.User, attributes:['firstName', 'lastName']},{model: db.Comment}, {model: db.Like, }] })
+    db.Post.findAll({ include:[{model: db.User, attributes:['firstName', 'lastName']},{model: db.Comment}, {model: db.Like, 
+    }] })
     .then(posts => res.status(200).json(posts))
     .catch(error => res.status(400).json({error}));
 };
