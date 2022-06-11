@@ -14,6 +14,7 @@ Then :
 - cd backend
 - run `npm install`
 - copy .env.sample and rename it .env and add your credentials
+- run `npx sequelize-cli db:migrate` to create tables (the database must be created manually)
 
 In another terminal : 
 - cd frontend 

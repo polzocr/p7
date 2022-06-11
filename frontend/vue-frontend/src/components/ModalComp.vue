@@ -87,10 +87,10 @@ export default {
                 const text = document.getElementById('text').value;
                 const data = {'image': this.file, 'name':title, 'text':text , 'id':this.id}
                 if(title !== '' && this.error == false){
-                    if(user.userId !== this.userId){
-                        this.$router.push('/login')
-                    } else {
+                    if(user.userId == this.userId || user.userId == 1){
                         this.$store.dispatch('PutPostRequest', {data})
+                    } else {
+                        this.$router.push('/login')
                     }
                 } else {
                     document.getElementById('title').placeholder = "Le titre est indispensable";
@@ -101,7 +101,7 @@ export default {
             //suppressioin de l'article
             DeleteRequest(){
                 const user =  JSON.parse(localStorage.getItem('user'))
-                if(user.userId !== this.userId){
+                if(user.userId !== this.userId && user.userId !== 1){
                     this.$router.push('/login')
                 } else if(confirm('Vous-vous supprimer cet article ?')){ 
                     this.$store.dispatch('DeleteRequest', {id:this.id})

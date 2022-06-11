@@ -1,7 +1,7 @@
 const db = require('../models');
 
 exports.likeOrDislikePost = (req,res,next) => {
-    const like = req.body.like
+    const like = req.body.like;
     switch(like){
         case 0:
             db.Like.findOne({where: {postId:req.params.id, userId: req.auth.userId} })

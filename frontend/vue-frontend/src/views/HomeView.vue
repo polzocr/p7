@@ -4,7 +4,7 @@
         <PostComp  v-for="(post, index) in postsReverse"
         :key="index"
         :id="post.id"
-        :userId="post.userId"
+        :userId="post.UserId"
         :created_at="post.createdAt"
         :user="post.User"  
         :title="post.name"

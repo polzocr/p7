@@ -6,7 +6,7 @@
                     <p id="post-title">{{ title }}</p>
                     <div id="delete__flexbox">
                         <p>{{ date() }} </p>
-                        <div v-if="ownPost()" class="dropdown">
+                        <div v-if="ownPost() || isAdmin()" class="dropdown">
                             <button class="btn btn-delete dropdown__icon"><i class="fa fa-ellipsis-h" role="button" aria-label="dropdown-bouton"></i></button>
                             <div class="dropdown__content">
                                 <button @click.prevent="showModal = true" class="btn btn-delete"><i class="fa fa-pen" role="link" aria-label="Modifier-article"></i></button>
@@ -167,7 +167,7 @@ import axios from 'axios'
                 let like_exist = false
                 if(this.likes.length !== 0){
                     this.likes.forEach(like => {
-                        if(like.userId == user.userId){
+                        if(like.UserId == user.userId){
                             this.liked = like.stateLike
                             like_exist = true
                         } 
@@ -249,6 +249,14 @@ import axios from 'axios'
             ownPost(){
                 const user = JSON.parse(localStorage.getItem('user'))
                 if(this.userId == user.userId){
+                    return true
+                } else {
+                    return false
+                }
+            },
+            isAdmin(){
+                const user = JSON.parse(localStorage.getItem('user'));
+                if(user.userId == 1){
                     return true
                 } else {
                     return false
