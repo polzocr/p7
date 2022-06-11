@@ -42,20 +42,20 @@ exports.modifyPost = (req, res, next) => {
     }:{...req.body}
     db.Post.findOne({where: {id:req.params.id} })
     .then(post => {
-        if(post.UserId !== req.auth.userId && post.UserId == 1){
+        if(post.UserId == req.auth.userId || req.auth.userId == 1){
+            if(post.image_url !== null){
+                filename = post.image_url.split('/images/')[1];
+            }
+            db.Post.update({ ...postObject}, {where: {id: req.params.id} })
+            .then(() => {
+                fs.unlink(`images/${filename}`, () => {
+                    res.status(200).json({message:'Objet modifié avec succès !'})
+                })
+            })
+            .catch(error => res.status(400).json({error}));
+        } else {
             res.status(401).json({error: "Requête non autorisée"})
         }
-        if(post.image_url !== null){
-            filename = post.image_url.split('/images/')[1];
-        }
-        db.Post.update({ ...postObject}, {where: {id: req.params.id} })
-        .then(() => {
-            fs.unlink(`images/${filename}`, () => {
-                res.status(200).json({message:'Objet modifié avec succès !'})
-            })
-            
-        })
-        .catch(error => res.status(400).json({error}));
     })
     .catch(error => res.status(404).json({error: "Post non trouvé"}));
 };
@@ -73,14 +73,13 @@ exports.deletePost = (req, res, next) => {
                 if(!post) {
                     return res.status(404).json({error: new Error('Objet non trouvé !')});
                 }
-                if(post.UserId !== req.auth.userId && post.UserId == 1){
+                if(post.UserId == req.auth.userId || req.auth.userId == 1){
+                    db.Post.destroy({where: {id:req.params.id} })
+                    .then(() => res.status(200).json({message: 'Objet supprimé avec succès !'}))
+                    .catch(error => res.status(400).json({error:"Erreur ici"}));
+                } else {
                     return res.status(401).json({error: ('Requête non autorisée !')});
                 }
-                db.Post.destroy({where: {id:req.params.id} })
-                .then(() => res.status(200).json({message: 'Objet supprimé avec succès !'}))
-                .catch(error => {
-                    console.log(error)
-                    res.status(400).json({error:"Erreur ici"})});
             })
             .catch(error => res.status(500).json({error: "Erreur la"}));
         })   
