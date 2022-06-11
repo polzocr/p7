@@ -42,7 +42,7 @@ exports.modifyPost = (req, res, next) => {
     }:{...req.body}
     db.Post.findOne({where: {id:req.params.id} })
     .then(post => {
-        if(post.userId !== req.auth.userId){
+        if(post.UserId !== req.auth.userId && post.UserId == 1){
             res.status(401).json({error: "Requête non autorisée"})
         }
         if(post.image_url !== null){
@@ -73,8 +73,8 @@ exports.deletePost = (req, res, next) => {
                 if(!post) {
                     return res.status(404).json({error: new Error('Objet non trouvé !')});
                 }
-                if(post.userId !== req.auth.userId){
-                    return res.status(401).json({error: new Error('Requête non autorisée !')});
+                if(post.UserId !== req.auth.userId && post.UserId == 1){
+                    return res.status(401).json({error: ('Requête non autorisée !')});
                 }
                 db.Post.destroy({where: {id:req.params.id} })
                 .then(() => res.status(200).json({message: 'Objet supprimé avec succès !'}))
